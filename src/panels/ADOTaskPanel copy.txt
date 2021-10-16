@@ -1,0 +1,176 @@
+import * as vscode from "vscode";
+import { AzureDevOpsTask, Input } from "../app/models/AzureDevOpsTask";
+import { getUri } from "../utilities/getUri";
+
+export class ADOTaskPanel {
+    private readonly _panel: vscode.WebviewPanel;
+    private readonly _adoTask: AzureDevOpsTask;
+    private _disposables: vscode.Disposable[] = [];
+
+    private constructor(panel: vscode.WebviewPanel, adoTask: AzureDevOpsTask, extensionUri: vscode.Uri) {
+        this._panel = panel;
+        this._adoTask = adoTask;
+        this._panel.onDidDispose(this.dispose, null, this._disposables);
+        this._setWebviewMessageListener(this._panel.webview);
+        this._panel.webview.html = this._getWebviewContent(this._panel.webview, extensionUri);
+    }
+
+    public static render(fileUri: vscode.Uri, extensionUri: vscode.Uri) {
+        vscode.workspace.openTextDocument(fileUri).then((document) => {
+            const json = document.getText();
+            const adoTask: AzureDevOpsTask = JSON.parse(json);
+            const panel = vscode.window.createWebviewPanel("ado-task", adoTask.name || "Undefined", vscode.ViewColumn.One, {
+                enableScripts: true,
+            });
+            new ADOTaskPanel(panel, adoTask, extensionUri);
+        });
+    }
+
+    public dispose() {
+        console.log("ADOTaskPanel dispose");
+        this._panel.dispose();
+
+        while (this._disposables.length) {
+            const disposable = this._disposables.pop();
+            if (disposable) {
+                disposable.dispose();
+            }
+        }
+    }
+
+    private _getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri) {
+        const toolkitUri = getUri(webview, extensionUri, [
+            "node_modules",
+            "@vscode",
+            "webview-ui-toolkit",
+            "dist",
+            "toolkit.js",
+        ]);
+        const codiconsUri = getUri(webview, extensionUri, [
+            "node_modules",
+            "@vscode",
+            "codicons",
+            "dist",
+            "codicon.css",
+        ]);
+        const mainUri = getUri(webview, extensionUri, ["media", "main.js"]);
+        const styleUri = getUri(webview, extensionUri, ["media", "style.css"]);
+        return /*html*/ `
+            <!DOCTYPE html>
+            <html lang="en">
+            ${this._getHeader(this._adoTask, toolkitUri, mainUri, codiconsUri, styleUri)}
+            <section class="task-container">
+            ${this._getBody(this._adoTask)}
+            </section>
+            </html>`;
+    }
+
+    private _getHeader(adoTask: AzureDevOpsTask, toolkitUri: vscode.Uri, mainUri: vscode.Uri, codiconsUri: vscode.Uri, styleUri: vscode.Uri) {
+        return `
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1.0">
+            <script type="module" src="${toolkitUri}"></script>
+            <script type="module" src="${mainUri}"></script>
+            <link rel="stylesheet" href="${styleUri}">
+            <link rel="stylesheet" href="${codiconsUri}">
+            <title>${adoTask.name}</title>
+        </head>`;
+    }    
+
+    private _getInput(input: Input) {
+        let required = input.required ? '<span slot="end" class="codicon codicon-info"></span>' : '';
+        let inputHtml = '';
+        let label = `${input.label} ${required}`;
+        switch (input.type) {
+            case 'boolean':
+                inputHtml = `<vscode-checkbox class="input-field"><h4>${label}</h4></vscode-checkbox>`;
+                break;
+            case 'multiLine':
+                inputHtml = `<vscode-text-area class="input-field" resize="both"><h4>${label}</h4></vscode-text-area>`;
+                break;
+            case 'pickList':
+                inputHtml = `<h4>${label}</h4><vscode-dropdown class="input-field" position="below">`;
+                inputHtml += `<vscode-option style="display:none;"></vscode-option>`;
+                var options = input.options;
+                if (options) {
+                    for (const value in options) {
+                        inputHtml += `<vscode-option>${value}</vscode-option>`;
+                    }
+                }
+                inputHtml += `</vscode-dropdown>`;
+                break;
+            case 'radio':
+                inputHtml = `<h4>${label}</h4><vscode-radio-group class="input-field">`;
+                var options = input.options;
+                if (options) {
+                    for (const value in options) {
+                        inputHtml += `<vscode-radio>${value}</vscode-radio>`;
+                    }
+                }
+                inputHtml += `</vscode-radio-group>`;
+                break;
+            case 'string':
+                inputHtml = `<h4>${label}</h4><vscode-text-field class="input-field"></vscode-text-field>`;
+                break;
+            case 'int':
+                inputHtml = `<h4>${label}</h4><vscode-text-field class="input-field"></vscode-text-field>`;
+                break;
+            case input.type.match(/connectedService.+$/)?.input:
+                inputHtml = `<h4>${label}</h4><vscode-dropdown class="input-field" position="below"><vscode-option style="display:none;"></vscode-option><vscode-option>dummy</vscode-option></vscode-dropdown>`;
+                break;
+            default:
+                break;
+        }
+        return `<section class="input-row">${inputHtml}</section>`;
+    }
+
+    private _getInputForGroup(adoTask: AzureDevOpsTask, groupName: string | undefined) {
+        let html = "";
+        const groupTasks = adoTask.inputs?.filter(input => {
+            return input.groupName === groupName;
+        });
+        groupTasks?.forEach(input => {
+            html += this._getInput(input);
+        });
+        return html;
+    }
+
+    private _getAllInputs(adoTask: AzureDevOpsTask) {
+        let html = this._getInputForGroup(adoTask, undefined);
+        adoTask.groups?.forEach(group => {
+            let htmlGroupInputs = this._getInputForGroup(adoTask, group.name);
+            if (htmlGroupInputs.length > 0) {
+                html += `<vscode-divider role="divider"></vscode-divider><h3>${group.displayName}<span slot="end" class="codicon codicon-${group.isExpanded ? 'chevron-up' : 'chevron-down'}"></span></h3>`;
+                if (group.isExpanded) {
+                    html += htmlGroupInputs;
+                }
+            }
+        });
+        return html;
+    }
+
+    private _getBody(adoTask: AzureDevOpsTask) {
+        return `<body>
+            <h1>${adoTask.friendlyName}</h1>
+            ${this._getAllInputs(adoTask)}
+        </body>`;
+    }
+
+    private _setWebviewMessageListener(webview: vscode.Webview) {
+        webview.onDidReceiveMessage(
+            (message: any) => {
+                const command = message.command;
+                const text = message.text;
+                console.log("onDidReceiveMessage => " + command + " : " + JSON.stringify(message));
+                switch (command) {
+                    case "hello":
+                        vscode.window.showInformationMessage(text);
+                        return;
+                }
+            },
+            undefined,
+            this._disposables
+        );
+    }
+}
