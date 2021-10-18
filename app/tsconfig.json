@@ -1,22 +1,13 @@
 {
     "compilerOptions": {
-        "module": "esnext",
-        "moduleResolution": "node",
-        "target": "es6",
-        "outDir": "ccoe-ext",
-        "lib": [
-            "es6",
-            "dom"
-        ],  
-        "jsx": "react",
-        "sourceMap": true,
-        "rootDir": "..",
-        "noUnusedLocals": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "experimentalDecorators": true
-    },
-    "exclude": [
-        "node_modules"
-    ]
-}
+      "module": "ES2020",
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "target": "ES2020",
+      "jsx": "react",
+      "sourceMap": true,
+      "experimentalDecorators": true,
+      "lib": ["dom", "ES2015"],
+      "strict": true
+    }
+  }

@@ -1,11 +1,5 @@
-li {
-    margin-bottom: 15px;
-  }
-  
-  input {
-    margin-left: 10px;
-  }
-  
-  .save {
-    margin-top: 10px;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}

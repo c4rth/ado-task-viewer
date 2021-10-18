@@ -1,5 +1,9 @@
+import { ChoiceGroup, Dropdown, FontSizes, FontWeights, IChoiceGroupOption, IDropdownOption, Label, PartialTheme, TextField, ThemeProvider } from "@fluentui/react";
 import * as React from "react";
 import { AzureDevOpsTask } from "../src/models/AzureDevOpsTask";
+import './App.css';
+import Inputs from "./Inputs";
+import Theme from "./Theme";
 
 interface IConfigProps {
   vscode: any;
@@ -7,10 +11,10 @@ interface IConfigProps {
 }
 
 interface IConfigState {
-  config: AzureDevOpsTask;
+  adoTask: AzureDevOpsTask;
 }
 
-export default class Config extends React.Component<IConfigProps, IConfigState> {
+export default class App extends React.Component<IConfigProps, IConfigState> {
   constructor(props: any) {
     super(props);
 
@@ -20,7 +24,7 @@ export default class Config extends React.Component<IConfigProps, IConfigState> 
     if (oldState) {
       this.state = oldState;
     } else {
-      this.state = { config: initialData };
+      this.state = { adoTask: initialData };
     }
   }
 
@@ -104,19 +108,14 @@ export default class Config extends React.Component<IConfigProps, IConfigState> 
       </React.Fragment>
     );
   }*/
-
-  render() {
+  render() {   
     return (
-      <React.Fragment>
-        <h1>Config name : {this.state.config.name}</h1>{" "}
-        {this.state.config.description}
-        <br />
-        <input
-          className="save"
-          type="button"
-          value="Save the configuration"
-        />
-      </React.Fragment>
+      <ThemeProvider theme={Theme.appTheme}>
+        <div className="App">
+          <h1>{this.state.adoTask.friendlyName}</h1>
+          <Inputs adoTask={this.state.adoTask} />
+        </div>
+      </ThemeProvider>
     );
   }
 

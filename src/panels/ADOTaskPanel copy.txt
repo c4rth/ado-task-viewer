@@ -125,17 +125,6 @@ export class ADOTaskPanel {
         return `<section class="input-row">${inputHtml}</section>`;
     }
 
-    private _getInputForGroup(adoTask: AzureDevOpsTask, groupName: string | undefined) {
-        let html = "";
-        const groupTasks = adoTask.inputs?.filter(input => {
-            return input.groupName === groupName;
-        });
-        groupTasks?.forEach(input => {
-            html += this._getInput(input);
-        });
-        return html;
-    }
-
     private _getAllInputs(adoTask: AzureDevOpsTask) {
         let html = this._getInputForGroup(adoTask, undefined);
         adoTask.groups?.forEach(group => {
@@ -148,29 +137,5 @@ export class ADOTaskPanel {
             }
         });
         return html;
-    }
-
-    private _getBody(adoTask: AzureDevOpsTask) {
-        return `<body>
-            <h1>${adoTask.friendlyName}</h1>
-            ${this._getAllInputs(adoTask)}
-        </body>`;
-    }
-
-    private _setWebviewMessageListener(webview: vscode.Webview) {
-        webview.onDidReceiveMessage(
-            (message: any) => {
-                const command = message.command;
-                const text = message.text;
-                console.log("onDidReceiveMessage => " + command + " : " + JSON.stringify(message));
-                switch (command) {
-                    case "hello":
-                        vscode.window.showInformationMessage(text);
-                        return;
-                }
-            },
-            undefined,
-            this._disposables
-        );
     }
 }

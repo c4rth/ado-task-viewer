@@ -1,9 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import Config from "./config";
+import App from "./App";
 
 import "./index.css";
 import { AzureDevOpsTask } from "../src/models/AzureDevOpsTask";
+import { initializeIcons } from "@fluentui/react/lib/Icons";
 
 declare global {
   interface Window {
@@ -12,9 +13,11 @@ declare global {
   }
 }
 
+initializeIcons();
+
 const vscode = window.acquireVsCodeApi();
 
 ReactDOM.render(
-  <Config vscode={vscode} initialData={window.initialData} />,
+  <App vscode={vscode} initialData={window.initialData} />,
   document.getElementById("root")
 );
