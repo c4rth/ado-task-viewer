@@ -8,12 +8,12 @@ import * as fs from 'fs';
 export class ADOTaskPanel {
     public static currentPanel: ADOTaskPanel | undefined;
     private readonly _panel: vscode.WebviewPanel;
-    // private _disposables: vscode.Disposable[] = [];
+    private _disposables: vscode.Disposable[] = [];
     private readonly _extensionPath: string;
 
     private constructor(panel: vscode.WebviewPanel, adoTask: AzureDevOpsTask, extensionPath: string) {
         this._panel = panel;
-        // this._panel.onDidDispose(this.dispose, null, this._disposables);
+        this._panel.onDidDispose(this.dispose, null, this._disposables);
         this._extensionPath = extensionPath;
         panel.webview.html = this._getWebviewContent(adoTask);
     }
@@ -21,13 +21,17 @@ export class ADOTaskPanel {
     public static render(fileUri: vscode.Uri, extensionPath: string) {
         if (ADOTaskPanel.currentPanel) {
             ADOTaskPanel.currentPanel._panel.reveal(ViewColumn.One);
-        } else {
-            vscode.workspace.openTextDocument(fileUri).then((document) => {
-                const json = document.getText();
-                const adoTask: AzureDevOpsTask = JSON.parse(json);
-                this.renderAdoTask(adoTask, extensionPath);
-            });
         }
+        vscode.workspace.openTextDocument(fileUri).then((document) => {
+            const json = document.getText();
+            const adoTask: AzureDevOpsTask = JSON.parse(json);
+            if (ADOTaskPanel.currentPanel) {
+                ADOTaskPanel.currentPanel._panel.title = adoTask.name || "Undefined";
+                ADOTaskPanel.currentPanel._panel.webview.html = ADOTaskPanel.currentPanel._getWebviewContent(adoTask);
+            } else {
+                this.renderAdoTask(adoTask, extensionPath);
+            }
+        });
     }
 
     private static renderAdoTask(adoTask: AzureDevOpsTask, extensionPath: string) {
@@ -40,16 +44,15 @@ export class ADOTaskPanel {
 
     public dispose() {
         if (ADOTaskPanel.currentPanel) {
+            const adoTaskPanel = ADOTaskPanel.currentPanel;
             ADOTaskPanel.currentPanel = undefined;
-            /*
-            this._panel.dispose();
-            while (this._disposables.length) {
-                const disposable = this._disposables.pop();
+            adoTaskPanel._panel.dispose();
+            while (adoTaskPanel._disposables.length) {
+                const disposable = adoTaskPanel._disposables.pop();
                 if (disposable) {
                     disposable.dispose();
                 }
             }
-            */
         }
     }
 
