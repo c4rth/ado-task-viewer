@@ -44,7 +44,7 @@ class InputsForGroup extends React.Component<InputsForGroupProps> {
         });
         return (
             <React.Fragment>
-                <h3>**{this.props.group?.displayName}**</h3>
+                <h3>***{this.props.group?.displayName}***</h3>
                 {inputs?.map((input) => {
                     return (<TaskInput input={input} />);
                 })}
