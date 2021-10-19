@@ -2,7 +2,7 @@ import { ChoiceGroup, Dropdown, FontSizes, FontWeights, IChoiceGroupOption, IDro
 import * as React from "react";
 import { AzureDevOpsTask } from "../src/models/AzureDevOpsTask";
 import './App.css';
-import Inputs from "./Inputs";
+import InputsView from "./components/InputsView";
 import Theme from "./Theme";
 
 interface IConfigProps {
@@ -113,7 +113,7 @@ export default class App extends React.Component<IConfigProps, IConfigState> {
       <ThemeProvider theme={Theme.appTheme}>
         <div className="App">
           <h1>{this.state.adoTask.friendlyName}</h1>
-          <Inputs adoTask={this.state.adoTask} />
+          <InputsView adoTask={this.state.adoTask} />
         </div>
       </ThemeProvider>
     );
