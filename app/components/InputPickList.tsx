@@ -13,7 +13,7 @@ export default class InputPickList extends React.Component<InputPickListProps> {
         let input = this.props.input;
         this.state = { input: input };
     }
-    
+
     private _onRenderLabelDropDown: IRenderFunction<IDropdownProps> = (props) => {
         return (
             <Stack horizontal verticalAlign="center">
@@ -27,8 +27,8 @@ export default class InputPickList extends React.Component<InputPickListProps> {
             </Stack>
         );
     };
-    
-    private renderPickList() {
+
+    render() {
         var options: IDropdownOption[] = [];
         for (const value in this.props.input.options) {
             console.log("renderPickList " + value);
