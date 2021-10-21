@@ -1,6 +1,6 @@
 import { ChoiceGroup, IChoiceGroupOption, IChoiceGroupOptionProps, IChoiceGroupProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
-import LabelInfo from "./LabelInfo";
+import { LabelInfo } from "./LabelInfo";
 import { TaskInputProps } from "./TaskInput";
 
 
@@ -13,7 +13,7 @@ export default class InputRadio extends React.Component<TaskInputProps> {
     }
 
     private _onRenderLabel: IRenderFunction<IChoiceGroupProps > = (props) => {
-        return <LabelInfo label={props?.label} description={this.props.input?.helpMarkDown}/>;
+        return <LabelInfo key={"label_" + this.props.input.name} label={props?.label} description={this.props.input?.helpMarkDown}/>;
     };
 
     render() {
@@ -23,7 +23,7 @@ export default class InputRadio extends React.Component<TaskInputProps> {
             options.push({ key: value, text: this.props.input.options[value] });
         }
         // return <ChoiceGroup defaultSelectedKey="" options={options} label={this.props.input.label} required={this.props.input.required} onRenderLabel={this._onRenderLabel}/>;
-        return <ChoiceGroup defaultSelectedKey="" options={options} label={this.props.input.label} required={this.props.input.required} />;
+        return <ChoiceGroup key={this.props.input.name} options={options} label={this.props.input.label} required={this.props.input.required} />;
     }
 
 }

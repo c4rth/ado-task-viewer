@@ -1,4 +1,4 @@
-import { IStackTokens, Label, Stack } from "@fluentui/react";
+import { IStackTokens, Label, Stack, TextField } from "@fluentui/react";
 import React from "react";
 import { AzureDevOpsTask, Group, Input } from "../../src/models/AzureDevOpsTask";
 import InputBoolean from "./inputs/InputBoolean";
@@ -22,18 +22,17 @@ export default class InputsView extends React.Component<InputsProps> {
 
     private _renderInput(input: Input) {
         switch (input.type) {
-            case 'boolean': return <InputBoolean input={input} />;
-            case 'radio': return <InputRadio input={input} />;
-            case 'multiLine': return <InputMultiLine input={input} />;
-            case 'pickList': return <InputPickList input={input} />;
-            case 'string': return <InputString input={input} />;
-            case 'int': return <InputInt input={input} />;
-            case input.type.match(/connectedService.+$/)?.input: return <InputConnectedService input={input} />;
-            case 'filePath': return <InputString input={input} />;
-            case 'secureFile': return <InputString input={input} />;
-            case 'identities': return <InputString input={input} />;
-            default:
-                return <Label>Unknow type {input.type} for {input.name}</Label>;
+            case 'boolean': return <InputBoolean key={input.name} input={input} />;
+            case 'radio': return <InputRadio key={input.name} input={input} />;
+            case 'multiLine': return <InputMultiLine key={input.name} input={input} />;
+            case 'pickList': return <InputPickList key={input.name} input={input} />;
+            case 'string': return <InputString key={input.name} input={input} />;
+            case 'int': return <InputInt key={input.name} input={input} />;
+            case input.type.match(/connectedService.+$/)?.input: return <InputConnectedService key={input.name} input={input} />;
+            case 'filePath': return <InputString key={input.name} input={input} />;
+            case 'secureFile': return <InputString key={input.name} input={input} />;
+            case 'identities': return <InputString key={input.name} input={input} />;
+            default: return <Label key={input.name} >Unknow type {input.type} for {input.name}</Label>;
         }
     }
 
@@ -42,12 +41,12 @@ export default class InputsView extends React.Component<InputsProps> {
             return input.groupName === group?.name;
         });
         return (
-            <>
+            <React.Fragment key={group?.displayName ?? "defaultGroup"}>
                 <h3>***{group?.displayName}***</h3>
                 {inputs?.map((input: Input) => {
                     return this._renderInput(input);
                 })}
-            </>
+            </React.Fragment>
         );
     }
 

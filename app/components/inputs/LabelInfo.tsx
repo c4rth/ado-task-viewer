@@ -1,58 +1,45 @@
-import { Callout, IconButton, IStackStyles, Label, Stack } from "@fluentui/react";
+import { Callout, DefaultButton, IconButton, IStackStyles, IStackTokens, ITextFieldProps, Label, Stack } from "@fluentui/react";
 import React from "react";
 import { useBoolean, useId } from '@fluentui/react-hooks';
 
-export interface LabelInfoProps {
-    label: string | undefined;
-    description: string | undefined;
-}
+const stackTokens: IStackTokens = {
+  childrenGap: 4,
+  maxWidth: 300,
+};
 
-export interface LabelInfoState {
-    isCalloutVisible: boolean;
-}
+const labelCalloutStackStyles: Partial<IStackStyles> = { root: { padding: 10 } };
 
-export default class LabelInfo extends React.Component<LabelInfoProps, LabelInfoState> {
+export const LabelInfo = (props: ITextFieldProps): JSX.Element => {
+  const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
+  const descriptionId: string = useId('description');
+  const iconButtonId: string = useId('iconButton');
 
-    static readonly labelCalloutStackStyles: Partial<IStackStyles> = { root: { padding: 20 } };
-
-    state: LabelInfoState = {
-        isCalloutVisible: false,
-    };
-
-    private _toggleIsCalloutVisible() {
-        console.log("click");
-        this.setState({ isCalloutVisible: !this.state.isCalloutVisible });
-    }
-
-    render() {
-        console.log("LabelInfo");
-        return (
-            <>
-                <Stack horizontal verticalAlign="center">
-                    <Label>{this.props.label}</Label>
-                    <IconButton
-                        iconProps={{ iconName: 'Info' }}
-                        title="Info"
-                        ariaLabel="Info"
-                        styles={{ root: { marginBottom: -3 } }}
-                        onClick={this._toggleIsCalloutVisible}
-                    />
-                </Stack>
-                {this.state.isCalloutVisible && (
-                    <Callout
-                        // target={'#' + iconButtonId}
-                        setInitialFocus
-                        onDismiss={this._toggleIsCalloutVisible}
-                        role="alertdialog">
-                        <Stack horizontalAlign="start" styles={LabelInfo.labelCalloutStackStyles}>
-                            <span>{this.props.description}</span>
-                        </Stack>
-                    </Callout>)
-                }
-            </>
-        );
-    }
-}
+  return (
+    <>
+      <Stack horizontal verticalAlign="center" tokens={stackTokens}>
+        <span id={props.id}>{props.label}</span>
+        <IconButton
+          id={iconButtonId}
+          iconProps={{ iconName: 'Info' }}
+          title="Info"
+          onClick={toggleIsCalloutVisible}
+        />
+      </Stack>
+      {isCalloutVisible && (
+        <Callout
+          target={'#' + iconButtonId}
+          setInitialFocus
+          onDismiss={toggleIsCalloutVisible}
+          ariaDescribedBy={descriptionId}
+          role="alertdialog" >
+          <Stack tokens={stackTokens} horizontalAlign="start" styles={labelCalloutStackStyles}>
+            <span id={descriptionId}>{props.description}</span>
+          </Stack>
+        </Callout>
+      )}
+    </>
+  );
+};
 
 
 /*

@@ -1,6 +1,6 @@
 import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React from "react";
-import LabelInfo from "./LabelInfo";
+import { LabelInfo } from "./LabelInfo";
 import { TaskInputProps } from "./TaskInput";
 
 
@@ -13,11 +13,11 @@ export default class InputMultiLine extends React.Component<TaskInputProps> {
     }
 
     private _onRenderLabel: IRenderFunction<ITextFieldProps> = (props) => {
-        return <LabelInfo label={props?.label} description={this.props.input?.helpMarkDown}/>;
+        return <LabelInfo key={"label_" + this.props.input.name} label={props?.label} description={this.props.input?.helpMarkDown}/>;
     };
 
     render() {
-        return <TextField label={this.props.input.label} required={this.props.input.required} multiline rows={3} onRenderLabel={this._onRenderLabel} />;
+        return <TextField key={this.props.input.name} label={this.props.input.label} required={this.props.input.required} multiline rows={3} onRenderLabel={this._onRenderLabel} />;
     }
 
 }

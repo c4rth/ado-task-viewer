@@ -1,6 +1,6 @@
 import { Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
-import LabelInfo from "./LabelInfo";
+import { LabelInfo } from "./LabelInfo";
 import { TaskInputProps } from "./TaskInput";
 
 
@@ -13,7 +13,7 @@ export default class InputConnectedService extends React.Component<TaskInputProp
     }
 
     private _onRenderLabel: IRenderFunction<IDropdownProps> = (props) => {
-        return <LabelInfo label={props?.label} description={this.props.input?.helpMarkDown}/>;
+        return <LabelInfo key={"label_" + this.props.input.name} label={props?.label} description={this.props.input?.helpMarkDown}/>;
     };
 
     render() {
@@ -22,7 +22,7 @@ export default class InputConnectedService extends React.Component<TaskInputProp
             { key: 'dummyService2', text: 'sc-dummy-2' },
             { key: 'dummyService3', text: 'sc-dummy-3' }
         ];
-        return <Dropdown placeholder="" label={this.props.input.label} required={this.props.input.required} options={options} onRenderLabel={this._onRenderLabel} />;
+        return <Dropdown key={this.props.input.name} placeholder="" label={this.props.input.label} required={this.props.input.required} options={options} onRenderLabel={this._onRenderLabel} />;
     }
 
 }
