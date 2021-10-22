@@ -1,5 +1,5 @@
 import { Input } from "../../../src/models/AzureDevOpsTask";
 
-export interface TaskInputProps {
+export interface ITaskInputProps {
     input: Input;
 }

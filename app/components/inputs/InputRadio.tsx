@@ -1,29 +1,24 @@
 import { ChoiceGroup, IChoiceGroupOption, IChoiceGroupOptionProps, IChoiceGroupProps, IRenderFunction } from "@fluentui/react";
+import { useId } from "@fluentui/react-hooks";
 import React from "react";
 import { LabelInfo } from "./LabelInfo";
-import { TaskInputProps } from "./TaskInput";
+import { ITaskInputProps } from "./TaskInput";
 
+export default function InputRadio(props: ITaskInputProps) {
 
-export default class InputRadio extends React.Component<TaskInputProps> {
+    const labelId = useId('labelElement');
 
-    constructor(props: any) {
-        super(props);
-        let input = this.props.input;
-        this.state = { input: input };
+    const options: IChoiceGroupOption[] = [];
+    for (const value in props.input.options) {
+        options.push({ key: value, text: props.input.options[value] });
     }
 
-    private _onRenderLabel: IRenderFunction<IChoiceGroupProps > = (props) => {
-        return <LabelInfo key={"label_" + this.props.input.name} label={props?.label} description={this.props.input?.helpMarkDown}/>;
-    };
+    return (
+        <>
+            <LabelInfo id={labelId} key={"label_" + props.input.name} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
+            <ChoiceGroup key={props.input.name} options={options} ariaLabelledBy={labelId} />
+        </>
+    );
 
-    render() {
-        const options: IChoiceGroupOption[] = [];
-        for (const value in this.props.input.options) {
-            console.log("InputRadio " + value);
-            options.push({ key: value, text: this.props.input.options[value] });
-        }
-        // return <ChoiceGroup defaultSelectedKey="" options={options} label={this.props.input.label} required={this.props.input.required} onRenderLabel={this._onRenderLabel}/>;
-        return <ChoiceGroup key={this.props.input.name} options={options} label={this.props.input.label} required={this.props.input.required} />;
-    }
 
 }

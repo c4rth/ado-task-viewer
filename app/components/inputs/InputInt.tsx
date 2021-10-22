@@ -1,23 +1,14 @@
 import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React from "react";
 import { LabelInfo } from "./LabelInfo";
-import { TaskInputProps } from "./TaskInput";
+import { ITaskInputProps } from "./TaskInput";
 
+export default function InputInt(props: ITaskInputProps) {
 
-export default class InputInt extends React.Component<TaskInputProps> {
-
-    constructor(props: any) {
-        super(props);
-        let input = this.props.input;
-        this.state = { input: input };
-    }
-
-    private _onRenderLabel: IRenderFunction<ITextFieldProps> = (props) => {
-        return <LabelInfo key={"label_" + this.props.input.name} label={props?.label} description={this.props.input?.helpMarkDown}/>;
+    const _onRenderLabel: IRenderFunction<ITextFieldProps> = () => {
+        return <LabelInfo key={"label_" + props.input.name} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />;
     };
 
-    render() {
-        return <TextField key={this.props.input.name} label={this.props.input.label} required={this.props.input.required} onRenderLabel={this._onRenderLabel} />;
-    }
+    return <TextField key={props.input.name} onRenderLabel={_onRenderLabel} />;
 
 }

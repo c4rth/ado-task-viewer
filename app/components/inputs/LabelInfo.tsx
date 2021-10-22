@@ -17,7 +17,7 @@ export const LabelInfo = (props: ITextFieldProps): JSX.Element => {
   return (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
-        <span id={props.id}>{props.label}</span>
+        <Label id={props.id} required={props.required}>{props.label}</Label>
         <IconButton
           id={iconButtonId}
           iconProps={{ iconName: 'Info' }}

@@ -1,27 +1,20 @@
 import { Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
 import { LabelInfo } from "./LabelInfo";
-import { TaskInputProps } from "./TaskInput";
+import { ITaskInputProps } from "./TaskInput";
 
 
-export default class InputPickList extends React.Component<TaskInputProps> {
+export default function InputPickList(props: ITaskInputProps) {
 
-    constructor(props: any) {
-        super(props);
-        let input = this.props.input;
-        this.state = { input: input };
-    }
-
-    private _onRenderLabelDropDown: IRenderFunction<IDropdownProps> = (props) => {
-        return <LabelInfo key={"label_" + this.props.input.name} label={props?.label} description={this.props.input?.helpMarkDown}/>;
+    const _onRenderLabel: IRenderFunction<IDropdownProps> = () => {
+        return <LabelInfo key={"label_" + props.input.name} description={props.input.helpMarkDown} label={props.input.label} required={props.input.required}/>;
     };
 
-    render() {
-        var options: IDropdownOption[] = [];
-        for (const value in this.props.input.options) {
-            options.push({ key: value, text: this.props.input.options[value] });
-        }
-        return <Dropdown key={this.props.input.name} placeholder="" label={this.props.input.label} required={this.props.input.required} options={options} onRenderLabel={this._onRenderLabelDropDown} />;
+    var options: IDropdownOption[] = [];
+    for (const value in props.input.options) {
+        options.push({ key: value, text: props.input.options[value] });
     }
+
+    return <Dropdown key={props.input.name} placeholder=""  options={options} onRenderLabel={_onRenderLabel} />;
 
 }
