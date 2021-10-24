@@ -1,9 +1,7 @@
 import * as vscode from "vscode";
-import { getUri } from "./utilities/getUri";
 import * as path from "path";
-import { AzureDevOpsTask } from "./models/AzureDevOpsTask";
 import { ViewColumn } from "vscode";
-import * as fs from 'fs';
+import { AzureDevOpsTask } from "./models/AzureDevOpsTask";
 
 export class ADOTaskPanel {
     public static currentPanel: ADOTaskPanel | undefined;

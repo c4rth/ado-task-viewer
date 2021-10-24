@@ -4,17 +4,16 @@
 
 - Input :
     - visibleRule
-    - properties :
-        - EditableOptions
-        - MultiSelect
-        - MultiSelectFlatList
-        - DisableManageLink
-        - IsSearchable
-        - PopulateDefaultValue
-        - isVariableOrNonNegativeNumber
+    - properties :        
+        - x DisableManageLink
+        - x IsSearchable
+        - x PopulateDefaultValue
+        - x isVariableOrNonNegativeNumber
         - maxLength
-        - editorExtension
-        - EndpointFilterRule
+        - x editorExtension
+        - x EndpointFilterRule
+        - EditableOptions
+- Binding
 
 DONE :
 - Group :
@@ -24,3 +23,5 @@ DONE :
         - defaultValue
         - resizable
         - rows
+        - MultiSelect
+        - MultiSelectFlatList

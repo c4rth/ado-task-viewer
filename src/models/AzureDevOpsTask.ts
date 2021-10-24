@@ -217,20 +217,45 @@ export interface Input {
 
 export interface Properties {
     DisableManageLink?:             DisableManageLink;
-    EditableOptions?:               DisableManageLink;
+    EditableOptions?:               EditableOptions;
     editorExtension?:               string;
     EndpointFilterRule?:            string;
-    IsSearchable?:                  DisableManageLink;
+    IsSearchable?:                  IsSearchable;
     isVariableOrNonNegativeNumber?: IsVariableOrNonNegativeNumber;
     maxLength?:                     string;
-    MultiSelect?:                   DisableManageLink;
-    MultiSelectFlatList?:           DisableManageLink;
-    PopulateDefaultValue?:          DisableManageLink;
+    MultiSelect?:                   MultiSelect;
+    MultiSelectFlatList?:           MultiSelectFlatList;
+    PopulateDefaultValue?:          PopulateDefaultValue;
     resizable?:                     boolean;
     rows?:                          string;
 }
 
 export enum DisableManageLink {
+    False = "False",
+    True = "True",
+}
+
+export enum EditableOptions {
+    False = "False",
+    True = "True",
+}
+
+export enum IsSearchable {
+    False = "False",
+    True = "True",
+}
+
+export enum MultiSelect {
+    False = "False",
+    True = "True",
+}
+
+export enum MultiSelectFlatList {
+    False = "False",
+    True = "True",
+}
+
+export enum PopulateDefaultValue {
     False = "False",
     True = "True",
 }

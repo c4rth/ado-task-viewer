@@ -1,5 +1,6 @@
 import { Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
+import { EditableOptions } from "../../../src/models/AzureDevOpsTask";
 import { LabelInfo } from "../LabelInfo";
 import { ITaskInputProps } from "./TaskInput";
 
@@ -17,7 +18,10 @@ export default function InputConnectedService(props: ITaskInputProps) {
     ];
 
     return (
-        <Dropdown key={props.input.name} placeholder="" options={options} onRenderLabel={_onRenderLabel} />
+        <Dropdown
+            key={props.input.name}
+            options={options}
+            onRenderLabel={_onRenderLabel}/>
     );
 
 }

@@ -1,5 +1,5 @@
 import { IStackTokens, Label, Stack } from "@fluentui/react";
-import React, { CSSProperties, useState } from "react";
+import React, { useState } from "react";
 import { Collapse } from "react-collapse";
 import { AzureDevOpsTask, Group, Input } from "../../src/models/AzureDevOpsTask";
 import { CollapsiblePanel } from "./CollapsiblePanel";
@@ -18,18 +18,21 @@ interface IInputsProps {
 export default function InputsView(props: IInputsProps) {
 
     const [adoTask, setAdoTask] = useState(props.adoTask);
-    const [inputs, setInputs] = useState(new Map<String, String>());
 
     const _renderInput = (input: Input) => {
         switch (input.type) {
             case 'boolean': return <InputBoolean key={input.name} input={input} />;
             case 'radio': return <InputRadio key={input.name} input={input} />;
+            case 'multiline':
             case 'multiLine': return <InputMultiLine key={input.name} input={input} />;
+            case 'picklist':
             case 'pickList': return <InputPickList key={input.name} input={input} />;
             case 'string': return <InputString key={input.name} input={input} />;
             case 'int': return <InputInt key={input.name} input={input} />;
             case input.type.match(/connectedService.+$/)?.input: return <InputConnectedService key={input.name} input={input} />;
+            case 'filepath':
             case 'filePath': return <InputString key={input.name} input={input} />;
+            case 'securefile':
             case 'secureFile': return <InputString key={input.name} input={input} />;
             case 'identities': return <InputString key={input.name} input={input} />;
             default: return <Label key={input.name} >Unknow type {input.type} for {input.name}</Label>;
