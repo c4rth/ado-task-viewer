@@ -16,10 +16,10 @@ export default function InputPickList(props: ITaskInputProps) {
         options.push({ key: value, text: props.input.options[value] });
     }
 
+
     if (props.input.properties?.MultiSelectFlatList && props.input.properties?.MultiSelectFlatList === MultiSelectFlatList.True) {
         return <Dropdown
             key={props.input.name}
-            placeholder=""
             options={options}
             onRenderLabel={_onRenderLabel}
             selectedKeys={defaultValuesAsString(props.input)}
@@ -27,7 +27,6 @@ export default function InputPickList(props: ITaskInputProps) {
     } else {
         return <Dropdown
             key={props.input.name}
-            placeholder=""
             options={options}
             onRenderLabel={_onRenderLabel}
             selectedKey={defaultValueAsString(props.input)} />;

@@ -1,4 +1,4 @@
-import { Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
+import { ComboBox, Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
 import { EditableOptions } from "../../../src/models/AzureDevOpsTask";
 import { LabelInfo } from "../LabelInfo";
@@ -18,10 +18,14 @@ export default function InputConnectedService(props: ITaskInputProps) {
     ];
 
     return (
-        <Dropdown
-            key={props.input.name}
-            options={options}
-            onRenderLabel={_onRenderLabel}/>
+        <>
+            <LabelInfo key={"label_" + props.input.name} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
+            <ComboBox
+                key={props.input.name}
+                allowFreeform={props.input.properties?.EditableOptions !== undefined || props.input.properties?.EditableOptions === EditableOptions.False}
+                options={options}
+                useComboBoxAsMenuWidth />
+        </>
     );
 
 }
