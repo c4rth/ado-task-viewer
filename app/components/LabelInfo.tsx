@@ -1,6 +1,6 @@
-import { Callout, DefaultButton, getTheme, IconButton, IStackStyles, IStackTokens, ITextFieldProps, Label, Stack } from "@fluentui/react";
-import React from "react";
+import { Callout, IconButton, IStackStyles, IStackTokens, ITextFieldProps, Label, Stack } from "@fluentui/react";
 import { useBoolean, useId } from '@fluentui/react-hooks';
+import React from "react";
 
 const stackTokens: IStackTokens = {
   childrenGap: 4,
@@ -17,7 +17,7 @@ export const LabelInfo = (props: ITextFieldProps): JSX.Element => {
   return (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
-        <Label id={props.id} required={props.required} className={props.className}>{props.label}</Label>
+        <Label id={props.id} required={props.required} className={props.className} styles={props.styles}>{props.label}</Label>
         <IconButton
           id={iconButtonId}
           iconProps={{ iconName: 'Info' }}

@@ -1,4 +1,4 @@
-import { ChoiceGroup, Dropdown, FontSizes, FontWeights, getTheme, IChoiceGroupOption, IDropdownOption, Label, PartialTheme, TextField, ThemeProvider } from "@fluentui/react";
+import { ChoiceGroup, Dropdown, FontSizes, FontWeights, getTheme, IChoiceGroupOption, IDropdownOption, ITextFieldStyles, Label, PartialTheme, TextField, ThemeProvider } from "@fluentui/react";
 import * as React from "react";
 import { AzureDevOpsTask } from "../src/models/AzureDevOpsTask";
 import './App.css';
@@ -29,15 +29,18 @@ export default class App extends React.Component<IConfigProps, IConfigState> {
     }
   }
 
+
   render() {
-   
+
+    const titleStyle: Partial<ITextFieldStyles> = { root: { fontSize: "xx-large", marginLeft: 5 } };
+
     return (
       <ThemeProvider theme={Theme.appTheme}>
         <div className="App">
           <LabelInfo key={"title_" + this.state.adoTask.name}
             label={this.state.adoTask.friendlyName}
             description={this.state.adoTask.helpMarkDown}
-            className="taskTitle" />
+            styles={titleStyle} />
           <InputsView adoTask={this.state.adoTask} />
         </div>
       </ThemeProvider>

@@ -70,7 +70,6 @@
   "dependencies": {
     "@fluentui/react": "^8.37.1",
     "@fluentui/react-hooks": "^8.3.4",
-    "azure-devops-ui": "^2.167.20",
     "react": "^17.0.2",
     "react-collapse": "^5.1.0",
     "react-dom": "^17.0.2"

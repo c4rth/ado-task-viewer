@@ -1,7 +1,8 @@
 import { IStackTokens, Label, Stack } from "@fluentui/react";
-import React, { useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import { Collapse } from "react-collapse";
 import { AzureDevOpsTask, Group, Input } from "../../src/models/AzureDevOpsTask";
+import { CollapsiblePanel } from "./CollapsiblePanel";
 import InputBoolean from "./inputs/InputBoolean";
 import InputConnectedService from "./inputs/InputConnectedService";
 import InputInt from "./inputs/InputInt";
@@ -35,7 +36,6 @@ export default function InputsView(props: IInputsProps) {
         }
     };
 
-
     const _renderGroups = (group: Group | undefined) => {
         const inputs = adoTask.inputs?.filter(input => {
             return input.groupName === group?.name;
@@ -56,15 +56,14 @@ export default function InputsView(props: IInputsProps) {
 
     return (
         <Stack tokens={verticalGapStackTokens}>
-            {_renderGroups(undefined)}
+            <Collapse key="collapse_default" isOpened={true}>
+                {_renderGroups(undefined)}
+            </Collapse>
             {adoTask.groups?.map((group) => {
                 return (
-                    <React.Fragment key={group?.displayName ?? "defaultGroup"}>
-                        <h3>***{group.displayName} - [{group.isExpanded ? "true" : "false"}] ***</h3>
-                        <Collapse key={"collapse" + group.name} isOpened={group.isExpanded !== undefined ? group.isExpanded : true}>
-                            {_renderGroups(group)}
-                        </Collapse>
-                    </React.Fragment>
+                    <CollapsiblePanel key={"collapsePanel_" + group.name} group={group}>
+                        {_renderGroups(group)}
+                    </CollapsiblePanel>
                 );
             })}
         </Stack>
