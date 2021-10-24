@@ -1,5 +1,6 @@
-import { IStackTokens, Label, Stack, TextField } from "@fluentui/react";
-import React from "react";
+import { IStackTokens, Label, Stack } from "@fluentui/react";
+import React, { useState } from "react";
+import { Collapse } from "react-collapse";
 import { AzureDevOpsTask, Group, Input } from "../../src/models/AzureDevOpsTask";
 import InputBoolean from "./inputs/InputBoolean";
 import InputConnectedService from "./inputs/InputConnectedService";
@@ -9,18 +10,16 @@ import InputPickList from "./inputs/InputPickList";
 import InputRadio from "./inputs/InputRadio";
 import InputString from "./inputs/InputString";
 
-interface InputsProps {
+interface IInputsProps {
     adoTask: AzureDevOpsTask;
 }
 
-export default class InputsView extends React.Component<InputsProps> {
-    constructor(props: any) {
-        super(props);
-        let adoTask = this.props.adoTask;
-        this.state = { adoTask: adoTask };
-    }
+export default function InputsView(props: IInputsProps) {
 
-    private _renderInput(input: Input) {
+    const [adoTask, setAdoTask] = useState(props.adoTask);
+    const [inputs, setInputs] = useState(new Map<String, String>());
+
+    const _renderInput = (input: Input) => {
         switch (input.type) {
             case 'boolean': return <InputBoolean key={input.name} input={input} />;
             case 'radio': return <InputRadio key={input.name} input={input} />;
@@ -34,35 +33,40 @@ export default class InputsView extends React.Component<InputsProps> {
             case 'identities': return <InputString key={input.name} input={input} />;
             default: return <Label key={input.name} >Unknow type {input.type} for {input.name}</Label>;
         }
-    }
+    };
 
-    private _renderGroups(group: Group | undefined) {
-        const inputs = this.props.adoTask.inputs?.filter(input => {
+
+    const _renderGroups = (group: Group | undefined) => {
+        const inputs = adoTask.inputs?.filter(input => {
             return input.groupName === group?.name;
         });
         return (
-            <React.Fragment key={group?.displayName ?? "defaultGroup"}>
-                <h3>***{group?.displayName}***</h3>
+            <>
                 {inputs?.map((input: Input) => {
-                    return this._renderInput(input);
+                    return _renderInput(input);
                 })}
-            </React.Fragment>
+            </>
         );
-    }
+    };
 
-    private static verticalGapStackTokens: IStackTokens = {
+    const verticalGapStackTokens: IStackTokens = {
         childrenGap: 10,
         padding: 10,
     };
 
-    render() {
-        return (
-            <Stack tokens={InputsView.verticalGapStackTokens}>
-                {this._renderGroups(undefined)}
-                {this.props.adoTask.groups?.map((group) => {
-                    { return this._renderGroups(group); }
-                })}
-            </Stack>
-        );
-    }
+    return (
+        <Stack tokens={verticalGapStackTokens}>
+            {_renderGroups(undefined)}
+            {adoTask.groups?.map((group) => {
+                return (
+                    <React.Fragment key={group?.displayName ?? "defaultGroup"}>
+                        <h3>***{group.displayName} - [{group.isExpanded ? "true" : "false"}] ***</h3>
+                        <Collapse key={"collapse" + group.name} isOpened={group.isExpanded !== undefined ? group.isExpanded : true}>
+                            {_renderGroups(group)}
+                        </Collapse>
+                    </React.Fragment>
+                );
+            })}
+        </Stack>
+    );
 }

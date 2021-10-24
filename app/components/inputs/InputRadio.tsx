@@ -1,8 +1,8 @@
 import { ChoiceGroup, IChoiceGroupOption, IChoiceGroupOptionProps, IChoiceGroupProps, IRenderFunction } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
 import React from "react";
-import { LabelInfo } from "./LabelInfo";
-import { ITaskInputProps } from "./TaskInput";
+import { LabelInfo } from "../LabelInfo";
+import { defaultValueAsString, ITaskInputProps } from "./TaskInput";
 
 export default function InputRadio(props: ITaskInputProps) {
 
@@ -16,7 +16,7 @@ export default function InputRadio(props: ITaskInputProps) {
     return (
         <>
             <LabelInfo id={labelId} key={"label_" + props.input.name} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
-            <ChoiceGroup key={props.input.name} options={options} ariaLabelledBy={labelId} />
+            <ChoiceGroup key={props.input.name} options={options} ariaLabelledBy={labelId} defaultSelectedKey={defaultValueAsString(props.input)} />
         </>
     );
 

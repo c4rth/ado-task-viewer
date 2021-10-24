@@ -1,7 +1,7 @@
 import { Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
-import { LabelInfo } from "./LabelInfo";
-import { ITaskInputProps } from "./TaskInput";
+import { LabelInfo } from "../LabelInfo";
+import { defaultValueAsString, ITaskInputProps } from "./TaskInput";
 
 
 export default function InputPickList(props: ITaskInputProps) {
@@ -15,6 +15,6 @@ export default function InputPickList(props: ITaskInputProps) {
         options.push({ key: value, text: props.input.options[value] });
     }
 
-    return <Dropdown key={props.input.name} placeholder=""  options={options} onRenderLabel={_onRenderLabel} />;
+    return <Dropdown key={props.input.name} placeholder=""  options={options} onRenderLabel={_onRenderLabel} defaultSelectedKey={defaultValueAsString(props.input)} />;
 
 }

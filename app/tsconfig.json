@@ -8,6 +8,6 @@
       "sourceMap": true,
       "experimentalDecorators": true,
       "lib": ["dom", "ES2015"],
-      "strict": true
+      "strict": true,
     }
   }

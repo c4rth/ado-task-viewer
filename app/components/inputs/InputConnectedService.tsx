@@ -1,6 +1,6 @@
 import { Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
-import { LabelInfo } from "./LabelInfo";
+import { LabelInfo } from "../LabelInfo";
 import { ITaskInputProps } from "./TaskInput";
 
 

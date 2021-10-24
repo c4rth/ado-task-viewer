@@ -1,5 +1,9 @@
 .App {    
   margin: 0;
-  padding: 0px 10px 10px 10px;
-  width: 576px;
+  padding: 0px 16px 16px 16px;
+  width: 359px;
+}
+
+.taskTitle {
+  font-size: xx-large;
 }
