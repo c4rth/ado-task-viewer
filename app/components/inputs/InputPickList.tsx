@@ -22,14 +22,14 @@ export default function InputPickList(props: ITaskInputProps) {
             key={props.input.name}
             options={options}
             onRenderLabel={_onRenderLabel}
-            selectedKeys={defaultValuesAsString(props.input)}
+            defaultSelectedKeys={defaultValuesAsString(props.input)}
             multiSelect />;
     } else {
         return <Dropdown
             key={props.input.name}
             options={options}
             onRenderLabel={_onRenderLabel}
-            selectedKey={defaultValueAsString(props.input)} />;
+            defaultSelectedKey={defaultValueAsString(props.input)} />;
     }
 
 }

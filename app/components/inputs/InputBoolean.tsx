@@ -13,6 +13,6 @@ export default function InputBoolean(props: ITaskInputProps) {
     return <Checkbox
         key={props.input.name}
         onRenderLabel={_onRenderLabel}
-        checked={defaultValueAsBoolean(props.input)}    />;
+        defaultChecked={defaultValueAsBoolean(props.input)}    />;
 
 }
