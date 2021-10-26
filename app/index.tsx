@@ -1,10 +1,10 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import App from "./App";
 
 import "./index.css";
 import { AzureDevOpsTask } from "../src/models/AzureDevOpsTask";
 import { initializeIcons } from "@fluentui/react/lib/Icons";
+import ReactDOM from "react-dom";
 
 declare global {
   interface Window {

@@ -1,9 +1,11 @@
-import { ChoiceGroup, Dropdown, FontSizes, FontWeights, getTheme, IChoiceGroupOption, IDropdownOption, ITextFieldStyles, Label, PartialTheme, TextField, ThemeProvider } from "@fluentui/react";
-import * as React from "react";
+
+import { ITextFieldStyles } from "@fluentui/react/lib/components/TextField";
+import { ThemeProvider } from "@fluentui/react/lib/utilities/ThemeProvider";
+import React from "react";
 import { AzureDevOpsTask } from "../src/models/AzureDevOpsTask";
 import './App.css';
-import { LabelInfo } from "./components/LabelInfo";
 import InputsView from "./components/InputsView";
+import { LabelInfo } from "./components/LabelInfo";
 import Theme from "./Theme";
 
 interface IConfigProps {

@@ -8,7 +8,7 @@ export const defaultValueAsString = (input: Input) => {
     return input.defaultValue?.toString();
 };
 
-export const defaultValuesAsString = (input: Input) => {
+export const defaultValuesAsString = (input: Input): string[] => {
     if (!input.defaultValue) {
         return [];
     }

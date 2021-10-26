@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   entry: path.join(__dirname, 'app', 'index.tsx'),
   output: {
     filename: 'bundle.js',
@@ -9,7 +9,7 @@ module.exports = {
     hashFunction: "xxhash64", // node 17 & webpack 5
   },
   externals: {
-    vscode: 'commonjs vscode' 
+    vscode: 'commonjs vscode'
     // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
     // modules added here also need to be added in the .vsceignore file
   },
@@ -31,6 +31,6 @@ module.exports = {
     ]
   },
   performance: {
-    hints: false
-  }
+    hints: 'warning'
+  }, 
 };

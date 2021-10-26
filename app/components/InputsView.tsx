@@ -2,6 +2,7 @@ import { IStackTokens, Label, Stack } from "@fluentui/react";
 import React, { useState } from "react";
 import { Collapse } from "react-collapse";
 import { AzureDevOpsTask, Group, Input } from "../../src/models/AzureDevOpsTask";
+import evaluate from "../evaluator/SimpleEvaluate";
 import { CollapsiblePanel } from "./CollapsiblePanel";
 import InputBoolean from "./inputs/InputBoolean";
 import InputConnectedService from "./inputs/InputConnectedService";
@@ -15,13 +16,64 @@ interface IInputsProps {
     adoTask: AzureDevOpsTask;
 }
 
+interface IVisibility {
+    isVisible: boolean;
+    rule: string | undefined;
+}
+
+function initInputValues(adoTask: AzureDevOpsTask): Map<string, string> {
+    const map = new Map<string, string>();
+    adoTask.inputs?.forEach((input) => {
+        map.set(input.name, input.defaultValue?.toString() ?? "");
+    });
+    return map;
+}
+
+const getValue = (context: object, expr: string) => {
+    const values = context as Map<String, String>;
+    // console.log("getValue : [" + expr + "] --> [" + (values.get(expr) ?? expr) + "]");
+    return values.get(expr) ?? expr;
+};
+
+function initInputVisibilities(adoTask: AzureDevOpsTask, inputValues: Map<string, string>): Map<string, IVisibility> {
+    const map = new Map<string, IVisibility>();
+    adoTask.inputs?.forEach((input) => {
+        if (input.visibleRule) {
+            // console.log("evaluate : [" + input.visibleRule + "]");
+            const isVisible = evaluate(inputValues, input.visibleRule, { getValue });
+            console.log("evaluate : [" + input.visibleRule + "] --> " + isVisible);
+            map.set(input.name, { isVisible: isVisible, rule: input.visibleRule });
+        } else {
+            map.set(input.name, { isVisible: true, rule: undefined });
+        }
+    });
+    return map;
+}
+
 export default function InputsView(props: IInputsProps) {
 
     const [adoTask, setAdoTask] = useState(props.adoTask);
+    const [inputValues, setInputValues] = useState(initInputValues(adoTask));
+    const [visibilities, setInputVisibilities] = useState(initInputVisibilities(adoTask, inputValues));
+
+    const updateInputValue = (key: string, value: string) => {
+        setInputValues(inputValues.set(key, value));
+        const newVisibilities = visibilities;
+        newVisibilities.forEach((visibility, key) => {
+            if (visibility.rule?.includes(key)) {
+                visibility.isVisible = evaluate(inputValues, visibility.rule, { getValue });
+                newVisibilities.set(key, visibility);
+            }
+        });
+        setInputVisibilities(newVisibilities);
+    };
+
+    const handleChangeEvent = (e: React.FormEvent) => {
+        console.log("handleChangeEvent " + e);
+    };
 
     const _renderInput = (input: Input) => {
         switch (input.type) {
-            case 'boolean': return <InputBoolean key={input.name} input={input} />;
             case 'radio': return <InputRadio key={input.name} input={input} />;
             case 'multiline':
             case 'multiLine': return <InputMultiLine key={input.name} input={input} />;
@@ -46,7 +98,9 @@ export default function InputsView(props: IInputsProps) {
         return (
             <>
                 {inputs?.map((input: Input) => {
-                    return _renderInput(input);
+                    if (visibilities.get(input.name)?.isVisible) {
+                        return _renderInput(input);
+                    }
                 })}
             </>
         );
