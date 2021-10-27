@@ -1,9 +1,7 @@
-import { Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
+import { ComboBox, Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
-import { EditableOptions, MultiSelect, MultiSelectFlatList } from "../../../src/models/AzureDevOpsTask";
 import { LabelInfo } from "../LabelInfo";
-import { defaultValueAsString, defaultValuesAsString, ITaskInputProps } from "./TaskInput";
-
+import { evaluateFieldAsStringArray, evaluateFieldAsBoolean, ITaskInputProps } from "./TaskInput";
 
 export default function InputPickList(props: ITaskInputProps) {
 
@@ -16,20 +14,29 @@ export default function InputPickList(props: ITaskInputProps) {
         options.push({ key: value, text: props.input.options[value] });
     }
 
-
-    if (props.input.properties?.MultiSelectFlatList && props.input.properties?.MultiSelectFlatList === MultiSelectFlatList.True) {
+    if (evaluateFieldAsBoolean(props.input.properties?.MultiSelectFlatList)) {
         return <Dropdown
             key={props.input.name}
             options={options}
             onRenderLabel={_onRenderLabel}
-            defaultSelectedKeys={defaultValuesAsString(props.input)}
+            defaultSelectedKeys={evaluateFieldAsStringArray(props.input.defaultValue)}
             multiSelect />;
+    } else if (evaluateFieldAsBoolean(props.input.properties?.EditableOptions)) {
+        return <>
+            <LabelInfo key={"label_" + props.input.name} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
+            <ComboBox
+                key={props.input.name}
+                allowFreeform
+                options={options}
+                defaultSelectedKey={props.input.defaultValue?.toString()}
+                useComboBoxAsMenuWidth />
+        </>;
     } else {
         return <Dropdown
             key={props.input.name}
             options={options}
             onRenderLabel={_onRenderLabel}
-            defaultSelectedKey={defaultValueAsString(props.input)} />;
+            defaultSelectedKey={props.input.defaultValue?.toString()} />;
     }
 
 }

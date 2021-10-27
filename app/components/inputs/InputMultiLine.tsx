@@ -1,8 +1,7 @@
 import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React from "react";
-import { EditableOptions } from "../../../src/models/AzureDevOpsTask";
 import { LabelInfo } from "../LabelInfo";
-import { defaultValueAsString, ITaskInputProps } from "./TaskInput";
+import { evaluateFieldAsInt, ITaskInputProps } from "./TaskInput";
 
 export default function InputMultiLine(props: ITaskInputProps) {
 
@@ -13,10 +12,10 @@ export default function InputMultiLine(props: ITaskInputProps) {
     return <TextField
         key={props.input.name}
         multiline
-        rows={props.input.properties?.rows ? parseInt(props.input.properties?.rows) : 3}
+        rows={evaluateFieldAsInt(props.input.properties?.rows, 3)}
         resizable={props.input.properties?.resizable}
-        maxLength={props.input.properties?.maxLength ? parseInt(props.input.properties?.maxLength) : undefined}
+        maxLength={evaluateFieldAsInt(props.input.properties?.maxLength)}
         onRenderLabel={_onRenderLabel}
-        defaultValue={defaultValueAsString(props.input)} />;
+        defaultValue={props.input.defaultValue?.toString()} />;
 
 }

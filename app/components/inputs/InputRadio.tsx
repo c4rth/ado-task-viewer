@@ -1,9 +1,8 @@
-import { ChoiceGroup, IChoiceGroupOption, IChoiceGroupOptionProps, IChoiceGroupProps, IRenderFunction } from "@fluentui/react";
+import { ChoiceGroup, IChoiceGroupOption } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
 import React from "react";
-import { EditableOptions } from "../../../src/models/AzureDevOpsTask";
 import { LabelInfo } from "../LabelInfo";
-import { defaultValueAsString, ITaskInputProps } from "./TaskInput";
+import { ITaskInputProps } from "./TaskInput";
 
 export default function InputRadio(props: ITaskInputProps) {
 
@@ -21,7 +20,7 @@ export default function InputRadio(props: ITaskInputProps) {
                 key={props.input.name} 
                 options={options}
                 ariaLabelledBy={labelId}
-                defaultSelectedKey={defaultValueAsString(props.input)} />
+                defaultSelectedKey={props.input.defaultValue?.toString()} />
         </>
     );
 

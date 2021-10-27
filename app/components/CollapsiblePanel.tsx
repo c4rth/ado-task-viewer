@@ -1,4 +1,4 @@
-import { FontIcon, Icon, IIconStyles, IStackStyles, Stack, Text } from "@fluentui/react";
+import { Icon, IStackStyles, Stack, Text } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
 import React from "react";
 import { Collapse } from "react-collapse";

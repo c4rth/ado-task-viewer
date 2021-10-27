@@ -1,8 +1,7 @@
-import { IRenderFunction, ITextFieldProps, Label, TextField } from "@fluentui/react";
+import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React from "react";
-import { EditableOptions } from "../../../src/models/AzureDevOpsTask";
 import { LabelInfo } from "../LabelInfo";
-import { defaultValueAsString, ITaskInputProps } from "./TaskInput";
+import { evaluateFieldAsInt, ITaskInputProps } from "./TaskInput";
 
 export default function InputString(props: ITaskInputProps) {
 
@@ -13,7 +12,7 @@ export default function InputString(props: ITaskInputProps) {
         <TextField
             key={props.input.name}
             onRenderLabel={_onRenderLabel}
-            defaultValue={defaultValueAsString(props.input)}
-            maxLength={props.input.properties?.maxLength ? parseInt(props.input.properties?.maxLength) : undefined} />
+            defaultValue={props.input.defaultValue?.toString()}
+            maxLength={evaluateFieldAsInt(props.input.properties?.maxLength)} />
     );
 }

@@ -74,6 +74,7 @@ export default function InputsView(props: IInputsProps) {
 
     const _renderInput = (input: Input) => {
         switch (input.type) {
+            case 'boolean': return <InputBoolean key={input.name} input={input} />;
             case 'radio': return <InputRadio key={input.name} input={input} />;
             case 'multiline':
             case 'multiLine': return <InputMultiLine key={input.name} input={input} />;

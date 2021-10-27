@@ -1,7 +1,7 @@
 import { Checkbox, ICheckboxProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
 import { LabelInfo } from "../LabelInfo";
-import { defaultValueAsBoolean, ITaskInputProps } from "./TaskInput";
+import { evaluateFieldAsBoolean, ITaskInputProps } from "./TaskInput";
 
 
 export default function InputBoolean(props: ITaskInputProps) {
@@ -13,6 +13,6 @@ export default function InputBoolean(props: ITaskInputProps) {
     return <Checkbox
         key={props.input.name}
         onRenderLabel={_onRenderLabel}
-        defaultChecked={defaultValueAsBoolean(props.input)}    />;
+        defaultChecked={evaluateFieldAsBoolean(props.input?.defaultValue)} />;
 
 }

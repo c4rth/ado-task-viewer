@@ -1,8 +1,7 @@
-import { ComboBox, Dropdown, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
+import { ComboBox, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
-import { EditableOptions } from "../../../src/models/AzureDevOpsTask";
 import { LabelInfo } from "../LabelInfo";
-import { ITaskInputProps } from "./TaskInput";
+import { evaluateFieldAsBoolean, ITaskInputProps } from "./TaskInput";
 
 
 export default function InputConnectedService(props: ITaskInputProps) {
@@ -22,7 +21,7 @@ export default function InputConnectedService(props: ITaskInputProps) {
             <LabelInfo key={"label_" + props.input.name} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
             <ComboBox
                 key={props.input.name}
-                allowFreeform={props.input.properties?.EditableOptions !== undefined || props.input.properties?.EditableOptions === EditableOptions.False}
+                allowFreeform={evaluateFieldAsBoolean(props.input.properties?.EditableOptions)}
                 options={options}
                 useComboBoxAsMenuWidth />
         </>
