@@ -34,14 +34,14 @@ export default class App extends React.Component<IConfigProps, IConfigState> {
 
   render() {
 
-    const titleStyle: Partial<ITextFieldStyles> = { root: { fontSize: "xx-large", marginLeft: 5 } };
+    const titleStyle: Partial<ITextFieldStyles> = { root: { fontSize: "large", fontWeight: "600", marginLeft: 5 } };
 
     return (
       <ThemeProvider theme={Theme.appTheme}>
         <div className="App">
           <LabelInfo key={"title_" + this.state.adoTask.name}
             label={this.state.adoTask.friendlyName}
-            description={this.state.adoTask.helpMarkDown}
+            description={this.state.adoTask.description}
             styles={titleStyle} />
           <InputsView adoTask={this.state.adoTask} />
         </div>

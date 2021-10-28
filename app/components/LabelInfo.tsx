@@ -1,23 +1,27 @@
-import { Callout, IconButton, IStackStyles, IStackTokens, ITextFieldProps, Label, Stack } from "@fluentui/react";
+import { Callout, IconButton, ILabelProps, IStackStyles, IStackTokens, ITextFieldProps, Label, Stack } from "@fluentui/react";
 import { useBoolean, useId } from '@fluentui/react-hooks';
 import React from "react";
 
 const stackTokens: IStackTokens = {
-  childrenGap: 4,
-  maxWidth: 300,
+  maxWidth: 359,
 };
 
 const labelCalloutStackStyles: Partial<IStackStyles> = { root: { padding: 10 } };
 
-export const LabelInfo = (props: ITextFieldProps): JSX.Element => {
+export interface ILabelInfoProps extends ILabelProps {
+  label: string | undefined;
+  description: string | undefined;
+}
+
+export const LabelInfo = (props: ILabelInfoProps): JSX.Element => {
   const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
   const descriptionId: string = useId('description');
   const iconButtonId: string = useId('iconButton');
 
   return (
     <>
-      <Stack horizontal verticalAlign="center" tokens={stackTokens}>
-        <Label id={props.id} required={props.required} className={props.className} styles={props.styles}>{props.label}</Label>
+      <Stack horizontal verticalAlign="center">
+        <Label id={props.id} required={props.required} className={props.className} styles={props.styles} onClick={props.onClick}>{props.label}</Label>
         <IconButton
           id={iconButtonId}
           iconProps={{ iconName: 'Info' }}

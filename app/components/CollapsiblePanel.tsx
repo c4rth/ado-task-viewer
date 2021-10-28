@@ -1,8 +1,9 @@
-import { Icon, IStackStyles, Stack, Text } from "@fluentui/react";
+import { Icon, IStackStyles, ITextFieldStyles, Label, Stack } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
 import React from "react";
 import { Collapse } from "react-collapse";
 import { Group } from "../../src/models/AzureDevOpsTask";
+import { evaluateFieldAsBoolean } from "./inputs/TaskInput";
 
 export interface ICollapsiblePanelProps {
     group: Group;
@@ -11,24 +12,26 @@ export interface ICollapsiblePanelProps {
 
 export const CollapsiblePanel = (props: ICollapsiblePanelProps): JSX.Element => {
 
-    const [isExpanded, { toggle: toggleIsExpanded }] = useBoolean(props.group.isExpanded !== undefined ? props.group.isExpanded : true);
+    const [isExpanded, { toggle: toggleIsExpanded }] = useBoolean(evaluateFieldAsBoolean(props.group.isExpanded, true));
 
     const headerStyles: Partial<IStackStyles> = {
         root: {
-            cursor: "default", 
-            padding: 10,
+            cursor: "default",
+            padding: 5,
             selectors: {
                 ':hover': {
-                    backgroundColor: '#d3d3d3'
+                    backgroundColor: '#f3f2f1'
                 },
             },
         }
     };
 
+    const titleStyle: Partial<ITextFieldStyles> = { root: { fontSize: "medium", fontWeight: "600" } };
+
     return (
         <React.Fragment key={props.group?.displayName ?? "defaultGroup"}>
             <Stack horizontal horizontalAlign="space-between" verticalAlign="center" onClick={toggleIsExpanded} styles={headerStyles} className="ms-Button-flexContainer flexContainer-128">
-                <Text variant="xLarge">{props.group.displayName}</Text>
+                <Label styles={titleStyle}>{props.group.displayName}</Label>
                 <Icon iconName={isExpanded ? 'ChevronUp' : 'ChevronDown'} />
             </Stack>
             <Collapse key={"collapse_" + props.group.name} isOpened={isExpanded}>

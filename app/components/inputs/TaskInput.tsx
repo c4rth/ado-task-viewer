@@ -11,8 +11,8 @@ export const evaluateFieldAsStringArray = (field: string | undefined | boolean):
     return field.toString().split(",");
 };
 
-export const evaluateFieldAsBoolean = (field: string | undefined | boolean): boolean => {
-    if (!field) { return false; }
+export const evaluateFieldAsBoolean = (field: string | undefined | boolean, defaultValue: boolean = false): boolean => {
+    if (!field) { return defaultValue; }
     return field.toString().toLowerCase() === "true";
 };
 

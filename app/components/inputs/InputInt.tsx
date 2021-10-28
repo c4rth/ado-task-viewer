@@ -1,7 +1,7 @@
 import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React from "react";
 import { LabelInfo } from "../LabelInfo";
-import { ITaskInputProps } from "./TaskInput";
+import { evaluateFieldAsInt, ITaskInputProps } from "./TaskInput";
 
 export default function InputInt(props: ITaskInputProps) {
 
@@ -13,6 +13,6 @@ export default function InputInt(props: ITaskInputProps) {
         key={props.input.name}
         onRenderLabel={_onRenderLabel}
         defaultValue={props.input.defaultValue?.toString()}
-        maxLength={props.input.properties?.maxLength ? parseInt(props.input.properties?.maxLength) : undefined} />; 
+        maxLength={evaluateFieldAsInt(props.input.properties?.maxLength)} />; 
 
 }
