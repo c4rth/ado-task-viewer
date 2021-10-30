@@ -1,13 +1,13 @@
 {
-  "name": "ccoe-vsc-extension",
-  "displayName": "ccoe-vsc-extension",
-  "description": "CCoE VsCode Extension",
-  "icon": "ccoe-extension.png",
-  "publisher": "CCoE",
+  "name": "ado-task-viewer",
+  "displayName": "ado-task-viewer",
+  "description": "AzDo Task Viewer",
+  "icon": "ado-task-viewer.png",
+  "publisher": "carth",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://127.0.0.1"
+    "url": "https://github.com/carthx/ado-task-viewer"
   },
   "engines": {
     "vscode": "^1.61.0"
@@ -16,21 +16,21 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:ccoe-vsc-extension.adoTask"
+    "onCommand:ado-task-viewer.adoTask"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "ccoe-vsc-extension.adoTask",
-        "title": "CCoE : Show ADO Task"
+        "command": "ado-task-viewer.adoTask",
+        "title": "AzDo Task Viewer"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "ccoe-vsc-extension.adoTask",
-          "group": "CCoeVscExtension",
+          "command": "ado-task-viewer.adoTask",
+          "group": "AzDoTaskViewerExtenstion",
           "when": "resourceFilename == task.json"
         }
       ]

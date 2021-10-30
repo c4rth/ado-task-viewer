@@ -1,12 +1,8 @@
-# ccoe-vsc-extension README
+# AzDevops Task viewer README
 
 ## Commands
 
-- **CCoE : Show ADO Task**
+- **View AzDo Task UI**
 
-  Simulate task.json UI
-
-- **CCoE : Generate UUIDv4**
-
-  Generate a UUID v4 at the cursor position if a document is open or in the clipboard
+  View task.json UI
 

@@ -2,6 +2,7 @@ import { Input } from "../../../src/models/AzureDevOpsTask";
 
 export interface ITaskInputProps {
     input: Input;
+    onChange?: Function | undefined;
 }
 
 export const evaluateFieldAsStringArray = (field: string | undefined | boolean): string[] => {

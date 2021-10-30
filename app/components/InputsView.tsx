@@ -68,7 +68,7 @@ export default function InputsView(props: IInputsProps) {
         setInputVisibilities(newVisibilities);
     };
 
-    const handleChangeEvent = (e: React.FormEvent) => {
+    const handleChangeEvent = (e: React.FormEvent, value?: string | undefined) => {
         console.log("handleChangeEvent " + e);
     };
 
@@ -79,7 +79,7 @@ export default function InputsView(props: IInputsProps) {
             case 'multiline':
             case 'multiLine': return <InputMultiLine key={input.name} input={input} />;
             case 'picklist':
-            case 'pickList': return <InputPickList key={input.name} input={input} />;
+            case 'pickList': return <InputPickList key={input.name} input={input} onChange={handleChangeEvent}/>;
             case 'string': return <InputString key={input.name} input={input} />;
             case 'int': return <InputInt key={input.name} input={input} />;
             case input.type.match(/connectedService.+$/)?.input: return <InputConnectedService key={input.name} input={input} />;

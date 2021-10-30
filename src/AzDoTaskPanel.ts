@@ -3,8 +3,8 @@ import * as path from "path";
 import { ViewColumn } from "vscode";
 import { AzureDevOpsTask } from "./models/AzureDevOpsTask";
 
-export class ADOTaskPanel {
-    public static currentPanel: ADOTaskPanel | undefined;
+export class AzDoTaskPanel {
+    public static currentPanel: AzDoTaskPanel | undefined;
     private readonly _panel: vscode.WebviewPanel;
     private _disposables: vscode.Disposable[] = [];
     private readonly _extensionPath: string;
@@ -17,15 +17,15 @@ export class ADOTaskPanel {
     }
 
     public static render(fileUri: vscode.Uri, extensionPath: string) {
-        if (ADOTaskPanel.currentPanel) {
-            ADOTaskPanel.currentPanel._panel.reveal(ViewColumn.One);
+        if (AzDoTaskPanel.currentPanel) {
+            AzDoTaskPanel.currentPanel._panel.reveal(ViewColumn.One);
         }
         vscode.workspace.openTextDocument(fileUri).then((document) => {
             const json = document.getText();
             const adoTask: AzureDevOpsTask = JSON.parse(json);
-            if (ADOTaskPanel.currentPanel) {
-                ADOTaskPanel.currentPanel._panel.title = adoTask.name || "Undefined";
-                ADOTaskPanel.currentPanel._panel.webview.html = ADOTaskPanel.currentPanel._getWebviewContent(adoTask);
+            if (AzDoTaskPanel.currentPanel) {
+                AzDoTaskPanel.currentPanel._panel.title = adoTask.name || "Undefined";
+                AzDoTaskPanel.currentPanel._panel.webview.html = AzDoTaskPanel.currentPanel._getWebviewContent(adoTask);
             } else {
                 this.renderAdoTask(adoTask, extensionPath);
             }
@@ -37,13 +37,13 @@ export class ADOTaskPanel {
             enableScripts: true,
             localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'out', 'app'))],
         });
-        ADOTaskPanel.currentPanel = new ADOTaskPanel(panel, adoTask, extensionPath);
+        AzDoTaskPanel.currentPanel = new AzDoTaskPanel(panel, adoTask, extensionPath);
     }
 
     public dispose() {
-        if (ADOTaskPanel.currentPanel) {
-            const adoTaskPanel = ADOTaskPanel.currentPanel;
-            ADOTaskPanel.currentPanel = undefined;
+        if (AzDoTaskPanel.currentPanel) {
+            const adoTaskPanel = AzDoTaskPanel.currentPanel;
+            AzDoTaskPanel.currentPanel = undefined;
             adoTaskPanel._panel.dispose();
             while (adoTaskPanel._disposables.length) {
                 const disposable = adoTaskPanel._disposables.pop();
