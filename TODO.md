@@ -1,27 +1,27 @@
-- Group :
-    - isExpanded
-    - visibleRule
-
+TODO :
 - Input :
-    - visibleRule
     - properties :        
         - x DisableManageLink
         - x IsSearchable
         - x PopulateDefaultValue
         - x isVariableOrNonNegativeNumber
-        - maxLength
         - x editorExtension
         - x EndpointFilterRule
-        - EditableOptions
 - Binding
+- dynamic update of visibility
 
 DONE :
 - Group :
+    - isExpanded
+    - not visible if empty
 
 - Input :
+    - visibleRule
     - properties
         - defaultValue
         - resizable
         - rows
         - MultiSelect
         - MultiSelectFlatList
+        - maxLength
+        - EditableOptions

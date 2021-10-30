@@ -12,7 +12,7 @@ import InputPickList from "./inputs/InputPickList";
 import InputRadio from "./inputs/InputRadio";
 import InputString from "./inputs/InputString";
 
-interface IInputsProps {
+interface IInputsViewProps {
     adoTask: AzureDevOpsTask;
 }
 
@@ -50,7 +50,7 @@ function initInputVisibilities(adoTask: AzureDevOpsTask, inputValues: Map<string
     return map;
 }
 
-export default function InputsView(props: IInputsProps) {
+export default function InputsPanel(props: IInputsViewProps) {
 
     const [adoTask, setAdoTask] = useState(props.adoTask);
     const [inputValues, setInputValues] = useState(initInputValues(adoTask));
@@ -79,7 +79,7 @@ export default function InputsView(props: IInputsProps) {
             case 'multiline':
             case 'multiLine': return <InputMultiLine key={input.name} input={input} />;
             case 'picklist':
-            case 'pickList': return <InputPickList key={input.name} input={input} onChange={handleChangeEvent}/>;
+            case 'pickList': return <InputPickList key={input.name} input={input} onChange={handleChangeEvent} />;
             case 'string': return <InputString key={input.name} input={input} />;
             case 'int': return <InputInt key={input.name} input={input} />;
             case input.type.match(/connectedService.+$/)?.input: return <InputConnectedService key={input.name} input={input} />;
@@ -92,10 +92,7 @@ export default function InputsView(props: IInputsProps) {
         }
     };
 
-    const _renderGroups = (group: Group | undefined) => {
-        const inputs = adoTask.inputs?.filter(input => {
-            return input.groupName === group?.name;
-        });
+    const _renderInputs = (inputs: Array<Input> | undefined) => {
         return (
             <>
                 {inputs?.map((input: Input) => {
@@ -107,6 +104,27 @@ export default function InputsView(props: IInputsProps) {
         );
     };
 
+    const _renderGroup = (group: Group | undefined, withHeader: boolean = false) => {
+        const inputs = adoTask.inputs?.filter(input => {
+            return input.groupName === group?.name;
+        });
+        if (inputs?.length === 0) {
+            return (<></>);
+        }
+        if (withHeader && group) {
+            return (
+                <CollapsiblePanel key={"collapsePanel_" + group.name} group={group}>
+                    {_renderInputs(inputs)}
+                </CollapsiblePanel>
+            );
+        }
+        return (
+            <Collapse key="collapse_default" isOpened={true}>
+                {_renderInputs(inputs)}
+            </Collapse>
+        );
+    };
+
     const verticalGapStackTokens: IStackTokens = {
         childrenGap: 10,
         padding: 10,
@@ -114,14 +132,12 @@ export default function InputsView(props: IInputsProps) {
 
     return (
         <Stack tokens={verticalGapStackTokens}>
-            <Collapse key="collapse_default" isOpened={true}>
-                {_renderGroups(undefined)}
-            </Collapse>
+            {_renderGroup(undefined)}
             {adoTask.groups?.map((group) => {
                 return (
-                    <CollapsiblePanel key={"collapsePanel_" + group.name} group={group}>
-                        {_renderGroups(group)}
-                    </CollapsiblePanel>
+                    <React.Fragment key={"fragment_" + group.name}>
+                        {_renderGroup(group)}
+                    </React.Fragment>
                 );
             })}
         </Stack>

@@ -4,7 +4,7 @@ import { ThemeProvider } from "@fluentui/react/lib/utilities/ThemeProvider";
 import React from "react";
 import { AzureDevOpsTask } from "../src/models/AzureDevOpsTask";
 import './App.css';
-import InputsView from "./components/InputsView";
+import InputsPanel from "./components/InputsPanel";
 import { LabelInfo } from "./components/LabelInfo";
 import Theme from "./Theme";
 
@@ -42,7 +42,7 @@ export default class App extends React.Component<IConfigProps, IConfigState> {
             label={this.state.adoTask.friendlyName}
             description={this.state.adoTask.description}
             styles={titleStyle} />
-          <InputsView adoTask={this.state.adoTask} />
+          <InputsPanel adoTask={this.state.adoTask} />
         </div>
       </ThemeProvider>
     );
