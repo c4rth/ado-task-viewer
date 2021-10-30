@@ -169,7 +169,7 @@ export default class Compiler {
       left: pre,
       right,
       operation,
-    }
+    };
   }
 
   private compare(a: string, b: string) {
@@ -242,7 +242,7 @@ export default class Compiler {
     }
 
     if (token === '!') {
-      return { left: null, operation: token, right: this.parseStatement() }
+      return { left: null, operation: token, right: this.parseStatement() };
     }
 
     // 3 > -12 or -12 + 10

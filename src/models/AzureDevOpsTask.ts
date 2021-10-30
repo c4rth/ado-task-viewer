@@ -6,7 +6,7 @@
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
-
+/* eslint-disable */
 export interface AzureDevOpsTask {
     $schema?: string;
     author?:  string;
@@ -681,3 +681,4 @@ const typeMap: any = {
         "Release",
     ],
 };
+/* eslint-enable */

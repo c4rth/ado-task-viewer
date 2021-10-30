@@ -55,7 +55,6 @@ export class AzDoTaskPanel {
     }
 
     private _getWebviewContent(adoTask: AzureDevOpsTask) {
-        // Local path to main script run in the webview
         const reactAppPath = path.join(this._extensionPath, 'out', 'app', 'bundle.js');
         const reactAppUri = vscode.Uri.file(reactAppPath).with({ scheme: "vscode-resource" });
         const configJson = JSON.stringify(adoTask);

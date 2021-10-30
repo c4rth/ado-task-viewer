@@ -10,7 +10,7 @@
  export const evaluate = (context: any, expr: string) => {
    const yard = new ShuntingYard(token(expr));
    return yard.parse(context);
- }
+ };
  
  export default class ShuntingYard {
    private values: string[] = [];
@@ -46,7 +46,7 @@
        if (operator !== undefined) {
          this.values.push(operator);
        }
-     } while (operator !== undefined)
+     } while (operator !== undefined);
      return this.calc(context);
    }
  
@@ -90,10 +90,10 @@
        case '<=':
          return left <= right;
        case '==':
-         // tslint:disable-next-line:triple-equals
+         // eslint-disable-next-line eqeqeq
          return left == right;
        case '!=':
-         // tslint:disable-next-line:triple-equals
+         // eslint-disable-next-line eqeqeq
          return left != right;
        case '&&':
          return left && right;

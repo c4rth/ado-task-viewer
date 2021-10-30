@@ -31,7 +31,6 @@ export default class App extends React.Component<IConfigProps, IConfigState> {
     }
   }
 
-
   render() {
 
     const titleStyle: Partial<ITextFieldStyles> = { root: { fontSize: "large", fontWeight: "600", marginLeft: 5 } };

@@ -39,4 +39,4 @@ export const CollapsiblePanel = (props: ICollapsiblePanelProps): JSX.Element => 
             </Collapse>
         </React.Fragment>
     );
-}
+};

@@ -3,8 +3,6 @@ import { AzDoTaskPanel } from './AzDoTaskPanel';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('ado-task-viewer.adoTask', (uri: vscode.Uri | undefined) => adoTask(uri, context)));
-
-	console.log("activate");
 }
 
 export function deactivate() { }
@@ -12,6 +10,5 @@ export function deactivate() { }
 function adoTask(uri: vscode.Uri | undefined, context: vscode.ExtensionContext) {
 	uri = uri || vscode.window.activeTextEditor?.document.uri;
 	if (!uri) { return; }
-	console.log("open : " + uri);
 	AzDoTaskPanel.render(uri, context.extensionPath);
 }
