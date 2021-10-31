@@ -14,15 +14,15 @@ export default function InputPickList(props: ITaskInputProps) {
         options.push({ key: value, text: props.input.options[value] });
     }
 
-    const handleDropdownChangeEvent = (event: React.FormEvent, option?: IDropdownOption | undefined, index?: number | undefined) => {
+    const _handleDropdownChangeEvent = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption | undefined, index?: number | undefined) => {
         if (props.onChange) {
-            props.onChange(event);
+            props.onChange(props.input.name, option?.key.toString());
         }
     };
 
-    const handleComboboxChangeEvent = (event: React.FormEvent<IComboBox>, option?: IComboBoxOption | undefined, index?: number | undefined, value?: string | undefined) => {
+    const _handleComboboxChangeEvent = (event: React.FormEvent<IComboBox>, option?: IComboBoxOption | undefined, index?: number | undefined, value?: string | undefined) => {
         if (props.onChange) {
-            props.onChange(event);
+            props.onChange(props.input.name, option?.key.toString());
         }
     };
 
@@ -32,7 +32,7 @@ export default function InputPickList(props: ITaskInputProps) {
             options={options}
             onRenderLabel={_onRenderLabel}
             defaultSelectedKeys={evaluateFieldAsStringArray(props.input.defaultValue)}
-            onChange={handleDropdownChangeEvent}
+            onChange={_handleDropdownChangeEvent}
             multiSelect />;
     } else if (evaluateFieldAsBoolean(props.input.properties?.EditableOptions)) {
         return <>
@@ -42,7 +42,7 @@ export default function InputPickList(props: ITaskInputProps) {
                 allowFreeform
                 options={options}
                 defaultSelectedKey={props.input.defaultValue?.toString()}
-                onChange={handleComboboxChangeEvent}
+                onChange={_handleComboboxChangeEvent}
                 useComboBoxAsMenuWidth />
         </>;
     } else {
@@ -50,7 +50,7 @@ export default function InputPickList(props: ITaskInputProps) {
             key={props.input.name}
             options={options}
             onRenderLabel={_onRenderLabel}
-            onChange={handleDropdownChangeEvent}
+            onChange={_handleDropdownChangeEvent}
             defaultSelectedKey={props.input.defaultValue?.toString()} />;
     }
 

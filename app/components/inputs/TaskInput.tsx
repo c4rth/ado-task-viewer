@@ -1,8 +1,10 @@
 import { Input } from "../../../src/models/AzureDevOpsTask";
 
+type OnChangeFunction = (key?: string | undefined, value?: string | undefined) => void;
+
 export interface ITaskInputProps {
     input: Input;
-    onChange?: Function | undefined;
+    onChange?: OnChangeFunction | undefined;
 }
 
 export const evaluateFieldAsStringArray = (field: string | undefined | boolean): string[] => {

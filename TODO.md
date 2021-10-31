@@ -9,6 +9,9 @@ TODO :
         - x EndpointFilterRule
 - Binding
 - dynamic update of visibility
+- handle event change
+    - connected service
+    - picklist
 
 DONE :
 - Group :
@@ -25,3 +28,10 @@ DONE :
         - MultiSelectFlatList
         - maxLength
         - EditableOptions
+    - int : number only
+    - handle event change
+        - Boolean
+        - radio
+        - int
+        - multiline
+        - string

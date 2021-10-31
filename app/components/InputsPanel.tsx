@@ -68,26 +68,26 @@ export default function InputsPanel(props: IInputsViewProps) {
         setInputVisibilities(newVisibilities);
     };
 
-    const handleChangeEvent = (e: React.FormEvent, value?: string | undefined) => {
-        console.log("handleChangeEvent " + e);
+    const handleChangeEvent = (key?: string | undefined, value?: string | undefined) => {
+        console.log("handleChangeEvent " + key + " = " + value);
     };
 
     const _renderInput = (input: Input) => {
         switch (input.type) {
-            case 'boolean': return <InputBoolean key={input.name} input={input} />;
-            case 'radio': return <InputRadio key={input.name} input={input} />;
+            case 'boolean': return <InputBoolean key={input.name} input={input} onChange={handleChangeEvent} />;
+            case 'radio': return <InputRadio key={input.name} input={input} onChange={handleChangeEvent} />;
             case 'multiline':
-            case 'multiLine': return <InputMultiLine key={input.name} input={input} />;
+            case 'multiLine': return <InputMultiLine key={input.name} input={input} onChange={handleChangeEvent} />;
             case 'picklist':
-            case 'pickList': return <InputPickList key={input.name} input={input} onChange={handleChangeEvent} />;
-            case 'string': return <InputString key={input.name} input={input} />;
-            case 'int': return <InputInt key={input.name} input={input} />;
-            case input.type.match(/connectedService.+$/)?.input: return <InputConnectedService key={input.name} input={input} />;
+            case 'pickList': return <InputPickList key={input.name} input={input} onChange={handleChangeEvent}/>;
+            case 'string': return <InputString key={input.name} input={input} onChange={handleChangeEvent} />;
+            case 'int': return <InputInt key={input.name} input={input} onChange={handleChangeEvent} />;
+            case input.type.match(/connectedService.+$/)?.input: return <InputConnectedService key={input.name} input={input} onChange={handleChangeEvent} />;
             case 'filepath':
-            case 'filePath': return <InputString key={input.name} input={input} />;
+            case 'filePath': return <InputString key={input.name} input={input} onChange={handleChangeEvent} />;
             case 'securefile':
-            case 'secureFile': return <InputString key={input.name} input={input} />;
-            case 'identities': return <InputString key={input.name} input={input} />;
+            case 'secureFile': return <InputString key={input.name} input={input} onChange={handleChangeEvent} />;
+            case 'identities': return <InputString key={input.name} input={input} onChange={handleChangeEvent} />;
             default: return <Label key={input.name} >Unknow type {input.type} for {input.name}</Label>;
         }
     };
