@@ -4,7 +4,7 @@ import React, { useCallback } from "react";
 import { LabelInfo } from "../LabelInfo";
 import { ITaskInputProps } from "./TaskInput";
 
-export default function InputRadio(props: ITaskInputProps) {
+export const InputRadio: React.FC<ITaskInputProps> = (props): JSX.Element => {
 
     const labelId = useId('labelElement');
 
@@ -24,9 +24,8 @@ export default function InputRadio(props: ITaskInputProps) {
 
     return (
         <>
-            <LabelInfo id={labelId} key={"label_" + props.input.name} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
+            <LabelInfo id={labelId} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
             <ChoiceGroup
-                key={props.input.name}
                 options={options}
                 ariaLabelledBy={labelId}
                 onChange={_handleRadioChangeEvent}
@@ -34,5 +33,4 @@ export default function InputRadio(props: ITaskInputProps) {
         </>
     );
 
-
-}
+};

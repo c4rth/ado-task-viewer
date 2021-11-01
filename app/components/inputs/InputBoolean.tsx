@@ -5,7 +5,7 @@ import { LabelInfo } from "../LabelInfo";
 import { evaluateFieldAsBoolean, ITaskInputProps } from "./TaskInput";
 
 
-export default function InputBoolean(props: ITaskInputProps) {
+export const InputBoolean: React.FC<ITaskInputProps> = (props): JSX.Element => {
 
     const [checkboxValue, { toggle: toggleCheckbox }] = useBoolean(evaluateFieldAsBoolean(props.input.defaultValue));
     const labelStyle: Partial<ITextFieldStyles> = { root: { fontSize: 14, fontWeight: 400, marginLeft: 5 } };
@@ -13,13 +13,12 @@ export default function InputBoolean(props: ITaskInputProps) {
     const _handleCheckboxChangeEvent = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, checked?: boolean | undefined) => {
         toggleCheckbox();
         if (props.onChange) {
-            props.onChange(props.input.name, (!checkboxValue)?.toString());
+            props.onChange(props.input.name, (!checkboxValue).toString());
         }
     };
 
     const _onRenderLabel: IRenderFunction<ICheckboxProps> = () => {
         return <LabelInfo
-            key={"label_" + props.input.name}
             label={props.input.label}
             description={props.input.helpMarkDown}
             required={props.input.required}
@@ -31,11 +30,10 @@ export default function InputBoolean(props: ITaskInputProps) {
 
     return (
         <Checkbox
-            key={props.input.name}
             onRenderLabel={_onRenderLabel}
             checked={checkboxValue}
             onChange={_handleCheckboxChangeEvent}
             styles={checkboxStyle} />
     );
 
-}
+};

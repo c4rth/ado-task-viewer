@@ -4,19 +4,19 @@ import { Collapse } from "react-collapse";
 import { AzureDevOpsTask, Group, Input } from "../../src/models/AzureDevOpsTask";
 import evaluate from "../evaluator/SimpleEvaluate";
 import { CollapsiblePanel } from "./CollapsiblePanel";
-import InputBoolean from "./inputs/InputBoolean";
-import InputConnectedService from "./inputs/InputConnectedService";
-import InputInt from "./inputs/InputInt";
-import InputMultiLine from "./inputs/InputMultiline";
-import InputPickList from "./inputs/InputPickList";
-import InputRadio from "./inputs/InputRadio";
-import InputString from "./inputs/InputString";
+import { InputBoolean } from "./inputs/InputBoolean";
+import { InputConnectedService } from "./inputs/InputConnectedService";
+import { InputInt } from "./inputs/InputInt";
+import { InputMultiLine } from "./inputs/InputMultiLine";
+import { InputPickList } from "./inputs/InputPickList";
+import { InputRadio } from "./inputs/InputRadio";
+import { InputString } from "./inputs/InputString";
 
 interface IInputsViewProps {
     adoTask: AzureDevOpsTask;
 }
 
-interface IVisibility {
+interface IFieldVisibility {
     isVisible: boolean;
     rule: string | undefined;
 }
@@ -35,8 +35,9 @@ const getValue = (context: object, expr: string) => {
     return values.get(expr) ?? expr;
 };
 
-function initInputVisibilities(adoTask: AzureDevOpsTask, inputValues: Map<string, string>): Map<string, IVisibility> {
-    const map = new Map<string, IVisibility>();
+function initInputVisibilities(adoTask: AzureDevOpsTask, inputValues: Map<string, string>): Map<string, IFieldVisibility> {
+    console.log("initInputVisibilities");
+    const map = new Map<string, IFieldVisibility>();
     adoTask.inputs?.forEach((input) => {
         if (input.visibleRule) {
             // console.log("evaluate : [" + input.visibleRule + "]");
@@ -50,14 +51,18 @@ function initInputVisibilities(adoTask: AzureDevOpsTask, inputValues: Map<string
     return map;
 }
 
-export default function InputsPanel(props: IInputsViewProps) {
+export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
 
     const [adoTask, setAdoTask] = useState(props.adoTask);
     const [inputValues, setInputValues] = useState(initInputValues(adoTask));
     const [visibilities, setInputVisibilities] = useState(initInputVisibilities(adoTask, inputValues));
 
     const updateInputValue = (key: string, value: string) => {
+        console.log("updateInputValue : " + key + "=" + value);
         setInputValues(inputValues.set(key, value));
+
+        // TODO : update input in adoTask or pass value in <InputXxx
+
         const newVisibilities = visibilities;
         newVisibilities.forEach((visibility, key) => {
             if (visibility.rule?.includes(key)) {
@@ -68,8 +73,8 @@ export default function InputsPanel(props: IInputsViewProps) {
         setInputVisibilities(newVisibilities);
     };
 
-    const handleChangeEvent = (key?: string | undefined, value?: string | undefined) => {
-        console.log("handleChangeEvent " + key + " = " + value);
+    const handleChangeEvent = (key: string, value?: string | undefined) => {
+        updateInputValue(key, value ?? "");
     };
 
     const _renderInput = (input: Input) => {
@@ -79,7 +84,7 @@ export default function InputsPanel(props: IInputsViewProps) {
             case 'multiline':
             case 'multiLine': return <InputMultiLine key={input.name} input={input} onChange={handleChangeEvent} />;
             case 'picklist':
-            case 'pickList': return <InputPickList key={input.name} input={input} onChange={handleChangeEvent}/>;
+            case 'pickList': return <InputPickList key={input.name} input={input} onChange={handleChangeEvent} />;
             case 'string': return <InputString key={input.name} input={input} onChange={handleChangeEvent} />;
             case 'int': return <InputInt key={input.name} input={input} onChange={handleChangeEvent} />;
             case input.type.match(/connectedService.+$/)?.input: return <InputConnectedService key={input.name} input={input} onChange={handleChangeEvent} />;
@@ -92,7 +97,7 @@ export default function InputsPanel(props: IInputsViewProps) {
         }
     };
 
-    const _renderInputs = (inputs: Array<Input> | undefined) => {
+    const _renderInputs = (inputs: Array<Input> | undefined, visibilities: Map<string, IFieldVisibility>) => {
         return (
             <>
                 {inputs?.map((input: Input) => {
@@ -104,7 +109,7 @@ export default function InputsPanel(props: IInputsViewProps) {
         );
     };
 
-    const _renderGroup = (group: Group | undefined, withHeader: boolean = false) => {
+    const _renderGroup = (group: Group | undefined, visibilities: Map<string, IFieldVisibility>, withHeader: boolean = false) => {
         const inputs = adoTask.inputs?.filter(input => {
             return input.groupName === group?.name;
         });
@@ -113,14 +118,14 @@ export default function InputsPanel(props: IInputsViewProps) {
         }
         if (withHeader && group) {
             return (
-                <CollapsiblePanel key={"collapsePanel_" + group.name} group={group}>
-                    {_renderInputs(inputs)}
+                <CollapsiblePanel group={group}>
+                    {_renderInputs(inputs, visibilities)}
                 </CollapsiblePanel>
             );
         }
         return (
-            <Collapse key="collapse_default" isOpened={true}>
-                {_renderInputs(inputs)}
+            <Collapse isOpened={true}>
+                {_renderInputs(inputs, visibilities)}
             </Collapse>
         );
     };
@@ -132,14 +137,14 @@ export default function InputsPanel(props: IInputsViewProps) {
 
     return (
         <Stack tokens={verticalGapStackTokens}>
-            {_renderGroup(undefined)}
+            {_renderGroup(undefined, visibilities)}
             {adoTask.groups?.map((group) => {
                 return (
                     <React.Fragment key={"fragment_" + group.name}>
-                        {_renderGroup(group)}
+                        {_renderGroup(group, visibilities, true)}
                     </React.Fragment>
                 );
             })}
         </Stack>
     );
-}
+};

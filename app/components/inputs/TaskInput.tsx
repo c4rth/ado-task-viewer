@@ -1,6 +1,6 @@
 import { Input } from "../../../src/models/AzureDevOpsTask";
 
-type OnChangeFunction = (key?: string | undefined, value?: string | undefined) => void;
+type OnChangeFunction = (key: string, value?: string | undefined) => void;
 
 export interface ITaskInputProps {
     input: Input;

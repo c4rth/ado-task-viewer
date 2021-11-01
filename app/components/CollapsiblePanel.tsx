@@ -10,7 +10,7 @@ export interface ICollapsiblePanelProps {
     children?: React.ReactNode;
 }
 
-export const CollapsiblePanel = (props: ICollapsiblePanelProps): JSX.Element => {
+export const CollapsiblePanel: React.FC<ICollapsiblePanelProps> = (props): JSX.Element => {
 
     const [isExpanded, { toggle: toggleIsExpanded }] = useBoolean(evaluateFieldAsBoolean(props.group.isExpanded, true));
 
@@ -29,12 +29,12 @@ export const CollapsiblePanel = (props: ICollapsiblePanelProps): JSX.Element => 
     const titleStyle: Partial<ITextFieldStyles> = { root: { fontSize: "medium", fontWeight: "600" } };
 
     return (
-        <React.Fragment key={props.group?.displayName ?? "defaultGroup"}>
+        <React.Fragment>
             <Stack horizontal horizontalAlign="space-between" verticalAlign="center" onClick={toggleIsExpanded} styles={headerStyles} className="ms-Button-flexContainer flexContainer-128">
                 <Label styles={titleStyle}>{props.group.displayName}</Label>
                 <Icon iconName={isExpanded ? 'ChevronUp' : 'ChevronDown'} />
             </Stack>
-            <Collapse key={"collapse_" + props.group.name} isOpened={isExpanded}>
+            <Collapse isOpened={isExpanded}>
                 {props.children}
             </Collapse>
         </React.Fragment>
