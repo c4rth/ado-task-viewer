@@ -1,27 +1,27 @@
 import { Checkbox, ICheckboxProps, ICheckboxStyles, IRenderFunction, ITextFieldStyles } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
-import React, { useCallback } from "react";
+import React from "react";
 import { LabelInfo } from "../LabelInfo";
-import { evaluateFieldAsBoolean, ITaskInputProps } from "./TaskInput";
+import { evaluateFieldAsBoolean, TaskInputProps } from "./TaskInput";
 
 
-export const InputBoolean: React.FC<ITaskInputProps> = (props): JSX.Element => {
+export const InputBoolean: React.FC<TaskInputProps> = (props): JSX.Element => {
 
-    const [checkboxValue, { toggle: toggleCheckbox }] = useBoolean(evaluateFieldAsBoolean(props.input.defaultValue));
+    const [checkboxValue, { toggle: toggleCheckbox }] = useBoolean(evaluateFieldAsBoolean(props.adoInput.value));
     const labelStyle: Partial<ITextFieldStyles> = { root: { fontSize: 14, fontWeight: 400, marginLeft: 5 } };
 
     const _handleCheckboxChangeEvent = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, checked?: boolean | undefined) => {
         toggleCheckbox();
         if (props.onChange) {
-            props.onChange(props.input.name, (!checkboxValue).toString());
+            props.onChange(props.adoInput.name, (!checkboxValue).toString());
         }
     };
 
     const _onRenderLabel: IRenderFunction<ICheckboxProps> = () => {
         return <LabelInfo
-            label={props.input.label}
-            description={props.input.helpMarkDown}
-            required={props.input.required}
+            label={props.adoInput.label}
+            description={props.adoInput.helpMarkDown}
+            required={props.adoInput.required}
             styles={labelStyle}
             onClick={_handleCheckboxChangeEvent} />;
     };

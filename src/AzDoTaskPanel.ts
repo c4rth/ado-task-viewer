@@ -36,6 +36,7 @@ export class AzDoTaskPanel {
         const panel = vscode.window.createWebviewPanel("ado-task", adoTask.name || "Undefined", vscode.ViewColumn.One, {
             enableScripts: true,
             localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'out', 'app'))],
+            retainContextWhenHidden: true
         });
         AzDoTaskPanel.currentPanel = new AzDoTaskPanel(panel, adoTask, extensionPath);
     }

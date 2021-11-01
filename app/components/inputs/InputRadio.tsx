@@ -2,34 +2,34 @@ import { ChoiceGroup, IChoiceGroupOption } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
 import React, { useCallback } from "react";
 import { LabelInfo } from "../LabelInfo";
-import { ITaskInputProps } from "./TaskInput";
+import { TaskInputProps } from "./TaskInput";
 
-export const InputRadio: React.FC<ITaskInputProps> = (props): JSX.Element => {
+export const InputRadio: React.FC<TaskInputProps> = (props): JSX.Element => {
 
     const labelId = useId('labelElement');
 
     const _handleRadioChangeEvent = useCallback(
         (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined) => {
             if (props.onChange) {
-                props.onChange(props.input.name, option?.key);
+                props.onChange(props.adoInput.name, option?.key);
             }
         },
         []
     );
 
     const options: IChoiceGroupOption[] = [];
-    for (const value in props.input.options) {
-        options.push({ key: value, text: props.input.options[value] });
+    for (const value in props.adoInput.options) {
+        options.push({ key: value, text: props.adoInput.options[value] });
     }
 
     return (
         <>
-            <LabelInfo id={labelId} label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
+            <LabelInfo id={labelId} label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />
             <ChoiceGroup
                 options={options}
                 ariaLabelledBy={labelId}
                 onChange={_handleRadioChangeEvent}
-                defaultSelectedKey={props.input.defaultValue?.toString()} />
+                defaultSelectedKey={props.adoInput.value?.toString()} />
         </>
     );
 

@@ -1,4 +1,4 @@
-import { Callout, IconButton, ILabelProps, IStackStyles, IStackTokens, ITextFieldProps, Label, Stack } from "@fluentui/react";
+import { Callout, IconButton, ILabelProps, IStackStyles, IStackTokens, Label, Stack } from "@fluentui/react";
 import { useBoolean, useId } from '@fluentui/react-hooks';
 import React from "react";
 
@@ -8,12 +8,12 @@ const stackTokens: IStackTokens = {
 
 const labelCalloutStackStyles: Partial<IStackStyles> = { root: { padding: 10 } };
 
-export interface ILabelInfoProps extends ILabelProps {
+export interface LabelInfoProps extends ILabelProps {
   label: string | undefined;
   description: string | undefined;
 }
 
-export const LabelInfo = (props: ILabelInfoProps): JSX.Element => {
+export const LabelInfo = (props: LabelInfoProps): JSX.Element => {
   const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
   const descriptionId: string = useId('description');
   const iconButtonId: string = useId('iconButton');

@@ -1,30 +1,30 @@
 import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React, { useCallback } from "react";
 import { LabelInfo } from "../LabelInfo";
-import { evaluateFieldAsInt, ITaskInputProps } from "./TaskInput";
+import { evaluateFieldAsInt, TaskInputProps } from "./TaskInput";
 
-export const InputMultiLine: React.FC<ITaskInputProps> = (props): JSX.Element => {
+export const InputMultiLine: React.FC<TaskInputProps> = (props): JSX.Element => {
 
     const _handleTextFieldChangeEvent = useCallback(
         (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => {
             if (props.onChange) {
-                props.onChange(props.input.name, newValue);
+                props.onChange(props.adoInput.name, newValue);
             }
         },
         []
     );
 
     const _onRenderLabel: IRenderFunction<ITextFieldProps> = () => {
-        return <LabelInfo label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />;
+        return <LabelInfo label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />;
     };
 
     return <TextField
         multiline={true}
-        rows={evaluateFieldAsInt(props.input.properties?.rows, 3)}
-        resizable={props.input.properties?.resizable}
-        maxLength={evaluateFieldAsInt(props.input.properties?.maxLength)}
+        rows={evaluateFieldAsInt(props.adoInput.properties?.rows, 3)}
+        resizable={props.adoInput.properties?.resizable}
+        maxLength={evaluateFieldAsInt(props.adoInput.properties?.maxLength)}
         onRenderLabel={_onRenderLabel}
         onChange={_handleTextFieldChangeEvent}
-        defaultValue={props.input.defaultValue?.toString()} />;
+        defaultValue={props.adoInput.value?.toString()} />;
 
 };

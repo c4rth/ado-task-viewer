@@ -7,18 +7,20 @@ TODO :
         - x isVariableOrNonNegativeNumber
         - x editorExtension
         - x EndpointFilterRule
-- Binding
-- dynamic update of visibility
+- Binding    
 - handle event change
     - connected service
     - picklist
+- watch update task.json
 
 DONE :
 - Group :
     - isExpanded
     - not visible if empty
+    - dynamic update of visibility
 
 - Input :
+    - dynamic update of visibility
     - visibleRule
     - properties
         - defaultValue

@@ -17,6 +17,6 @@ initializeIcons();
 const vscode = window.acquireVsCodeApi();
 
 ReactDOM.render(
-  <App vscode={vscode} initialData={window.initialData} />,
+  <App vscode={vscode} azureDevOpsTask={window.initialData} />,
   document.getElementById("root")
 );

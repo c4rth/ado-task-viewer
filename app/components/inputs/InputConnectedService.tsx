@@ -1,9 +1,9 @@
-import { ComboBox, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
+import { ComboBox, IDropdownOption } from "@fluentui/react";
 import React from "react";
 import { LabelInfo } from "../LabelInfo";
-import { evaluateFieldAsBoolean, ITaskInputProps } from "./TaskInput";
+import { evaluateFieldAsBoolean, TaskInputProps } from "./TaskInput";
 
-export const InputConnectedService: React.FC<ITaskInputProps> = (props): JSX.Element => {
+export const InputConnectedService: React.FC<TaskInputProps> = (props): JSX.Element => {
 
     const options: IDropdownOption[] = [
         { key: 'dummyService1', text: 'sc-dummy-1' },
@@ -13,9 +13,9 @@ export const InputConnectedService: React.FC<ITaskInputProps> = (props): JSX.Ele
 
     return (
         <>
-            <LabelInfo label={props.input.label} description={props.input.helpMarkDown} required={props.input.required} />
+            <LabelInfo label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />
             <ComboBox
-                allowFreeform={evaluateFieldAsBoolean(props.input.properties?.EditableOptions)}
+                allowFreeform={evaluateFieldAsBoolean(props.adoInput.properties?.EditableOptions)}
                 options={options}
                 useComboBoxAsMenuWidth />
         </>

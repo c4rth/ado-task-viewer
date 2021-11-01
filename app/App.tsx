@@ -6,26 +6,25 @@ import { AzureDevOpsTask } from "../src/models/AzureDevOpsTask";
 import './App.css';
 import { InputsPanel } from "./components/InputsPanel";
 import { LabelInfo } from "./components/LabelInfo";
+import { convertToAdoTask } from "./components/models/AdoTask";
 import Theme from "./Theme";
 
 interface IConfigProps {
   vscode: any;
-  initialData: AzureDevOpsTask;
+  azureDevOpsTask: AzureDevOpsTask;
 }
 
 export const App: React.FC<IConfigProps> = (props): JSX.Element => {
 
   const titleStyle: Partial<ITextFieldStyles> = { root: { fontSize: "large", fontWeight: "600", marginLeft: 5 } };
 
-  const [adoTask, setAdoTask] = useState(props.initialData);
-
   return (
     <ThemeProvider theme={Theme.appTheme}>
       <div className="App">
-        <LabelInfo label={adoTask.friendlyName}
-          description={adoTask.description}
+        <LabelInfo label={props.azureDevOpsTask.friendlyName}
+          description={props.azureDevOpsTask.description}
           styles={titleStyle} />
-        <InputsPanel adoTask={adoTask} />
+        <InputsPanel adoTask={convertToAdoTask(props.azureDevOpsTask)} />
       </div>
     </ThemeProvider>
   );

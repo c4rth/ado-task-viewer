@@ -5,12 +5,12 @@ import { Collapse } from "react-collapse";
 import { Group } from "../../src/models/AzureDevOpsTask";
 import { evaluateFieldAsBoolean } from "./inputs/TaskInput";
 
-export interface ICollapsiblePanelProps {
+export interface CollapsiblePanelProps {
     group: Group;
     children?: React.ReactNode;
 }
 
-export const CollapsiblePanel: React.FC<ICollapsiblePanelProps> = (props): JSX.Element => {
+export const CollapsiblePanel: React.FC<CollapsiblePanelProps> = (props): JSX.Element => {
 
     const [isExpanded, { toggle: toggleIsExpanded }] = useBoolean(evaluateFieldAsBoolean(props.group.isExpanded, true));
 

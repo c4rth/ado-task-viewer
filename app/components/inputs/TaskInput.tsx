@@ -1,9 +1,9 @@
-import { Input } from "../../../src/models/AzureDevOpsTask";
+import { AdoInput } from "../models/AdoTask";
 
 type OnChangeFunction = (key: string, value?: string | undefined) => void;
 
-export interface ITaskInputProps {
-    input: Input;
+export interface TaskInputProps {
+    adoInput: AdoInput;
     onChange?: OnChangeFunction | undefined;
 }
 
