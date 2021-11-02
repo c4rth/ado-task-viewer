@@ -2,6 +2,12 @@
   width: 400px;
 }
 
+.AppError {    
+  width: 100%;
+  margin: 10px;
+  color: red;
+} 
+
 .InputsPanel {    
   width: 359px;
 }

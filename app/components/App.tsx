@@ -1,9 +1,9 @@
 
-import { IconButton, IIconProps, Stack } from "@fluentui/react";
+import { IconButton, IIconProps, Label, Stack } from "@fluentui/react";
 import { ITextFieldStyles } from "@fluentui/react/lib/components/TextField";
 import { ThemeProvider } from "@fluentui/react/lib/utilities/ThemeProvider";
 import React from "react";
-import { AzureDevOpsTask } from "../../src/models/AzureDevOpsTask";
+import { AzureDevOpsTask, Convert } from "../../src/models/AzureDevOpsTask";
 import { ReloadMessage } from '../../src/views/messages/messageTypes';
 import './App.css';
 import { InputsPanel } from "./InputsPanel";
@@ -26,19 +26,35 @@ export const App: React.FC<IConfigProps> = (props): JSX.Element => {
     });
   };
 
-  return (
-    <ThemeProvider theme={Theme.appTheme}>
-      <div className="App">
-        <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-          <LabelInfo label={props.azureDevOpsTask.friendlyName}
-            description={props.azureDevOpsTask.description}
-            styles={titleStyle} />
-          <IconButton iconProps={iconRefreshProps} title="Refresh" ariaLabel="Refresh" onClick={_onClickRefresh} />
-        </Stack>
-        <div className="InputsPanel">
-          <InputsPanel adoTask={convertToAdoTask(props.azureDevOpsTask)} />
+  try {
+    const json = JSON.stringify(props.azureDevOpsTask);
+    Convert.toAzureDevOpsTask(json);
+    return (
+      <ThemeProvider theme={Theme.appTheme}>
+        <div className="App">
+          <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
+            <LabelInfo label={props.azureDevOpsTask.friendlyName}
+              description={props.azureDevOpsTask.description}
+              styles={titleStyle} />
+            <IconButton iconProps={iconRefreshProps} title="Refresh" ariaLabel="Refresh" onClick={_onClickRefresh} />
+          </Stack>
+          <div className="InputsPanel">
+            <InputsPanel adoTask={convertToAdoTask(props.azureDevOpsTask)} />
+          </div>
         </div>
-      </div>
-    </ThemeProvider>
-  );
+      </ThemeProvider>
+    );
+  } catch (e) {
+    console.error(e);
+    return (
+      <ThemeProvider theme={Theme.appTheme}>
+        <div className="AppError">
+          <h1>task.json is invalid</h1>
+          {(e as TypeError).message}
+        </div>
+      </ThemeProvider>
+    );
+  }
+
+
 };

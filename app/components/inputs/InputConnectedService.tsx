@@ -11,7 +11,7 @@ const INITIAL_OPTIONS: IDropdownOption[] = [
 
 export const InputConnectedService: React.FC<TaskInputProps> = (props): JSX.Element => {
 
-    const allowFreeform = evaluateFieldAsBoolean(props.adoInput.properties?.EditableOptions);
+    const allowFreeform = evaluateFieldAsBoolean(props.adoInput.properties?.editableOptions);
     const [options, setOptions] = React.useState(INITIAL_OPTIONS);
     const [selectedKey, setSelectedKey] = React.useState<string | number | undefined>(props.adoInput.defaultValue?.toString());
 

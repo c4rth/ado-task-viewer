@@ -1,7 +1,7 @@
 import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React, { useCallback } from "react";
 import { LabelInfo } from "../ui/LabelInfo";
-import { evaluateFieldAsInt, TaskInputProps } from "./TaskInput";
+import { evaluateFieldAsBoolean, evaluateFieldAsInt, TaskInputProps } from "./TaskInput";
 
 export const InputMultiLine: React.FC<TaskInputProps> = (props): JSX.Element => {
 
@@ -21,7 +21,7 @@ export const InputMultiLine: React.FC<TaskInputProps> = (props): JSX.Element => 
     return <TextField
         multiline={true}
         rows={evaluateFieldAsInt(props.adoInput.properties?.rows, 3)}
-        resizable={props.adoInput.properties?.resizable}
+        resizable={evaluateFieldAsBoolean(props.adoInput.properties?.resizable)}
         maxLength={evaluateFieldAsInt(props.adoInput.properties?.maxLength)}
         onRenderLabel={_onRenderLabel}
         onChange={_handleTextFieldChangeEvent}

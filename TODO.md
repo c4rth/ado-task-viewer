@@ -9,13 +9,14 @@ TODO :
         - x editorExtension
         - x EndpointFilterRule
     - init pickList / connected with value not in list (Editable)
-- Binding    
-- handle event change
-    - connected service
-    - picklist
-- watch update task.json
+    - Binding    
+    - handle event change
+        - connected service
+        - picklist
 
 DONE :
+- refresh
+- validate parsing
 - Group :
     - isExpanded
     - not visible if empty

@@ -26,14 +26,14 @@ export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {
         }
     };
 
-    if (evaluateFieldAsBoolean(props.adoInput.properties?.MultiSelectFlatList)) {
+    if (evaluateFieldAsBoolean(props.adoInput.properties?.multiSelectFlatList) || evaluateFieldAsBoolean(props.adoInput.properties?.multiSelect)) {
         return <Dropdown
             options={options}
             onRenderLabel={_onRenderLabel}
             defaultSelectedKeys={evaluateFieldAsStringArray(props.adoInput.value)}
             onChange={_handleDropdownChangeEvent}
             multiSelect />;
-    } else if (evaluateFieldAsBoolean(props.adoInput.properties?.EditableOptions)) {
+    } else if (evaluateFieldAsBoolean(props.adoInput.properties?.editableOptions)) {
         return <>
             <LabelInfo label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />
             <ComboBox
