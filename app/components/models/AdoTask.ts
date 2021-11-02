@@ -33,13 +33,13 @@ export function updateVisibilities(adoTask : AdoTask) {
     [...adoTask.adoGroups.values()].map((adoGroup) => {
         if (adoGroup.visibleRule) {
             adoGroup.isVisible = evaluate(adoTask, adoGroup.visibleRule, { getValue });
-            console.log("evaluate group : [" + adoGroup.visibleRule + "] --> " + adoGroup.isVisible);
+            // console.log("evaluate group : [" + adoGroup.visibleRule + "] --> " + adoGroup.isVisible);
         }
         if (adoGroup.isVisible) {
             [...adoGroup.adoInputs.values()].map((adoInput) => {
                 if (adoInput.visibleRule) {
                     adoInput.isVisible = evaluate(adoTask, adoInput.visibleRule, { getValue });
-                    console.log("evaluate input : [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
+                    // console.log("evaluate input : [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
                 }
             });
         }

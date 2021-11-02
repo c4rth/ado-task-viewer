@@ -1,7 +1,7 @@
 import { IStackTokens, Label, Stack } from "@fluentui/react";
 import React, { useState } from "react";
 import { Collapse } from "react-collapse";
-import { CollapsiblePanel } from "./CollapsiblePanel";
+import { CollapsiblePanel } from "./ui/CollapsiblePanel";
 import { InputBoolean } from "./inputs/InputBoolean";
 import { InputConnectedService } from "./inputs/InputConnectedService";
 import { InputInt } from "./inputs/InputInt";

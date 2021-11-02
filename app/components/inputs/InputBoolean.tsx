@@ -1,7 +1,7 @@
 import { Checkbox, ICheckboxProps, ICheckboxStyles, IRenderFunction, ITextFieldStyles } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
 import React from "react";
-import { LabelInfo } from "../LabelInfo";
+import { LabelInfo } from "../ui/LabelInfo";
 import { evaluateFieldAsBoolean, TaskInputProps } from "./TaskInput";
 
 

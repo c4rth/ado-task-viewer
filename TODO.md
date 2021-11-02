@@ -1,5 +1,6 @@
 TODO :
 - Input :
+    - alias
     - properties :        
         - x DisableManageLink
         - x IsSearchable
@@ -7,6 +8,7 @@ TODO :
         - x isVariableOrNonNegativeNumber
         - x editorExtension
         - x EndpointFilterRule
+    - init pickList / connected with value not in list (Editable)
 - Binding    
 - handle event change
     - connected service

@@ -1,7 +1,7 @@
 import { ChoiceGroup, IChoiceGroupOption } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
 import React, { useCallback } from "react";
-import { LabelInfo } from "../LabelInfo";
+import { LabelInfo } from "../ui/LabelInfo";
 import { TaskInputProps } from "./TaskInput";
 
 export const InputRadio: React.FC<TaskInputProps> = (props): JSX.Element => {

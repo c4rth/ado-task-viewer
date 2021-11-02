@@ -1,6 +1,6 @@
 import { ComboBox, Dropdown, IComboBox, IComboBoxOption, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
 import React from "react";
-import { LabelInfo } from "../LabelInfo";
+import { LabelInfo } from "../ui/LabelInfo";
 import { evaluateFieldAsStringArray, evaluateFieldAsBoolean, TaskInputProps } from "./TaskInput";
 
 export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {

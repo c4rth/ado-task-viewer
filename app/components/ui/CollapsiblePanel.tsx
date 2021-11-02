@@ -2,8 +2,8 @@ import { Icon, IStackStyles, ITextFieldStyles, Label, Stack } from "@fluentui/re
 import { useBoolean } from "@fluentui/react-hooks";
 import React from "react";
 import { Collapse } from "react-collapse";
-import { Group } from "../../src/models/AzureDevOpsTask";
-import { evaluateFieldAsBoolean } from "./inputs/TaskInput";
+import { Group } from "../../../src/models/AzureDevOpsTask";
+import { evaluateFieldAsBoolean } from "../inputs/TaskInput";
 
 export interface CollapsiblePanelProps {
     group: Group;
