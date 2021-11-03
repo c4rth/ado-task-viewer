@@ -1,5 +1,5 @@
 
-import { IconButton, IIconProps, Label, Stack } from "@fluentui/react";
+import { IconButton, IIconProps, Stack } from "@fluentui/react";
 import { ITextFieldStyles } from "@fluentui/react/lib/components/TextField";
 import { ThemeProvider } from "@fluentui/react/lib/utilities/ThemeProvider";
 import React from "react";
@@ -27,8 +27,7 @@ export const App: React.FC<IConfigProps> = (props): JSX.Element => {
   };
 
   try {
-    const json = JSON.stringify(props.azureDevOpsTask);
-    Convert.toAzureDevOpsTask(json);
+    Convert.validateAzureDevOpsTask(props.azureDevOpsTask);
     return (
       <ThemeProvider theme={Theme.appTheme}>
         <div className="App">

@@ -9,6 +9,7 @@ export const InputBoolean: React.FC<TaskInputProps> = (props): JSX.Element => {
 
     const [checkboxValue, { toggle: toggleCheckbox }] = useBoolean(evaluateFieldAsBoolean(props.adoInput.value));
     const labelStyle: Partial<ITextFieldStyles> = { root: { fontSize: 14, fontWeight: 400, marginLeft: 5 } };
+    const checkboxStyle: Partial<ICheckboxStyles> = { label: { marginTop: 5 }, checkbox: { marginLeft: 8 } };
 
     const _handleCheckboxChangeEvent = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, checked?: boolean | undefined) => {
         toggleCheckbox();
@@ -25,8 +26,6 @@ export const InputBoolean: React.FC<TaskInputProps> = (props): JSX.Element => {
             styles={labelStyle}
             onClick={_handleCheckboxChangeEvent} />;
     };
-
-    const checkboxStyle: Partial<ICheckboxStyles> = { label: { marginTop: 5 }, checkbox: { marginRight: 5 } };
 
     return (
         <Checkbox

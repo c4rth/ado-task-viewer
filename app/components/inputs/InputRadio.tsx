@@ -28,7 +28,7 @@ export const InputRadio: React.FC<TaskInputProps> = (props): JSX.Element => {
                 id={labelId}
                 label={props.adoInput.label}
                 description={props.adoInput.helpMarkDown}
-                required={evaluateFieldAsBoolean(props.adoInput.required)} />;
+                required={evaluateFieldAsBoolean(props.adoInput.required)} />
             <ChoiceGroup
                 options={options}
                 ariaLabelledBy={labelId}

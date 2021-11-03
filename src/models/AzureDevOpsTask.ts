@@ -144,6 +144,7 @@ export interface Execution {
     node10?: ExecutionObject;
     powerShell?: ExecutionObject;
     powerShell3?: ExecutionObject;
+    httpRequest?: HttpRequestObject;
 }
 
 export interface ExecutionObject {
@@ -155,6 +156,20 @@ export interface ExecutionObject {
      */
     target: string;
     workingDirectory?: string;
+}
+
+export interface HttpRequestObject {
+    execute?: HttpRequestExecuteObject;
+}
+
+export interface HttpRequestExecuteObject {
+    endpointId?: string;
+    endpointUrl?: string;
+    method?: string;
+    body?: string;
+    headers?: string;
+    waitForCompletion?: string;
+    expression?: string;
 }
 
 export enum Platform {
@@ -376,6 +391,10 @@ export class Convert {
     public static AzureDevOpsTaskToJson(value: AzureDevOpsTask): string {
         return JSON.stringify(uncast(value, r("AzureDevOpsTask")), null, 2);
     }
+
+    public static validateAzureDevOpsTask(value: AzureDevOpsTask) {
+        cast(value, r("AzureDevOpsTask"));
+    }
 }
 
 function invalidValue(typ: any, val: any, key: any = ''): never {
@@ -561,12 +580,25 @@ const typeMap: any = {
         { json: "Node10", js: "node10", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell", js: "powerShell", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell3", js: "powerShell3", typ: u(undefined, r("ExecutionObject")) },
+        { json: "HttpRequest", js: "httpRequest", typ: u(undefined, r("HttpRequestObject")) },
     ], false),
     "ExecutionObject": o([
         { json: "argumentFormat", js: "argumentFormat", typ: u(undefined, "") },
         { json: "platforms", js: "platforms", typ: u(undefined, a(r("Platform"))) },
         { json: "target", js: "target", typ: "" },
         { json: "workingDirectory", js: "workingDirectory", typ: u(undefined, "") },
+    ], "any"),
+    "HttpRequestObject": o([
+        { json: "execute", js: "execute", typ: u(undefined, r("HttpRequestExecuteObject")) },
+    ], "any"),
+    "HttpRequestExecuteObject": o([
+        { json: "endpointId", js: "argumentFormat", typ: u(undefined, "") },
+        { json: "endpointUrl", js: "argumentFormat", typ: u(undefined, "") },
+        { json: "method", js: "argumentFormat", typ: u(undefined, "") },
+        { json: "body", js: "argumentFormat", typ: u(undefined, "") },
+        { json: "headers", js: "argumentFormat", typ: u(undefined, "") },
+        { json: "waitForCompletion", js: "argumentFormat", typ: u(undefined, "") },
+        { json: "expression", js: "argumentFormat", typ: u(undefined, "") },
     ], "any"),
     "Group": o([
         { json: "displayName", js: "displayName", typ: "" },
