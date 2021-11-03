@@ -204,7 +204,7 @@ export interface Input {
     /**
      * Whether the input is a required field (default is false).
      */
-    required?: boolean;
+    required?: DefaultValue;
     /**
      * The type that dictates the control rendered to the user.
      */
@@ -583,7 +583,7 @@ const typeMap: any = {
         { json: "name", js: "name", typ: "" },
         { json: "options", js: "options", typ: u(undefined, m("any")) },
         { json: "properties", js: "properties", typ: u(undefined, r("Properties")) },
-        { json: "required", js: "required", typ: u(undefined, true) },
+        { json: "required", js: "required", typ: u(undefined, u(true, "")) },
         { json: "type", js: "type", typ: "" },
         { json: "visibleRule", js: "visibleRule", typ: u(undefined, "") },
     ], false),
