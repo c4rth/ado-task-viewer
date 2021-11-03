@@ -19,9 +19,9 @@ export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
 
     const [adoTask, setAdoTask] = useState(props.adoTask);
 
-    const handleChangeEvent = (inputName: string, value?: string | undefined) => {
+    const handleChangeEvent = (inputName: string, value?: string | boolean | undefined) => {
         const newAdoTask = {...adoTask};
-        console.log("updateInputValue : " + inputName + "=" + value);
+        console.log("updateInputValue : " + inputName + "=" + value + " ("+typeof value+")");
         const adoInput = newAdoTask.adoInputs.get(inputName);
         if (adoInput) {
             adoInput.value = value;            

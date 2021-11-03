@@ -1,6 +1,6 @@
 import { AdoInput } from "../models/AdoTask";
 
-type OnChangeFunction = (key: string, value?: string | undefined) => void;
+type OnChangeFunction = (key: string, value?: string | boolean | undefined) => void;
 
 export interface TaskInputProps {
     adoInput: AdoInput;

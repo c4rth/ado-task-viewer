@@ -1,7 +1,7 @@
 import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React, { useCallback } from "react";
 import { LabelInfo } from "../ui/LabelInfo";
-import { evaluateFieldAsInt, TaskInputProps } from "./TaskInput";
+import { evaluateFieldAsBoolean, evaluateFieldAsInt, TaskInputProps } from "./TaskInput";
 
 export const InputString: React.FC<TaskInputProps> = (props): JSX.Element => {
 
@@ -15,7 +15,10 @@ export const InputString: React.FC<TaskInputProps> = (props): JSX.Element => {
     );
 
     const _onRenderLabel: IRenderFunction<ITextFieldProps> = () => {
-        return <LabelInfo label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />;
+        return <LabelInfo
+            label={props.adoInput.label}
+            description={props.adoInput.helpMarkDown}
+            required={evaluateFieldAsBoolean(props.adoInput.required)} />;
     };
 
     return <TextField

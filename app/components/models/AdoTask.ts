@@ -3,7 +3,7 @@ import evaluate from "../../evaluator/SimpleEvaluate";
 
 export interface AdoInput extends Input {
     isVisible: boolean;
-    value?: boolean | string;
+    value?: boolean | string | undefined;
 }
 
 export interface AdoGroup extends Group {
@@ -29,17 +29,17 @@ function getInputsOfGroup(azureDevOpsTask: AzureDevOpsTask, groupName?: string):
 
 const getValue = (context: object, expr: string) => (context as AdoTask).adoInputs.get(expr)?.value ?? expr;
 
-export function updateVisibilities(adoTask : AdoTask) {
+export function updateVisibilities(adoTask: AdoTask) {
     [...adoTask.adoGroups.values()].map((adoGroup) => {
         if (adoGroup.visibleRule) {
             adoGroup.isVisible = evaluate(adoTask, adoGroup.visibleRule, { getValue });
-            // console.log("evaluate group : [" + adoGroup.visibleRule + "] --> " + adoGroup.isVisible);
+            //console.log("evaluate group '" + adoGroup.name + "': [" + adoGroup.visibleRule + "] --> " + adoGroup.isVisible);
         }
         if (adoGroup.isVisible) {
             [...adoGroup.adoInputs.values()].map((adoInput) => {
                 if (adoInput.visibleRule) {
                     adoInput.isVisible = evaluate(adoTask, adoInput.visibleRule, { getValue });
-                    // console.log("evaluate input : [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
+                    //console.log("evaluate input '" + adoInput.name + "': [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
                 }
             });
         }
@@ -65,7 +65,7 @@ export function convertToAdoTask(azureDevOpsTask: AzureDevOpsTask): AdoTask {
             adoGroups.set(group.name, adoGroup);
         }
     });
-    const adoTask : AdoTask = { adoGroups: adoGroups, adoInputs: adoInputs };
+    const adoTask: AdoTask = { adoGroups: adoGroups, adoInputs: adoInputs };
     updateVisibilities(adoTask);
     return adoTask;
 }

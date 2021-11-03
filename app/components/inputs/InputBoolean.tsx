@@ -13,7 +13,7 @@ export const InputBoolean: React.FC<TaskInputProps> = (props): JSX.Element => {
     const _handleCheckboxChangeEvent = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, checked?: boolean | undefined) => {
         toggleCheckbox();
         if (props.onChange) {
-            props.onChange(props.adoInput.name, (!checkboxValue).toString());
+            props.onChange(props.adoInput.name, !checkboxValue);
         }
     };
 
@@ -21,7 +21,7 @@ export const InputBoolean: React.FC<TaskInputProps> = (props): JSX.Element => {
         return <LabelInfo
             label={props.adoInput.label}
             description={props.adoInput.helpMarkDown}
-            required={props.adoInput.required}
+            required={evaluateFieldAsBoolean(props.adoInput.required)}
             styles={labelStyle}
             onClick={_handleCheckboxChangeEvent} />;
     };

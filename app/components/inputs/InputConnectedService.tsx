@@ -16,13 +16,9 @@ export const InputConnectedService: React.FC<TaskInputProps> = (props): JSX.Elem
     const [selectedKey, setSelectedKey] = React.useState<string | number | undefined>(props.adoInput.defaultValue?.toString());
 
     const _handleComboboxChangeEvent = (event: React.FormEvent<IComboBox>, option?: IComboBoxOption | undefined, index?: number | undefined, value?: string | undefined) => {
-        console.log("_handleComboboxChangeEvent");
         let key = option?.key;
-        console.log("_handleComboboxChangeEvent: key = " + key);
-        console.log("_handleComboboxChangeEvent: value = " + value);
         if (allowFreeform && !option && value) {
             key = value;
-            console.log("_handleComboboxChangeEvent: new key = " + key);
             setOptions(prevOptions => [...prevOptions, { key: key!, text: value }]);
         }
         setSelectedKey(key);
@@ -33,7 +29,10 @@ export const InputConnectedService: React.FC<TaskInputProps> = (props): JSX.Elem
 
     return (
         <>
-            <LabelInfo label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />
+            <LabelInfo
+                label={props.adoInput.label}
+                description={props.adoInput.helpMarkDown}
+                required={evaluateFieldAsBoolean(props.adoInput.required)} />
             <ComboBox
                 allowFreeform={true}
                 selectedKey={selectedKey}

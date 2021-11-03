@@ -6,7 +6,10 @@ import { evaluateFieldAsStringArray, evaluateFieldAsBoolean, TaskInputProps } fr
 export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {
 
     const _onRenderLabel: IRenderFunction<IDropdownProps> = () => {
-        return <LabelInfo description={props.adoInput.helpMarkDown} label={props.adoInput.label} required={props.adoInput.required} />;
+        return <LabelInfo
+            label={props.adoInput.label}
+            description={props.adoInput.helpMarkDown}
+            required={evaluateFieldAsBoolean(props.adoInput.required)} />;
     };
 
     var options: IDropdownOption[] = [];
@@ -35,7 +38,10 @@ export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {
             multiSelect />;
     } else if (evaluateFieldAsBoolean(props.adoInput.properties?.editableOptions)) {
         return <>
-            <LabelInfo label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />
+            <LabelInfo
+                label={props.adoInput.label}
+                description={props.adoInput.helpMarkDown}
+                required={evaluateFieldAsBoolean(props.adoInput.required)} />;
             <ComboBox
                 allowFreeform
                 options={options}

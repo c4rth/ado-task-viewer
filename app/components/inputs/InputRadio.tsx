@@ -2,7 +2,7 @@ import { ChoiceGroup, IChoiceGroupOption } from "@fluentui/react";
 import { useId } from "@fluentui/react-hooks";
 import React, { useCallback } from "react";
 import { LabelInfo } from "../ui/LabelInfo";
-import { TaskInputProps } from "./TaskInput";
+import { evaluateFieldAsBoolean, TaskInputProps } from "./TaskInput";
 
 export const InputRadio: React.FC<TaskInputProps> = (props): JSX.Element => {
 
@@ -24,7 +24,11 @@ export const InputRadio: React.FC<TaskInputProps> = (props): JSX.Element => {
 
     return (
         <>
-            <LabelInfo id={labelId} label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />
+            <LabelInfo
+                id={labelId}
+                label={props.adoInput.label}
+                description={props.adoInput.helpMarkDown}
+                required={evaluateFieldAsBoolean(props.adoInput.required)} />;
             <ChoiceGroup
                 options={options}
                 ariaLabelledBy={labelId}

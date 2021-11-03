@@ -1,10 +1,10 @@
 import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
 import React, { useCallback } from "react";
 import { LabelInfo } from "../ui/LabelInfo";
-import { evaluateFieldAsInt, TaskInputProps } from "./TaskInput";
+import { evaluateFieldAsBoolean, evaluateFieldAsInt, TaskInputProps } from "./TaskInput";
 
 export const InputInt: React.FC<TaskInputProps> = (props): JSX.Element => {
-    
+
     const _handleTextFieldChangeEvent = useCallback(
         (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => {
             if (props.onChange) {
@@ -13,9 +13,12 @@ export const InputInt: React.FC<TaskInputProps> = (props): JSX.Element => {
         },
         []
     );
-    
+
     const _onRenderLabel: IRenderFunction<ITextFieldProps> = () => {
-        return <LabelInfo label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />;
+        return <LabelInfo
+            label={props.adoInput.label}
+            description={props.adoInput.helpMarkDown}
+            required={evaluateFieldAsBoolean(props.adoInput.required)} />;
     };
 
     return <TextField
@@ -23,6 +26,6 @@ export const InputInt: React.FC<TaskInputProps> = (props): JSX.Element => {
         onRenderLabel={_onRenderLabel}
         defaultValue={props.adoInput.value?.toString()}
         onChange={_handleTextFieldChangeEvent}
-        maxLength={evaluateFieldAsInt(props.adoInput.properties?.maxLength)} />; 
+        maxLength={evaluateFieldAsInt(props.adoInput.properties?.maxLength)} />;
 
 };

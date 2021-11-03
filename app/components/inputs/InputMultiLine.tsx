@@ -15,7 +15,10 @@ export const InputMultiLine: React.FC<TaskInputProps> = (props): JSX.Element => 
     );
 
     const _onRenderLabel: IRenderFunction<ITextFieldProps> = () => {
-        return <LabelInfo label={props.adoInput.label} description={props.adoInput.helpMarkDown} required={props.adoInput.required} />;
+        return <LabelInfo
+            label={props.adoInput.label}
+            description={props.adoInput.helpMarkDown}
+            required={evaluateFieldAsBoolean(props.adoInput.required)} />;
     };
 
     return <TextField
