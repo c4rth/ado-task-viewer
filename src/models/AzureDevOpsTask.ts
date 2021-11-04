@@ -196,14 +196,12 @@ export interface Group {
     visibleRule?: string;
 }
 
-export type DefaultValue = boolean | string | number;
-
 export interface Input {
     aliases?: string[];
     /**
      * The default value to apply to this input.
      */
-    defaultValue?: DefaultValue;
+    defaultValue?: boolean | string | number;
     /**
      * Setting this to the name of a group defined in 'groups' will place the input into that
      * group.
@@ -227,7 +225,7 @@ export interface Input {
     /**
      * Whether the input is a required field (default is false).
      */
-    required?: DefaultValue;
+    required?: boolean | string;
     /**
      * The type that dictates the control rendered to the user.
      */

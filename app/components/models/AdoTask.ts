@@ -3,7 +3,7 @@ import evaluate from "../../evaluator/SimpleEvaluate";
 
 export interface AdoInput extends Input {
     isVisible: boolean;
-    value?: boolean | string | undefined;
+    value?: boolean | string | number | undefined;
 }
 
 export interface AdoGroup extends Group {
@@ -33,13 +33,13 @@ export function updateVisibilities(adoTask: AdoTask) {
     [...adoTask.adoGroups.values()].map((adoGroup) => {
         if (adoGroup.visibleRule) {
             adoGroup.isVisible = evaluate(adoTask, adoGroup.visibleRule, { getValue });
-            //console.log("evaluate group '" + adoGroup.name + "': [" + adoGroup.visibleRule + "] --> " + adoGroup.isVisible);
+            console.log("evaluate group '" + adoGroup.name + "': [" + adoGroup.visibleRule + "] --> " + adoGroup.isVisible);
         }
         if (adoGroup.isVisible) {
             [...adoGroup.adoInputs.values()].map((adoInput) => {
                 if (adoInput.visibleRule) {
                     adoInput.isVisible = evaluate(adoTask, adoInput.visibleRule, { getValue });
-                    //console.log("evaluate input '" + adoInput.name + "': [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
+                    console.log("evaluate input '" + adoInput.name + "': [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
                 }
             });
         }

@@ -7,21 +7,21 @@ export interface TaskInputProps {
     onChange?: OnChangeFunction | undefined;
 }
 
-export const evaluateFieldAsStringArray = (field: string | undefined | boolean): string[] => {
-    if (field === undefined) {
+export const evaluateFieldAsStringArray = (value: string | boolean | number | undefined): string[] => {
+    if (value === undefined) {
         return [];
     }
-    return field.toString().split(",");
+    return value.toString().split(",");
 };
 
-export const evaluateFieldAsBoolean = (field: string | undefined | boolean, defaultValue: boolean = false): boolean => {
-    if (field === undefined) { return defaultValue; }
-    return field.toString().toLowerCase() === "true";
+export const evaluateFieldAsBoolean = (value: string | boolean | number | undefined, defaultValue: boolean = false): boolean => {
+    if (value === undefined) { return defaultValue; }
+    return value.toString().toLowerCase() === "true";
 };
 
-export const evaluateFieldAsInt = (field: string | undefined, defaultValue: number | undefined = undefined): number | undefined => {
-    if (field === undefined) {
+export const evaluateFieldAsInt = (value: string | undefined, defaultValue: number | undefined = undefined): number | undefined => {
+    if (value === undefined) {
         return defaultValue;
     }
-    return parseInt(field);
+    return parseInt(value);
 };
