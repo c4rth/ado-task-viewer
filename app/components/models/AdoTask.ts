@@ -36,13 +36,13 @@ export function updateVisibilities(adoTask: AdoTask) {
     [...adoTask.adoGroups.values()].map((adoGroup) => {
         if (adoGroup.visibilityRule) {
             adoGroup.isVisible = VisibilityHelper.evaluateVisibility(adoGroup.visibilityRule, adoTask.adoInputs);
-            console.log("evaluate group '" + adoGroup.name + "': [" + adoGroup.visibleRule + "] --> " + adoGroup.isVisible);
+            //console.log("evaluate group '" + adoGroup.name + "': [" + adoGroup.visibleRule + "] --> " + adoGroup.isVisible);
         }
         if (adoGroup.isVisible) {
             [...adoGroup.adoInputs.values()].map((adoInput) => {
                 if (adoInput.visibilityRule) {
                     adoInput.isVisible = VisibilityHelper.evaluateVisibility(adoInput.visibilityRule, adoTask.adoInputs);
-                    console.log("evaluate input '" + adoInput.name + "': [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
+                    //console.log("evaluate input '" + adoInput.name + "': [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
                 }
             });
         }

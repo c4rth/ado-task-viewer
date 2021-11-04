@@ -1,4 +1,4 @@
-type Message = import('../src/models/messageTypes').Message;
+type Message = import('../src/views/messages/messageTypes').Message;
 
 type VSCode = {
   postMessage<T extends Message = Message>(message: T): void;
@@ -8,4 +8,4 @@ type VSCode = {
 
 declare const vscode: VSCode;
 
-declare const apiUserGender: string;
+declare const azureDevOpsTask: any;
