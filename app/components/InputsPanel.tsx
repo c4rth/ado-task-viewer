@@ -24,7 +24,8 @@ export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
         console.log("updateInputValue : " + inputName + "=" + value + " ("+typeof value+")");
         const adoInput = newAdoTask.adoInputs.get(inputName);
         if (adoInput) {
-            adoInput.value = value;            
+            adoInput.value = value;     
+            console.log("updateInputValue done : " + inputName + "=" + value + " ("+typeof value+")");       
             updateVisibilities(newAdoTask);
         }
         setAdoTask(newAdoTask);
@@ -54,9 +55,9 @@ export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
         return (
             <>
                 {[...adoInputs.values()].map((adoInput: AdoInput) => {
-                    if (adoInput.isVisible) {
+                   if (adoInput.isVisible) {
                         return _renderInput(adoInput);
-                    }
+                   }
                 })}
             </>
         );

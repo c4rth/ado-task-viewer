@@ -72,7 +72,7 @@ export interface AzureDevOpsTask {
      * Execution options for this task (on Pre-Job stage)
      */
     prejobexecution?: Prejobexecution;
-    preview?: boolean;
+    preview?: boolean | string;
     releaseNotes?: string;
     /**
      * Restrictions on tasks
@@ -145,6 +145,7 @@ export interface Execution {
     powerShell?: ExecutionObject;
     powerShell3?: ExecutionObject;
     httpRequest?: HttpRequestObject;
+    process?: ProcessObject;
 }
 
 export interface ExecutionObject {
@@ -154,6 +155,13 @@ export interface ExecutionObject {
      * The target file to be executed. You can use variables here in brackets e.g.
      * $(currentDirectory)ilename.ps1
      */
+    target: string;
+    workingDirectory?: string;
+}
+
+export interface ProcessObject {
+    argumentFormat?: string;
+    platforms?: string;
     target: string;
     workingDirectory?: string;
 }
@@ -188,7 +196,7 @@ export interface Group {
     visibleRule?: string;
 }
 
-export type DefaultValue = boolean | string;
+export type DefaultValue = boolean | string | number;
 
 export interface Input {
     aliases?: string[];
@@ -296,6 +304,7 @@ export interface OutputVariable {
      * The variable name
      */
     name: string;
+    visibleRule?: string;
 }
 
 /**
@@ -371,9 +380,9 @@ export interface SourceDefinition {
  * Always update this when you release your task, so that the agents utilize the latest code.
  */
 export interface Version {
-    major: number;
-    minor: number;
-    patch: number;
+    major: number | string;
+    minor: number | string;
+    patch: number | string;
 }
 
 export enum Visibility {
@@ -447,7 +456,9 @@ function transform(val: any, typ: any, getProps: any, key: any = ''): any {
 
     function transformArray(typ: any, val: any): any {
         // val must be an array with no invalid elements
-        if (!Array.isArray(val)) { return invalidValue("array", val, key); }
+        if (!Array.isArray(val)) {
+            return invalidValue("array", val, key);
+        }
         return val.map(el => transform(el, typ, getProps));
     }
 
@@ -485,7 +496,9 @@ function transform(val: any, typ: any, getProps: any, key: any = ''): any {
         if (val === null) { return val; }
         return invalidValue(typ, val, key);
     }
-    if (typ === false) { return invalidValue(typ, val, key); }
+    if (typ === false) {
+        return invalidValue(typ, val, key);
+    }
     while (typeof typ === "object" && typ.ref !== undefined) {
         typ = typeMap[typ.ref];
     }
@@ -550,9 +563,10 @@ const typeMap: any = {
         { json: "minimumAgentVersion", js: "minimumAgentVersion", typ: u(undefined, "") },
         { json: "name", js: "name", typ: u(undefined, "") },
         { json: "outputVariables", js: "outputVariables", typ: u(undefined, a(r("OutputVariable"))) },
+        { json: "OutputVariables", js: "outputVariables", typ: u(undefined, a(r("OutputVariable"))) },
         { json: "postjobexecution", js: "postjobexecution", typ: u(undefined, r("Postjobexecution")) },
         { json: "prejobexecution", js: "prejobexecution", typ: u(undefined, r("Prejobexecution")) },
-        { json: "preview", js: "preview", typ: u(undefined, true) },
+        { json: "preview", js: "preview", typ: u(undefined, u(true, "")) },
         { json: "releaseNotes", js: "releaseNotes", typ: u(undefined, "") },
         { json: "restrictions", js: "restrictions", typ: u(undefined, r("Restrictions")) },
         { json: "runsOn", js: "runsOn", typ: u(undefined, a(r("RunsOn"))) },
@@ -581,6 +595,7 @@ const typeMap: any = {
         { json: "PowerShell", js: "powerShell", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell3", js: "powerShell3", typ: u(undefined, r("ExecutionObject")) },
         { json: "HttpRequest", js: "httpRequest", typ: u(undefined, r("HttpRequestObject")) },
+        { json: "Process", js: "process", typ: u(undefined, r("ProcessObject")) },
     ], false),
     "ExecutionObject": o([
         { json: "argumentFormat", js: "argumentFormat", typ: u(undefined, "") },
@@ -600,6 +615,12 @@ const typeMap: any = {
         { json: "waitForCompletion", js: "argumentFormat", typ: u(undefined, "") },
         { json: "expression", js: "argumentFormat", typ: u(undefined, "") },
     ], "any"),
+    "ProcessObject": o([
+        { json: "argumentFormat", js: "argumentFormat", typ: u(undefined, "") },
+        { json: "platforms", js: "platforms", typ: u(undefined, a(r("Platform"))) },
+        { json: "modifyEnvironment", js: "target", typ: u(undefined, "") },
+        { json: "workingDirectory", js: "workingDirectory", typ: u(undefined, "") },
+    ], "any"),
     "Group": o([
         { json: "displayName", js: "displayName", typ: "" },
         { json: "isExpanded", js: "isExpanded", typ: u(undefined, true) },
@@ -608,7 +629,7 @@ const typeMap: any = {
     ], false),
     "Input": o([
         { json: "aliases", js: "aliases", typ: u(undefined, a("")) },
-        { json: "defaultValue", js: "defaultValue", typ: u(undefined, u(true, "")) },
+        { json: "defaultValue", js: "defaultValue", typ: u(undefined, u(3.14, u(true, ""))) },
         { json: "groupName", js: "groupName", typ: u(undefined, "") },
         { json: "helpMarkDown", js: "helpMarkDown", typ: u(undefined, "") },
         { json: "label", js: "label", typ: "" },
@@ -621,21 +642,22 @@ const typeMap: any = {
     ], false),
     "Properties": o([
         { json: "DisableManageLink", js: "disableManageLink", typ: u(undefined, r("DisableManageLink")) },
-        { json: "EditableOptions", js: "editableOptions", typ: u(undefined, r("DisableManageLink")) },
+        { json: "EditableOptions", js: "editableOptions", typ: u(undefined, r("EditableOptions")) },
         { json: "editorExtension", js: "editorExtension", typ: u(undefined, "") },
         { json: "EndpointFilterRule", js: "endpointFilterRule", typ: u(undefined, "") },
-        { json: "IsSearchable", js: "isSearchable", typ: u(undefined, r("DisableManageLink")) },
+        { json: "IsSearchable", js: "isSearchable", typ: u(undefined, r("IsSearchable")) },
         { json: "isVariableOrNonNegativeNumber", js: "isVariableOrNonNegativeNumber", typ: u(undefined, r("IsVariableOrNonNegativeNumber")) },
         { json: "maxLength", js: "maxLength", typ: u(undefined, "") },
-        { json: "MultiSelect", js: "multiSelect", typ: u(undefined, r("DisableManageLink")) },
-        { json: "MultiSelectFlatList", js: "multiSelectFlatList", typ: u(undefined, r("DisableManageLink")) },
-        { json: "PopulateDefaultValue", js: "populateDefaultValue", typ: u(undefined, r("DisableManageLink")) },
+        { json: "MultiSelect", js: "multiSelect", typ: u(undefined, r("MultiSelect")) },
+        { json: "MultiSelectFlatList", js: "multiSelectFlatList", typ: u(undefined, r("MultiSelectFlatList")) },
+        { json: "PopulateDefaultValue", js: "populateDefaultValue", typ: u(undefined, r("PopulateDefaultValue")) },
         { json: "resizable", js: "resizable", typ: u(undefined, u(true, "")) },
         { json: "rows", js: "rows", typ: u(undefined, "") },
     ], "any"),
     "OutputVariable": o([
         { json: "description", js: "description", typ: u(undefined, "") },
         { json: "name", js: "name", typ: "" },
+        { json: "visibleRule", js: "visibleRule", typ: u(undefined, "") },
     ], false),
     "Postjobexecution": o([
         { json: "Node", js: "node", typ: u(undefined, r("ExecutionObject")) },
@@ -667,9 +689,9 @@ const typeMap: any = {
         { json: "target", js: "target", typ: u(undefined, "") },
     ], false),
     "Version": o([
-        { json: "Major", js: "major", typ: 3.14 },
-        { json: "Minor", js: "minor", typ: 3.14 },
-        { json: "Patch", js: "patch", typ: 3.14 },
+        { json: "Major", js: "major", typ: u(3.14, "") },
+        { json: "Minor", js: "minor", typ: u(3.14, "") },
+        { json: "Patch", js: "patch", typ: u(3.14, "") },
     ], false),
     "Category": [
         "Azure Artifacts",
@@ -692,6 +714,22 @@ const typeMap: any = {
         "POST",
         "PUT",
         "TRACE",
+        "delete",
+        "get",
+        "head",
+        "options",
+        "patch",
+        "post",
+        "put",
+        "trace",
+        "Delete",
+        "Get",
+        "Head",
+        "Options",
+        "Patch",
+        "Post",
+        "Put",
+        "Trace",
     ],
     "Platform": [
         "windows",
@@ -699,8 +737,42 @@ const typeMap: any = {
     "DisableManageLink": [
         "False",
         "True",
+        "false",
+        "true",
+    ],
+    "EditableOptions": [
+        "False",
+        "True",
+        "false",
+        "true",
+    ],
+    "IsSearchable": [
+        "False",
+        "True",
+        "false",
+        "true",
     ],
     "IsVariableOrNonNegativeNumber": [
+        "False",
+        "True",
+        "false",
+        "true",
+    ],
+    "MultiSelect": [
+        "False",
+        "True",
+        "false",
+        "true",
+    ],
+    "MultiSelectFlatList": [
+        "False",
+        "True",
+        "false",
+        "true",
+    ],
+    "PopulateDefaultValue": [
+        "False",
+        "True",
         "false",
         "true",
     ],
