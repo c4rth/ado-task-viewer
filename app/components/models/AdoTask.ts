@@ -27,7 +27,9 @@ function getInputsOfGroup(azureDevOpsTask: AzureDevOpsTask, groupName?: string):
     return adoInputs;
 }
 
-const getValue = (context: object, expr: string) => (context as AdoTask).adoInputs.get(expr)?.value ?? expr;
+const getValue = (context: object, expr: string) => {
+    return (context as AdoTask).adoInputs.get(expr)?.value ?? expr;
+};
 
 export function updateVisibilities(adoTask: AdoTask) {
     [...adoTask.adoGroups.values()].map((adoGroup) => {
@@ -38,6 +40,7 @@ export function updateVisibilities(adoTask: AdoTask) {
         if (adoGroup.isVisible) {
             [...adoGroup.adoInputs.values()].map((adoInput) => {
                 if (adoInput.visibleRule) {
+                    console.log("evaluate input '" + adoInput.name + "': [" + adoInput.visibleRule + "] ???");
                     adoInput.isVisible = evaluate(adoTask, adoInput.visibleRule, { getValue });
                     console.log("evaluate input '" + adoInput.name + "': [" + adoInput.visibleRule + "] --> " + adoInput.isVisible);
                 }

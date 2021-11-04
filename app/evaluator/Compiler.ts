@@ -80,7 +80,7 @@ export default class Compiler {
 
   calc(node: Node | string, context: any): any {
     if (typeof node === 'string') {
-      return this.getValue(node, context);
+      return this.getValue(node, context, true);
     }
 
     if (OPERATION[node.operation] === undefined) {
@@ -88,15 +88,15 @@ export default class Compiler {
     }
 
     if (node.operation === '!' && node.right) {
-      return !this.getValue(node.right, context);
+      return !this.getValue(node.right, context, true);
     }
 
-    const left = this.getValue(node.left, context);
+    const left = this.getValue(node.left, context, true);
     if (node.operation === undefined) {
       return left;
     }
 
-    const right = this.getValue(node.right, context);
+    const right = this.getValue(node.right, context, false);
 
     switch (node.operation) {
       case '*':
@@ -180,7 +180,7 @@ export default class Compiler {
   }
 
 
-  private getValue(val: string | Node | null, context: any) {
+  private getValue(val: string | Node | null, context: any, fromContext : boolean) {
     if (typeof val !== 'string' && val !== null) {
       return this.calc(val, context);
     }
@@ -214,6 +214,9 @@ export default class Compiler {
       return value;
     }
 
+    if (!fromContext) {
+      return val;
+    }
     // all other lookup from context
     return this.getValueFn(context, val);
   }
