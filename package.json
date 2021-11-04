@@ -49,6 +49,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@types/get-value": "^3.0.2",
     "@types/glob": "^7.1.4",
     "@types/node": "^16.11.6",
     "@types/react": "^17.0.34",

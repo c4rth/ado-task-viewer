@@ -1,5 +1,5 @@
 import evaluate from './SimpleEvaluate';
-const get = require('get-value');
+import get from 'get-value';
 
 export const OPERATION: { [key: string]: number } = {
   '!': 5,
