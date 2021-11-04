@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { ViewColumn } from "vscode";
-import { AzureDevOpsTask, Convert } from "../models/AzureDevOpsTask";
+import { AzureDevOpsTask } from "../models/AzureDevOpsTask";
 import { CommonMessage, Message } from "./messages/messageTypes";
 
 export class AzDoTaskPanel {

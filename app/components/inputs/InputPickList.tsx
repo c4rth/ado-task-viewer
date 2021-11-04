@@ -1,21 +1,37 @@
-import { ComboBox, Dropdown, IComboBox, IComboBoxOption, IDropdownOption, IDropdownProps, IRenderFunction } from "@fluentui/react";
+import { ComboBox, Dropdown, IComboBox, IComboBoxOption, IDropdownOption } from "@fluentui/react";
 import React from "react";
+import { DataSourceBinding, Options } from "../../../src/models/AzureDevOpsTask";
 import { LabelInfo } from "../ui/LabelInfo";
 import { evaluateFieldAsStringArray, evaluateFieldAsBoolean, TaskInputProps } from "./TaskInput";
 
 export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {
 
-    const _onRenderLabel: IRenderFunction<IDropdownProps> = () => {
+    const _onRenderLabel = () => {
         return <LabelInfo
             label={props.adoInput.label}
             description={props.adoInput.helpMarkDown}
             required={evaluateFieldAsBoolean(props.adoInput.required)} />;
     };
 
-    var options: IDropdownOption[] = [];
-    for (const value in props.adoInput.options) {
-        options.push({ key: value, text: props.adoInput.options[value] });
-    }
+    const _initOptions = (initialValue: string | number | boolean, inputOptions: Options, dataSourceBinding: DataSourceBinding) => {
+        var options: IDropdownOption[] = [];
+        if (inputOptions) {
+            for (const value in inputOptions) {
+                options.push({ key: value, text: inputOptions[value] });
+            }
+        } else if (dataSourceBinding) {
+            for (let index = 0; index < 3; index++) {
+                let value = "binding-" + (dataSourceBinding.target ?? "target") + "-" + index;
+                options.push({ key: value, text: value });
+            }
+        }
+        if (initialValue && typeof initialValue !== 'boolean') {
+            if (options.filter((option) => option.key === initialValue).length === 0) {
+                options.push({ key: initialValue, text: initialValue.toString() });
+            }
+        }
+        return options;
+    };
 
     const _handleDropdownChangeEvent = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption | undefined, index?: number | undefined) => {
         if (props.onChange) {
@@ -31,7 +47,7 @@ export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {
 
     if (evaluateFieldAsBoolean(props.adoInput.properties?.multiSelectFlatList) || evaluateFieldAsBoolean(props.adoInput.properties?.multiSelect)) {
         return <Dropdown
-            options={options}
+            options={_initOptions(props.adoInput.value, props.adoInput.options, props.adoInput.dataSourceBinding)}
             onRenderLabel={_onRenderLabel}
             defaultSelectedKeys={evaluateFieldAsStringArray(props.adoInput.value)}
             onChange={_handleDropdownChangeEvent}
@@ -44,14 +60,14 @@ export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {
                 required={evaluateFieldAsBoolean(props.adoInput.required)} />;
             <ComboBox
                 allowFreeform
-                options={options}
+                options={_initOptions(props.adoInput.value, props.adoInput.options, props.adoInput.dataSourceBinding)}
                 defaultSelectedKey={props.adoInput.value?.toString()}
                 onChange={_handleComboboxChangeEvent}
                 useComboBoxAsMenuWidth />
         </>;
     } else {
         return <Dropdown
-            options={options}
+            options={_initOptions(props.adoInput.value, props.adoInput.options, props.adoInput.dataSourceBinding)}
             onRenderLabel={_onRenderLabel}
             onChange={_handleDropdownChangeEvent}
             defaultSelectedKey={props.adoInput.value?.toString()} />;

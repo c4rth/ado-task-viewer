@@ -220,7 +220,7 @@ export interface Input {
      * The variable name to use to store the user-supplied value
      */
     name: string;
-    options?: { [key: string]: any };
+    options?: Options;
     properties?: Properties;
     /**
      * Whether the input is a required field (default is false).
@@ -291,6 +291,10 @@ export enum PopulateDefaultValue {
 export enum IsVariableOrNonNegativeNumber {
     False = "false",
     True = "true",
+}
+
+export interface Options {
+    [key: string]: any
 }
 
 export interface OutputVariable {

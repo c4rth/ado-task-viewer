@@ -9,14 +9,12 @@ TODO :
         - x editorExtension
         - x EndpointFilterRule
     - init pickList / connected with value not in list (Editable)
-    - Binding    
     - handle event change
-        - connected service
+        - connected service ?
         - picklist
 
-- BashV3 : evaluate invisibleRule "x = y" where y is field and value.
-
 DONE :
+- BashV3 : evaluate invisibleRule "x = y" where y is field and value.
 - refresh
 - validate parsing
 - Group :
@@ -25,6 +23,7 @@ DONE :
     - dynamic update of visibility
 
 - Input :
+    - dataSourceBindings    
     - dynamic update of visibility
     - visibleRule
     - properties
@@ -43,6 +42,9 @@ DONE :
         - multiline
         - string
 
+- visibleRule = update evaluator
+    - NotContains NotEndsWith NotStartsWith
+    - Contains EndsWith StartsWith
 
     "$schema": "https://raw.githubusercontent.com/microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     

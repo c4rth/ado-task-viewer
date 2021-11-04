@@ -4,9 +4,9 @@ import { LabelInfo } from "../ui/LabelInfo";
 import { evaluateFieldAsBoolean, TaskInputProps } from "./TaskInput";
 
 const INITIAL_OPTIONS: IDropdownOption[] = [
-    { key: 'sc-dummy-1', text: 'sc-dummy-1' },
-    { key: 'sc-dummy-2', text: 'sc-dummy-2' },
-    { key: 'sc-dummy-3', text: 'sc-dummy-3' }
+    { key: 'connection-1', text: 'connection-1' },
+    { key: 'connection-2', text: 'connection-2' },
+    { key: 'connection-3', text: 'connection-3' }
 ];
 
 export const InputConnectedService: React.FC<TaskInputProps> = (props): JSX.Element => {
