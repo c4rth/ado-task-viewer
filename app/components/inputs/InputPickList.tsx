@@ -25,6 +25,8 @@ export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {
                 options.push({ key: value, text: value });
             }
         }
+        // TODO
+        console.log("_initOptions : initial = " + initialValue);
         if (initialValue && typeof initialValue !== 'boolean') {
             if (options.filter((option) => option.key === initialValue).length === 0) {
                 options.push({ key: initialValue, text: initialValue.toString() });
@@ -45,19 +47,19 @@ export const InputPickList: React.FC<TaskInputProps> = (props): JSX.Element => {
         }
     };
 
-    if (evaluateFieldAsBoolean(props.adoInput.properties?.multiSelectFlatList) || evaluateFieldAsBoolean(props.adoInput.properties?.multiSelect)) {
+    if (evaluateFieldAsBoolean(props.adoInput.properties?.MultiSelectFlatList) || evaluateFieldAsBoolean(props.adoInput.properties?.MultiSelect)) {
         return <Dropdown
             options={_initOptions(props.adoInput.value, props.adoInput.options, props.adoInput.dataSourceBinding)}
             onRenderLabel={_onRenderLabel}
             defaultSelectedKeys={evaluateFieldAsStringArray(props.adoInput.value)}
             onChange={_handleDropdownChangeEvent}
             multiSelect />;
-    } else if (evaluateFieldAsBoolean(props.adoInput.properties?.editableOptions)) {
+    } else if (evaluateFieldAsBoolean(props.adoInput.properties?.EditableOptions)) {
         return <>
             <LabelInfo
                 label={props.adoInput.label}
                 description={props.adoInput.helpMarkDown}
-                required={evaluateFieldAsBoolean(props.adoInput.required)} />;
+                required={evaluateFieldAsBoolean(props.adoInput.required)} />
             <ComboBox
                 allowFreeform
                 options={_initOptions(props.adoInput.value, props.adoInput.options, props.adoInput.dataSourceBinding)}

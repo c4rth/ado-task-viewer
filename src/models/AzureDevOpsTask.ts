@@ -43,7 +43,7 @@ export interface AzureDevOpsTask {
      */
     groups?: Group[];
     helpMarkDown?: string;
-    helpURL?: string;
+    helpUrl?: string;
     /**
      * A unique guid for this task
      */
@@ -114,12 +114,12 @@ export interface DataSourceBinding {
     callbackContextTemplate?: string;
     callbackRequiredTemplate?: string;
     dataSourceName?: string;
-    endpointID?: string;
-    endpointURL?: string;
+    endpointId?: string;
+    endpointUrl?: string;
     initialContextTemplate?: string;
     parameters?: { [key: string]: any };
     requestContent?: string;
-    requestVerb?: RequestVerb;
+    RequestVerb?: RequestVerb;
     resultSelector?: string;
     resultTemplate?: string;
     target?: string;
@@ -140,12 +140,12 @@ export enum RequestVerb {
  * Execution options for this task
  */
 export interface Execution {
-    node?: ExecutionObject;
-    node10?: ExecutionObject;
-    powerShell?: ExecutionObject;
-    powerShell3?: ExecutionObject;
-    httpRequest?: HttpRequestObject;
-    process?: ProcessObject;
+    Node?: ExecutionObject;
+    Node10?: ExecutionObject;
+    PowerShell?: ExecutionObject;
+    PowerShell3?: ExecutionObject;
+    HttpRequest?: HttpRequestObject;
+    Process?: ProcessObject;
 }
 
 export interface ExecutionObject {
@@ -244,16 +244,16 @@ export interface Input {
 export type Resizable = boolean | string;
 
 export interface Properties {
-    disableManageLink?: DisableManageLink;
-    editableOptions?: EditableOptions;
+    DisableManageLink?: DisableManageLink;
+    EditableOptions?: EditableOptions;
     editorExtension?: string;
-    endpointFilterRule?: string;
-    isSearchable?: IsSearchable;
+    EndpointFilterRule?: string;
+    IsSearchable?: IsSearchable;
     isVariableOrNonNegativeNumber?: IsVariableOrNonNegativeNumber;
     maxLength?: string;
-    multiSelect?: MultiSelect;
-    multiSelectFlatList?: MultiSelectFlatList;
-    populateDefaultValue?: PopulateDefaultValue;
+    MultiSelect?: MultiSelect;
+    MultiSelectFlatList?: MultiSelectFlatList;
+    PopulateDefaultValue?: PopulateDefaultValue;
     resizable?: Resizable;
     rows?: string;
 }
@@ -313,20 +313,20 @@ export interface OutputVariable {
  * Execution options for this task (on Post-Job stage)
  */
 export interface Postjobexecution {
-    node?: ExecutionObject;
-    node10?: ExecutionObject;
-    powerShell?: ExecutionObject;
-    powerShell3?: ExecutionObject;
+    Node?: ExecutionObject;
+    Node10?: ExecutionObject;
+    PowerShell?: ExecutionObject;
+    PowerShell3?: ExecutionObject;
 }
 
 /**
  * Execution options for this task (on Pre-Job stage)
  */
 export interface Prejobexecution {
-    node?: ExecutionObject;
-    node10?: ExecutionObject;
-    powerShell?: ExecutionObject;
-    powerShell3?: ExecutionObject;
+    Node?: ExecutionObject;
+    Node10?: ExecutionObject;
+    PowerShell?: ExecutionObject;
+    PowerShell3?: ExecutionObject;
 }
 
 /**
@@ -382,9 +382,9 @@ export interface SourceDefinition {
  * Always update this when you release your task, so that the agents utilize the latest code.
  */
 export interface Version {
-    major: number | string;
-    minor: number | string;
-    patch: number | string;
+    Major: number | string;
+    Minor: number | string;
+    Patch: number | string;
 }
 
 export enum Visibility {
