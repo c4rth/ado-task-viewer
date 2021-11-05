@@ -1,4 +1,4 @@
-import { IStackTokens, Label, Stack } from "@fluentui/react";
+import { ILabelStyles, IStackTokens, Label, Stack } from "@fluentui/react";
 import React, { useState } from "react";
 import { Collapse } from "react-collapse";
 import { CollapsiblePanel } from "./ui/CollapsiblePanel";
@@ -14,6 +14,7 @@ import { AdoGroup, AdoInput, AdoTask, updateVisibilities } from "./models/AdoTas
 interface IInputsViewProps {
     adoTask: AdoTask;
 }
+const labelErrorStyle: Partial<ILabelStyles> = { root: { color: "yellow", background: "red", marginTop: 5 } };
 
 export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
 
@@ -33,6 +34,7 @@ export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
 
     const _renderInput = (adoInput: AdoInput) => {
         switch (adoInput.type) {
+            case undefined: return <Label key={adoInput.name} styles={labelErrorStyle}>Empty type for {adoInput.name}</Label>;
             case 'boolean': return <InputBoolean key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
             case 'radio': return <InputRadio key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
             case 'multiline':
@@ -64,7 +66,8 @@ export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
     };
 
     const _renderGroup = (adoGroup: AdoGroup) => {
-        if (adoGroup.adoInputs.size === 0 || !adoGroup.isVisible) {
+        let visibleInputs = [...adoGroup.adoInputs.values()].filter((adoInput: AdoInput) => adoInput.isVisible);
+        if (!adoGroup.isVisible || adoGroup.adoInputs.size === 0 ||  visibleInputs.length === 0) {
             return (<></>);
         }
         if (adoGroup.name.length === 0) {
