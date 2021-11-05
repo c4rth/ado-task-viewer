@@ -48,6 +48,7 @@ export class AzDoTaskPanel {
             if (AzDoTaskPanel.currentPanel) {
                 AzDoTaskPanel.currentPanel._renderWebview(azureDevOpsTask, json);
                 AzDoTaskPanel.currentPanel._panel.reveal(ViewColumn.One);
+                vscode.commands.executeCommand('workbench.action.webview.reloadWebviewAction');
             } else {
                 const panel = vscode.window.createWebviewPanel("ado-task", azureDevOpsTask.name || "Undefined", vscode.ViewColumn.One, {
                     enableScripts: true,
