@@ -236,6 +236,8 @@ export interface Input {
      * value"
      */
     visibleRule?: string;
+
+    validation?: Validation;
 }
 
 /**
@@ -390,6 +392,11 @@ export interface Version {
 export enum Visibility {
     Build = "Build",
     Release = "Release",
+}
+
+export interface Validation {
+    expression?: string;
+    message?: string;
 }
 
 // Converts JSON strings to/from your types
@@ -639,8 +646,9 @@ const typeMap: any = {
         { json: "options", js: "options", typ: u(undefined, m("any")) },
         { json: "properties", js: "properties", typ: u(undefined, r("Properties")) },
         { json: "required", js: "required", typ: u(undefined, u(true, "")) },
-        { json: "type", js: "type", typ: "" },
+        { json: "type", js: "type", typ: u(undefined, "") },
         { json: "visibleRule", js: "visibleRule", typ: u(undefined, "") },
+        { json: "validation", js: "validation", typ: u(undefined, r("Validation")) },
     ], false),
     "Properties": o([
         { json: "DisableManageLink", js: "disableManageLink", typ: u(undefined, r("DisableManageLink")) },
@@ -656,6 +664,10 @@ const typeMap: any = {
         { json: "resizable", js: "resizable", typ: u(undefined, u(true, "")) },
         { json: "rows", js: "rows", typ: u(undefined, "") },
     ], "any"),
+    "Validation": o([
+        { json: "expression", js: "expression", typ: u(undefined, "")},
+        { json: "message", js: "message", typ: u(undefined, "")},
+    ], false),
     "OutputVariable": o([
         { json: "description", js: "description", typ: u(undefined, "") },
         { json: "name", js: "name", typ: "" },
