@@ -37,16 +37,17 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm-run-all vscepack:*",
     "compile": "npm-run-all compile:*",
     "compile:extension": "tsc -p ./",
     "compile:view": "webpack --mode development",
+    "vscepack:extension": "tsc -p ./",
+    "vscepack:view": "webpack --mode production --devtool hidden-source-map",
     "watch": "npm-run-all -p watch:*",
     "watch:extension": "tsc -watch -p ./",
     "watch:view": "webpack --watch --mode development",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src app --ext ts,tsx",
-    "test": "node ./out/test/runTest.js"
+    "lint": "eslint src app --ext ts,tsx"
   },
   "devDependencies": {
     "@types/get-value": "^3.0.2",

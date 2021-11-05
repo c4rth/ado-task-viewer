@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
+  target: 'webworker',
   entry: path.join(__dirname, 'app', 'index.tsx'),
   output: {
     filename: 'bundle.js',
