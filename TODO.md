@@ -8,10 +8,6 @@ TODO :
         - x isVariableOrNonNegativeNumber
         - x editorExtension
         - x EndpointFilterRule
-    - init pickList / connected with value not in list (Editable)
-    - handle event change
-        - connected service ?
-        - picklist
 
 DONE :
 - BashV3 : evaluate invisibleRule "x = y" where y is field and value.
@@ -41,6 +37,10 @@ DONE :
         - int
         - multiline
         - string
+    - init pickList / connected with value not in list (Editable)
+    - handle event change
+        - connected service ?
+        - picklist
 
 - visibleRule = update evaluator
     - NotContains NotEndsWith NotStartsWith

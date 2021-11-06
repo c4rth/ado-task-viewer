@@ -3,10 +3,9 @@ import React, { useState } from "react";
 import { Collapse } from "react-collapse";
 import { CollapsiblePanel } from "./ui/CollapsiblePanel";
 import { InputBoolean } from "./inputs/InputBoolean";
-import { InputConnectedService } from "./inputs/InputConnectedService";
 import { InputInt } from "./inputs/InputInt";
 import { InputMultiLine } from "./inputs/InputMultiLine";
-import { InputPickList } from "./inputs/InputPickList";
+import { InputPickList, PickListType } from "./inputs/InputPickList";
 import { InputRadio } from "./inputs/InputRadio";
 import { InputString } from "./inputs/InputString";
 import { AdoGroup, AdoInput, AdoTask, updateVisibilities } from "./models/AdoTask";
@@ -40,7 +39,7 @@ export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
             case 'multiline':
             case 'multiLine': return <InputMultiLine key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
             case 'picklist':
-            case 'pickList': return <InputPickList key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
+            case 'pickList': return <InputPickList type={PickListType.PickList} key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
             case 'string': return <InputString key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
             case 'int': return <InputInt key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
             case 'filepath':
@@ -48,7 +47,7 @@ export const InputsPanel: React.FC<IInputsViewProps> = (props): JSX.Element => {
             case 'securefile':
             case 'secureFile': return <InputString key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
             case 'identities': return <InputString key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
-            case adoInput.type.match(/connectedService.+$/)?.input: return <InputConnectedService key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
+            case adoInput.type.match(/connectedService.+$/)?.input: return <InputPickList type={PickListType.ServiceConnection} key={adoInput.name} adoInput={adoInput} onChange={handleChangeEvent} />;
             default: return <Label key={adoInput.name}>Unknow type {adoInput.type} for {adoInput.name}</Label>;
         }
     };
