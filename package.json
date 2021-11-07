@@ -1,10 +1,11 @@
 {
   "name": "ado-task-viewer",
-  "displayName": "ado-task-viewer",
+  "displayName": "Azure DevOps Task viewer",
   "description": "AzDo Task Viewer",
   "icon": "ado-task-viewer.png",
   "publisher": "carth",
   "version": "0.0.1",
+  "private": "true",
   "repository": {
     "type": "git",
     "url": "https://github.com/carthx/ado-task-viewer"

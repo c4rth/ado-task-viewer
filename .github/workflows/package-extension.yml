@@ -31,7 +31,7 @@ jobs:
         uses: HaaLeo/publish-vscode-extension@v0
         with:
           # Personal access token
-          # pat: 
+          pat: DUMMY_PAT
           # Path to the vsix file to be published. Cannot be used together with packagePath.
           # extensionFile: # optional
           # Use the registry API at this base URL
