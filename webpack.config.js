@@ -6,8 +6,8 @@ module.exports = {
   entry: path.join(__dirname, 'app', 'index.tsx'),
   output: {
     filename: 'bundle.js',
+    // filename: '[name].js',
     path: path.resolve(__dirname, 'out', 'app'),
-    //pathinfo: true,
     hashFunction: "xxhash64", // node 17 & webpack 5
   },
   externals: {
@@ -34,19 +34,28 @@ module.exports = {
   },
   /*
   optimization: {
-    // Automatically split vendor and commons
-    // https://twitter.com/wSokra/status/969633336732905474
-    // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
     splitChunks: {
-      chunks: 'all',
-      name: false,
-    },
-    // Keep the runtime chunk separated to enable long term caching
-    // https://twitter.com/wSokra/status/969679223278505985
-    runtimeChunk: true,
+      cacheGroups: {
+        react: {
+          test: /[\\/]node_modules[\\/]((react).*)[\\/]/,
+          name: "react",
+          chunks: "all"
+        },
+        fluentui: {
+          test: /[\\/]node_modules[\\/]((@fluentui).*)[\\/]/,
+          name: "fluentui",
+          chunks: "all"
+        },
+        commons: {
+          test: /[\\/]node_modules[\\/]((?!(react|@fluentui)).*)[\\/]/,
+          name: "commons",
+          chunks: "all"
+        }
+      }
+    }
   },
   */
   performance: {
     hints: 'warning'
-  }, 
+  },
 };

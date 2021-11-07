@@ -80,8 +80,8 @@ export class AzDoTaskPanel {
     }
 
     private _getWebviewContent(json: string): string {
-        const reactAppPath = path.join(this._extensionPath, 'out', 'app', 'bundle.js');
-        const reactAppUri = vscode.Uri.file(reactAppPath).with({ scheme: "vscode-resource" });
+        const mainAppPath = path.join(this._extensionPath, 'out', 'app', 'bundle.js');
+        const mainAppUri = vscode.Uri.file(mainAppPath).with({ scheme: "vscode-resource" });
         return `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -94,7 +94,7 @@ export class AzDoTaskPanel {
                 const vscode = acquireVsCodeApi();
                 const azureDevOpsTask = ${json};
             </script>
-            <script src="${reactAppUri}"></script>
+            <script src="${mainAppUri}"></script>
         </body>
         </html>`;
     }

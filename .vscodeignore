@@ -7,11 +7,10 @@ test/**
 **/.eslintrc.json
 webpack.config.js
 .gitignore
-.yarnrc
-vsc-extension-quickstart.md
 **/*.map
 **/*.tsx
 **/*.ts
 **/*.zip
 **/*.vsix
 node_modules
+TODO.md
