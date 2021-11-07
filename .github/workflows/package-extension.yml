@@ -25,6 +25,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - run: npm install
+
       - name: Publish VS Code Extension
         # You may pin to the exact commit or the version.
         # uses: HaaLeo/publish-vscode-extension@aae4c55fd9e724685834ff0a9488ad57c8f3ecf1
