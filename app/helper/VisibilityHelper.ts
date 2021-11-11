@@ -1,3 +1,7 @@
+/**
+ * https://github.com/microsoft/vscode-deploy-azure
+ * https://github.com/microsoft/vscode-deploy-azure/blob/master/src/configure/templateInputHelper/utilities/VisibilityHelper.ts
+ */
 import { AdoInput } from "../components/models/AdoTask";
 import { IPredicate, IVisibilityRule } from "./models";
 

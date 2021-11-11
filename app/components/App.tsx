@@ -1,4 +1,4 @@
-import { IconButton, IIconProps, Stack } from "@fluentui/react";
+import { IconButton, IIconProps, Label, Stack } from "@fluentui/react";
 import { ITextFieldStyles } from "@fluentui/react/lib/components/TextField";
 import { ThemeProvider } from "@fluentui/react/lib/utilities/ThemeProvider";
 import React from "react";
@@ -7,12 +7,13 @@ import { ReloadMessage } from '../../src/views/messages/messageTypes';
 import './App.css';
 import { InputsPanel } from "./InputsPanel";
 import { convertToAdoTask } from "./models/AdoTask";
-import Theme from "./Theme";
+import ThemeHelpers from "./theme/ThemeHelper";
 import { LabelInfo } from "./ui/LabelInfo";
 
 export const App: React.FC = (): JSX.Element => {
 
   const titleStyle: Partial<ITextFieldStyles> = { root: { fontSize: "large", fontWeight: "600", marginLeft: 5 } };
+  const titleErrorStyle: Partial<ITextFieldStyles> = { root: { fontSize: "large", fontWeight: "600", marginLeft: 5, color: "red" } };
   const iconRefreshProps: IIconProps = { iconName: 'Refresh' };
 
   const _onClickRefresh = () => {
@@ -24,7 +25,7 @@ export const App: React.FC = (): JSX.Element => {
   try {
     Convert.validateAzureDevOpsTask(azureDevOpsTask);
     return (
-      <ThemeProvider theme={Theme.appTheme}>
+      <ThemeProvider theme={ThemeHelpers.getAdaptedTheme()}>
         <div className="App">
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
             <LabelInfo label={azureDevOpsTask.friendlyName}
@@ -41,9 +42,12 @@ export const App: React.FC = (): JSX.Element => {
   } catch (e) {
     console.error(e);
     return (
-      <ThemeProvider theme={Theme.appTheme}>
+      <ThemeProvider theme={ThemeHelpers.getAdaptedTheme()}>
         <div className="AppError">
-          <h1>task.json is invalid</h1>
+          <Stack horizontal verticalAlign="center">
+            <Label styles={titleErrorStyle}>task.json is invalid</Label>
+            <IconButton iconProps={iconRefreshProps} title="Refresh" ariaLabel="Refresh" onClick={_onClickRefresh} />
+          </Stack>
           {(e as TypeError).message}
         </div>
       </ThemeProvider>

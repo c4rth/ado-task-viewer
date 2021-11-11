@@ -1,4 +1,4 @@
-import { Icon, IStackStyles, ITextFieldStyles, Label, Stack } from "@fluentui/react";
+import { getColorFromString, Icon, IStackStyles, ITextFieldStyles, Label, Stack } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
 import React from "react";
 import { Collapse } from "react-collapse";
@@ -20,7 +20,7 @@ export const CollapsiblePanel: React.FC<CollapsiblePanelProps> = (props): JSX.El
             padding: 5,
             selectors: {
                 ':hover': {
-                    backgroundColor: '#f3f2f1'
+                    backgroundColor: "var(--vscode-editorHoverWidget-background)"
                 },
             },
         }
