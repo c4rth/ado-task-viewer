@@ -4,7 +4,7 @@
   "description": "AzDo Task Viewer",
   "icon": "ado-task-viewer.png",
   "publisher": "carth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": "true",
   "repository": {
     "type": "git",
