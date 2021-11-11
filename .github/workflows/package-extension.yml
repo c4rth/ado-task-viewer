@@ -12,29 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - name: Package VS Code Extension
-        uses: HaaLeo/publish-vscode-extension@v0
+      - name: Package extension
+        uses: lannonbr/vsce-action@master
         with:
-          # Personal access token
-          pat: DUMMY_PAT
-          # Path to the vsix file to be published. Cannot be used together with packagePath.
-          # extensionFile: # optional
-          # Use the registry API at this base URL
-          # registryUrl: # optional, default is https://open-vsx.org
-          # Path to the extension to be packaged and published. Cannot be used together with extensionFile.
-          # packagePath: # optional, default is ./
-          # Prepend all relative links in README.md with this URL.
-          # baseContentUrl: # optional
-          # Prepend all relative image links in README.md with this URL.
-          # baseImagesUrl: # optional
-          # Use yarn instead of npm while packing extension files.
-          # yarn: # optional
-          # Set this option to "true" to package your extension but do not publish it.
-          dryRun: true
-          # Allow publishing extensions to the visual studio marketplace which use a proposed API (enableProposedApi: true).
-          # noVerify: # optional
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v2.2.4
+          args: "package -o ado-task-viewer-${{ github.event.release.tag_name }}.vsix"
+      - name: Upload extension package to release
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ado-task-viewer-0.0.1.vsix
-          path: ./ado-task-viewer-0.0.1.vsix
+          upload_url: ${{ github.event.release.upload_url }} 
+          asset_path: ./ado-task-viewer-${{ github.event.release.tag_name }}.vsix
+          asset_name: ado-task-viewer-${{ github.event.release.tag_name }}.vsix
+          asset_content_type: application/octet-stream
