@@ -1,4 +1,4 @@
-# AzDevops Task viewer README
+# AzDevops task.json viewer
 
 ## Commands
 
