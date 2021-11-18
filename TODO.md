@@ -8,6 +8,8 @@ TODO :
         - x isVariableOrNonNegativeNumber
         - x editorExtension
         - x EndpointFilterRule
+    - helpMarkDown : markdown / html
+
 
 DONE :
 - BashV3 : evaluate invisibleRule "x = y" where y is field and value.

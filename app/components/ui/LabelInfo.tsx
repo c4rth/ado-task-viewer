@@ -36,8 +36,8 @@ export const LabelInfo = (props: LabelInfoProps): JSX.Element => {
           onDismiss={toggleIsCalloutVisible}
           ariaDescribedBy={descriptionId}
           role="alertdialog" >
-          <Stack tokens={stackTokens} horizontalAlign="start" styles={labelCalloutStackStyles}>
-            <span id={descriptionId}>{props.description}</span>
+          <Stack tokens={stackTokens} horizontalAlign="start">
+            <span id={descriptionId}>{props.description}</span> 
           </Stack>
         </Callout>
       )}

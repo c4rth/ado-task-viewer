@@ -64,7 +64,7 @@ function _parseVisibleRules(adoTask: AdoTask) {
 
 export function convertToAdoTask(azureDevOpsTask: AzureDevOpsTask): AdoTask {
     const adoGroups = new Map<string, AdoGroup>();
-    var adoInputs = new Map<string, AdoInput>();
+    let adoInputs = new Map<string, AdoInput>();
     // Default group
     const inputs = _getInputsOfGroup(azureDevOpsTask, undefined);
     if (inputs && inputs.size > 0) {

@@ -29,7 +29,7 @@ export const InputPickList: React.FC<PickListProps> = (props): JSX.Element => {
     };
 
     const _initOptions = (type: PickListType, initialValue: string | number | boolean, inputOptions: Options, dataSourceBinding: DataSourceBinding) => {
-        var options: IDropdownOption[] = [];
+        let options: IDropdownOption[] = [];
         if (inputOptions) {
             for (const value in inputOptions) {
                 options.push({ key: value, text: inputOptions[value] });
