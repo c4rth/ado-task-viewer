@@ -14,7 +14,15 @@
     "vscode": "^1.62.0"
   },
   "categories": [
-    "Other"
+    "Azure",
+    "Visualization"
+  ],
+  "keywords": [
+    "task.json",
+    "preview",
+    "visualizer",
+    "azure devops",
+    "extension"
   ],
   "activationEvents": [
     "onCommand:ado-task-viewer.viewTask"
