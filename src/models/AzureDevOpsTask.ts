@@ -246,18 +246,18 @@ export interface Input {
 export type Resizable = boolean | string;
 
 export interface Properties {
-    DisableManageLink?: DisableManageLink;
-    EditableOptions?: EditableOptions;
+    DisableManageLink?: boolean | DisableManageLink;
+    EditableOptions?: boolean | EditableOptions;
     editorExtension?: string;
     EndpointFilterRule?: string;
-    IsSearchable?: IsSearchable;
-    isVariableOrNonNegativeNumber?: IsVariableOrNonNegativeNumber;
+    IsSearchable?: boolean | IsSearchable;
+    isVariableOrNonNegativeNumber?: boolean | IsVariableOrNonNegativeNumber;
     maxLength?: string;
-    MultiSelect?: MultiSelect;
-    MultiSelectFlatList?: MultiSelectFlatList;
-    PopulateDefaultValue?: PopulateDefaultValue;
-    resizable?: Resizable;
-    rows?: string;
+    MultiSelect?: boolean | MultiSelect;
+    MultiSelectFlatList?: boolean | MultiSelectFlatList;
+    PopulateDefaultValue?: boolean | PopulateDefaultValue;
+    resizable?: boolean | Resizable;
+    rows?: string | number;
 }
 
 export enum DisableManageLink {
@@ -651,18 +651,19 @@ const typeMap: any = {
         { json: "validation", js: "validation", typ: u(undefined, r("Validation")) },
     ], false),
     "Properties": o([
-        { json: "DisableManageLink", js: "disableManageLink", typ: u(undefined, r("DisableManageLink")) },
-        { json: "EditableOptions", js: "editableOptions", typ: u(undefined, r("EditableOptions")) },
+        { json: "DisableManageLink", js: "disableManageLink", typ: u(undefined, u(true, r("DisableManageLink"))) },
+        { json: "EditableOptions", js: "editableOptions", typ: u(undefined, u(true, r("EditableOptions"))) },
         { json: "editorExtension", js: "editorExtension", typ: u(undefined, "") },
         { json: "EndpointFilterRule", js: "endpointFilterRule", typ: u(undefined, "") },
-        { json: "IsSearchable", js: "isSearchable", typ: u(undefined, r("IsSearchable")) },
-        { json: "isVariableOrNonNegativeNumber", js: "isVariableOrNonNegativeNumber", typ: u(undefined, r("IsVariableOrNonNegativeNumber")) },
+        { json: "IsSearchable", js: "isSearchable", typ: u(undefined, u(true, r("IsSearchable"))) },
+        { json: "isVariableOrNonNegativeNumber", js: "isVariableOrNonNegativeNumber", typ: u(undefined, u(true, r("IsVariableOrNonNegativeNumber"))) },
         { json: "maxLength", js: "maxLength", typ: u(undefined, "") },
-        { json: "MultiSelect", js: "multiSelect", typ: u(undefined, r("MultiSelect")) },
-        { json: "MultiSelectFlatList", js: "multiSelectFlatList", typ: u(undefined, r("MultiSelectFlatList")) },
-        { json: "PopulateDefaultValue", js: "populateDefaultValue", typ: u(undefined, r("PopulateDefaultValue")) },
-        { json: "resizable", js: "resizable", typ: u(undefined, u(true, "")) },
-        { json: "rows", js: "rows", typ: u(undefined, "") },
+        { json: "MultiSelect", js: "multiSelect", typ: u(undefined, u(true, r("MultiSelect"))) },
+        { json: "MultiSelectFlatList", js: "multiSelectFlatList", typ: u(undefined, u(true, r("MultiSelectFlatList"))) },
+        { json: "PopulateDefaultValue", js: "populateDefaultValue", typ: u(undefined, u(true, r("PopulateDefaultValue"))) },
+        { json: "resizable", js: "resizable", typ: u(undefined, u(true, r("Resizable"))) },
+        { json: "rows", js: "rows", typ: u(undefined, u("",1)) },
+        { json: "displayFormat", js: "displayFormat", typ: u(undefined, "") },
     ], "any"),
     "Validation": o([
         { json: "expression", js: "expression", typ: u(undefined, "")},
@@ -755,6 +756,12 @@ const typeMap: any = {
         "true",
     ],
     "EditableOptions": [
+        "False",
+        "True",
+        "false",
+        "true",
+    ],
+    "Resizable": [
         "False",
         "True",
         "false",

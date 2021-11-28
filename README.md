@@ -1,12 +1,13 @@
 # AzDevops task.json viewer
 
 ## Features
-### View task.json of an Azure DevOps custom extension
+### View task.json of an Azure DevOps extension
 <br/>
 
 Supported :
 - input types
 - visibility rules
+- input validation
 - collapsible groups
 - help markdown
 - validation : based on https://github.com/microsoft/azure-pipelines-task-lib/blob/master/tasks.schema.json

@@ -1,14 +1,21 @@
-import { IRenderFunction, ITextFieldProps, TextField } from "@fluentui/react";
-import React, { useCallback } from "react";
+import { TextField } from "@fluentui/react";
+import React, { useCallback, useState } from "react";
 import { LabelInfo } from "../ui/LabelInfo";
 import { evaluateFieldAsBoolean, evaluateFieldAsInt, TaskInputProps } from "./TaskInput";
+import { isExpressionValid } from "../../helper/inputExpressionValidation";
 
 export const InputString: React.FC<TaskInputProps> = (props): JSX.Element => {
+    const [errorMessage, setErrorMessage] = useState<string>(undefined);
+    const expression = props.adoInput.validation?.expression;
+    const expressionMessage = props.adoInput.validation?.message;
 
     const _handleTextFieldChangeEvent = useCallback(
         (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => {
             if (props.onChange) {
                 props.onChange(props.adoInput.name, newValue);
+            }
+            if (expression) {
+                setErrorMessage(isExpressionValid(expression, newValue) ? undefined : expressionMessage);
             }
         },
         []
@@ -25,5 +32,6 @@ export const InputString: React.FC<TaskInputProps> = (props): JSX.Element => {
         onRenderLabel={_onRenderLabel}
         defaultValue={props.adoInput.value?.toString()}
         onChange={_handleTextFieldChangeEvent}
-        maxLength={evaluateFieldAsInt(props.adoInput.properties?.maxLength)} />;
+        maxLength={evaluateFieldAsInt(props.adoInput.properties?.maxLength)}
+        errorMessage={errorMessage} />;
 };

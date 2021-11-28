@@ -19,9 +19,9 @@ export const evaluateFieldAsBoolean = (value: string | boolean | number | undefi
     return value.toString().toLowerCase() === "true";
 };
 
-export const evaluateFieldAsInt = (value: string | undefined, defaultValue: number | undefined = undefined): number | undefined => {
+export const evaluateFieldAsInt = (value: string | number | undefined, defaultValue: number | undefined = undefined): number | undefined => {
     if (value === undefined) {
         return defaultValue;
     }
-    return parseInt(value);
+    return parseInt(value.toString());
 };
