@@ -1,6 +1,7 @@
 import { ComboBox, Dropdown, IComboBox, IComboBoxOption, IDropdownOption } from "@fluentui/react";
-import React from "react";
+import React, { useState } from "react";
 import { DataSourceBinding, Options } from "../../../src/models/AzureDevOpsTask";
+import { isExpressionValid } from "../../helper/inputExpressionValidation";
 import { LabelInfo } from "../ui/LabelInfo";
 import { evaluateFieldAsStringArray, evaluateFieldAsBoolean, TaskInputProps } from "./TaskInput";
 
@@ -49,7 +50,7 @@ export const InputPickList: React.FC<PickListProps> = (props): JSX.Element => {
         }
         return options;
     };
-    
+
     const [options, setOptions] = React.useState(_initOptions(props.type, props.adoInput.value, props.adoInput.options, props.adoInput.dataSourceBinding));
     const [selectedKey, setSelectedKey] = React.useState<string | number>(props.adoInput.value?.toString());
 
@@ -61,6 +62,10 @@ export const InputPickList: React.FC<PickListProps> = (props): JSX.Element => {
         },
         []);
 
+    const [errorMessage, setErrorMessage] = useState<string>(undefined);
+    const expression = props.adoInput.validation?.expression;
+    const expressionMessage = props.adoInput.validation?.message;
+
     const _handleComboboxChangeEvent = React.useCallback(
         (event: React.FormEvent<IComboBox>, option?: IComboBoxOption | undefined, index?: number | undefined, value?: string | undefined) => {
             let selected = option?.selected;
@@ -69,9 +74,11 @@ export const InputPickList: React.FC<PickListProps> = (props): JSX.Element => {
                 option = { key: value, text: value };
                 setOptions(prevOptions => [...prevOptions, option!]);
             }
-
             if (option) {
                 setSelectedKey(option.key);
+            }
+            if (expression) {
+                setErrorMessage(isExpressionValid(expression, value ?? option?.key.toString()) ? undefined : expressionMessage);
             }
             if (props.onChange) {
                 props.onChange(props.adoInput.name, value ?? option?.key.toString() ?? "");
@@ -97,6 +104,7 @@ export const InputPickList: React.FC<PickListProps> = (props): JSX.Element => {
                 options={options}
                 selectedKey={selectedKey}
                 onChange={_handleComboboxChangeEvent}
+                errorMessage={errorMessage}
                 useComboBoxAsMenuWidth />
         </>;
     } else {
