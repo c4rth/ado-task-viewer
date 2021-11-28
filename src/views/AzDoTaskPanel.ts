@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { ViewColumn } from "vscode";
 import { AzureDevOpsTask } from "../models/AzureDevOpsTask";
-import { CommonMessage, Message } from "./messages/messageTypes";
+import { Message } from "./messages/messageTypes";
 
 export class AzDoTaskPanel {
     public static currentPanel: AzDoTaskPanel | undefined;
@@ -24,9 +24,6 @@ export class AzDoTaskPanel {
                     if (AzDoTaskPanel.currentPanel) {
                         AzDoTaskPanel.render(AzDoTaskPanel.currentPanel._fileUri, AzDoTaskPanel.currentPanel._extensionPath);
                     }
-                } else if (message.type === 'COMMON') {
-                    const text = (message as CommonMessage).payload;
-                    vscode.window.showInformationMessage(`Received message from Webview: ${text}`);
                 }
             },
             null,

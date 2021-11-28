@@ -1,4 +1,4 @@
-import { getColorFromString, Icon, IStackStyles, ITextFieldStyles, Label, Stack } from "@fluentui/react";
+import { Icon, IStackStyles, ITextFieldStyles, Label, Stack } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
 import React from "react";
 import { Collapse } from "react-collapse";
