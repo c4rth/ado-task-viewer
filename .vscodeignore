@@ -14,3 +14,4 @@ webpack.config.js
 **/*.vsix
 node_modules
 TODO.md
+.github

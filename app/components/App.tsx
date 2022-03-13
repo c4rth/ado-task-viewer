@@ -1,6 +1,4 @@
-import { IconButton, IIconProps, Label, Stack } from "@fluentui/react";
-import { ITextFieldStyles } from "@fluentui/react/lib/components/TextField";
-import { ThemeProvider } from "@fluentui/react/lib/utilities/ThemeProvider";
+import { IconButton, IIconProps, Label, Stack, ITextFieldStyles, ThemeProvider } from "@fluentui/react";
 import React from "react";
 import { Convert } from "../../src/models/AzureDevOpsTask";
 import { ReloadMessage } from '../../src/views/messages/messageTypes';
