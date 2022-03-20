@@ -2,8 +2,8 @@
 All notable changes to the "ado-task-viewer" extension will be documented in this file.
 
 ## Version 0.2.4
-- Compatible with https://vscode.dev
-
+- Update packages + group
+- 
 ## Version 0.2.3
 - Update packages
 
