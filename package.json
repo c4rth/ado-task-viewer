@@ -57,7 +57,8 @@
     "watch:extension": "tsc -watch -p ./",
     "watch:view": "webpack --watch",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src app --ext ts,tsx"
+    "lint": "eslint src app --ext ts,tsx",
+    "test": "npm run compile && node ./out/test/runTest.js"
   },
   "devDependencies": {
     "@types/get-value": "^3.0.2",
