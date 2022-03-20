@@ -39,9 +39,9 @@
     "menus": {
       "explorer/context": [
         {
+          "when": "resourceFilename == task.json",
           "command": "ado-task-viewer.viewTask",
-          "group": "AzDoTaskViewerExtenstion",
-          "when": "resourceFilename == task.json"
+          "group": "AzDoExtension"
         }
       ]
     }
@@ -63,12 +63,12 @@
     "@types/get-value": "^3.0.2",
     "@types/glob": "^7.1.4",
     "@types/node": "^17.0.21",
-    "@types/react": "^17.0.40",
+    "@types/react": "^17.0.41",
     "@types/react-collapse": "^5.0.1",
-    "@types/react-dom": "^17.0.13",
-    "@types/vscode": "^1.62.0",
-    "@typescript-eslint/eslint-plugin": "^5.14.0",
-    "@typescript-eslint/parser": "^5.14.0",
+    "@types/react-dom": "^17.0.14",
+    "@types/vscode": "^1.65.0",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
     "@vscode/test-web": "^0.0.22",
     "css-loader": "^6.7.1",
     "eslint": "^8.11.0",
@@ -81,8 +81,8 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fluentui/react": "^8.61.0",
-    "@fluentui/react-hooks": "^8.5.2",
+    "@fluentui/react": "^8.62.0",
+    "@fluentui/react-hooks": "^8.5.3",
     "react": "^17.0.2",
     "react-collapse": "^5.1.1",
     "react-dom": "^17.0.2"
