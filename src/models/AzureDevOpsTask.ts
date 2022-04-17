@@ -153,7 +153,7 @@ export interface ExecutionObject {
     platforms?: Platform[];
     /**
      * The target file to be executed. You can use variables here in brackets e.g.
-     * $(currentDirectory)ilename.ps1
+     * $(currentDirectory)/filename.ps1
      */
     target: string;
     workingDirectory?: string;

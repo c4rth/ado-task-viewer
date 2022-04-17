@@ -1,7 +1,7 @@
 import { IconButton, IIconProps, Label, Stack, ITextFieldStyles, ThemeProvider } from "@fluentui/react";
 import React from "react";
 import { Convert } from "../../src/models/AzureDevOpsTask";
-import { ReloadMessage } from '../../src/views/messages/messageTypes';
+import { ReloadMessage } from '../../src/views/messages/MessageTypes';
 import './App.css';
 import { InputsPanel } from "./InputsPanel";
 import { convertToAdoTask } from "./models/AdoTask";

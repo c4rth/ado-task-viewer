@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { ViewColumn } from "vscode";
 import { AzureDevOpsTask } from "../models/AzureDevOpsTask";
-import { Message } from "./messages/messageTypes";
+import { Message } from "./messages/MessageTypes";
 
 export class AzDoTaskPanel {
     public static currentPanel: AzDoTaskPanel | undefined;
@@ -24,6 +24,8 @@ export class AzDoTaskPanel {
                     if (AzDoTaskPanel.currentPanel) {
                         AzDoTaskPanel.render(AzDoTaskPanel.currentPanel._fileUri, AzDoTaskPanel.currentPanel._extensionPath);
                     }
+                } else if (message.type === 'OPENURL') {
+                    vscode.env.openExternal(vscode.Uri.parse(message.payload));
                 }
             },
             null,
