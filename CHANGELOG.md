@@ -2,8 +2,10 @@
 All notable changes to the "ado-task-viewer" extension will be documented in this file.
 
 ## Version 0.2.4
-- Update packages + group
-- 
+- Update packages
+- HelpMarkDown : support URL
+- Fix : info icon always visible
+
 ## Version 0.2.3
 - Update packages
 
