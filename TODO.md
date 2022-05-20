@@ -1,14 +1,13 @@
 TODO :
 - Input :
     - alias
-    - properties :        
+    - properties :
         - x DisableManageLink
         - x IsSearchable
         - x PopulateDefaultValue
         - x isVariableOrNonNegativeNumber
         - x editorExtension
         - x EndpointFilterRule
-    - helpMarkDown : markdown / html
 
 
 DONE :
@@ -21,7 +20,7 @@ DONE :
     - dynamic update of visibility
 
 - Input :
-    - dataSourceBindings    
+    - dataSourceBindings
     - dynamic update of visibility
     - visibleRule
     - properties
@@ -43,13 +42,15 @@ DONE :
     - handle event change
         - connected service ?
         - picklist
+    - helpMarkDown : markdown / html
 
 - visibleRule = update evaluator
     - NotContains NotEndsWith NotStartsWith
     - Contains EndsWith StartsWith
 
     "$schema": "https://raw.githubusercontent.com/microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    
+- JSON validation
+
 Schema : missing or errors
     execution - HttpRequest
     execution - HttpRequestChain
@@ -69,4 +70,3 @@ Schema : missing or errors
     inputs item - groupName / groupname
     inputs item - defaultValue : string, boolean + number
     inputs item - helpMarkDown / helpMarkdown
-

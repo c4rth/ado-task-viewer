@@ -6,27 +6,21 @@ import { Message } from "./messages/MessageTypes";
 
 export class AzDoTaskPanel {
     public static currentPanel: AzDoTaskPanel | undefined;
-    private readonly _panel: vscode.WebviewPanel;
+    public readonly _panel: vscode.WebviewPanel;
     private _disposables: vscode.Disposable[] = [];
-    private readonly _extensionPath: string;
-    private readonly _fileUri: vscode.Uri;
+    public readonly _extensionPath: string;
+    public readonly _fileUri: vscode.Uri;
 
-    private constructor(panel: vscode.WebviewPanel, fileUri: vscode.Uri, azureDevOpsTask: AzureDevOpsTask, json: string, extensionPath: string) {
+    private constructor(panel: vscode.WebviewPanel, fileUri: vscode.Uri, json: string, extensionPath: string) {
         this._panel = panel;
         this._extensionPath = extensionPath;
         this._fileUri = fileUri;
 
-        this._renderWebview(azureDevOpsTask, json);
+        this._renderWebview(json);
 
         this._panel.webview.onDidReceiveMessage(
-            function (message: Message) {
-                if (message.type === 'RELOAD') {
-                    if (AzDoTaskPanel.currentPanel) {
-                        AzDoTaskPanel.render(AzDoTaskPanel.currentPanel._fileUri, AzDoTaskPanel.currentPanel._extensionPath);
-                    }
-                } else if (message.type === 'OPENURL') {
-                    vscode.env.openExternal(vscode.Uri.parse(message.payload));
-                }
+            (message) => {
+                this._handleMessage(message);
             },
             null,
             this._disposables
@@ -43,24 +37,36 @@ export class AzDoTaskPanel {
     public static render(fileUri: vscode.Uri, extensionPath: string) {
         vscode.workspace.openTextDocument(fileUri).then((document) => {
             const json = document.getText();
-            const azureDevOpsTask: AzureDevOpsTask = JSON.parse(json);
             if (AzDoTaskPanel.currentPanel) {
-                AzDoTaskPanel.currentPanel._renderWebview(azureDevOpsTask, json);
+                AzDoTaskPanel.currentPanel._renderWebview(json);
                 AzDoTaskPanel.currentPanel._panel.reveal(ViewColumn.One);
                 vscode.commands.executeCommand('workbench.action.webview.reloadWebviewAction');
             } else {
-                const panel = vscode.window.createWebviewPanel("ado-task", azureDevOpsTask.name || "Undefined", vscode.ViewColumn.One, {
+                const panel = vscode.window.createWebviewPanel("ado-task", "Loading...", vscode.ViewColumn.One, {
                     enableScripts: true,
                     localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'out', 'app'))],
                     retainContextWhenHidden: true
                 });
-                AzDoTaskPanel.currentPanel = new AzDoTaskPanel(panel, fileUri, azureDevOpsTask, json, extensionPath);
+                AzDoTaskPanel.currentPanel = new AzDoTaskPanel(panel, fileUri, json, extensionPath);
             }
         });
     }
 
-    private _renderWebview(azureDevOpsTask: AzureDevOpsTask, json: string) {
-        this._panel.title = azureDevOpsTask.name || "Undefined";
+    private _handleMessage(message: any): any {
+        if (message.type === 'RELOAD') {
+            if (AzDoTaskPanel.currentPanel) {
+                AzDoTaskPanel.render(AzDoTaskPanel.currentPanel._fileUri, AzDoTaskPanel.currentPanel._extensionPath);
+            }
+        } else if (message.type === 'OPENURL') {
+            vscode.env.openExternal(vscode.Uri.parse(message.payload));
+        } else if (message.type === 'SETTITLE') {
+            if (AzDoTaskPanel.currentPanel) {
+                AzDoTaskPanel.currentPanel._panel.title = message.payload;
+            }
+        }
+    }
+
+    private _renderWebview(json: string) {
         this._panel.webview.html = this._getWebviewContent(json);
     }
 
@@ -81,6 +87,7 @@ export class AzDoTaskPanel {
     private _getWebviewContent(json: string): string {
         const mainAppPath = path.join(this._extensionPath, 'out', 'app', 'bundle.js');
         const mainAppUri = vscode.Uri.file(mainAppPath).with({ scheme: "vscode-resource" });
+        const jsonString = JSON.stringify(json);
         return `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -91,6 +98,7 @@ export class AzDoTaskPanel {
             <div id="root"></div>
             <script>
                 const vscode = acquireVsCodeApi();
+                const azureDevOpsTaskJson = ${jsonString};
                 const azureDevOpsTask = ${json};
             </script>
             <script src="${mainAppUri}"></script>

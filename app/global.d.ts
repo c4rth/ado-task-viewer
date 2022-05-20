@@ -8,4 +8,4 @@ type VSCode = {
 
 declare const vscode: VSCode;
 
-declare const azureDevOpsTask: any;
+declare const azureDevOpsTaskJson: string;

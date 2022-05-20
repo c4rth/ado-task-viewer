@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "ado-task-viewer" extension will be documented in this file.
 
+## Version 0.2.5
+- Improve JSON validation
+
 ## Version 0.2.4
 - Update packages
 - HelpMarkDown : support URL
