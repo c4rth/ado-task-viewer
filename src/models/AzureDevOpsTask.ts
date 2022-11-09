@@ -142,6 +142,7 @@ export enum RequestVerb {
 export interface Execution {
     Node?: ExecutionObject;
     Node10?: ExecutionObject;
+    Node16?: ExecutionObject;
     PowerShell?: ExecutionObject;
     PowerShell3?: ExecutionObject;
     HttpRequest?: HttpRequestObject;
@@ -317,6 +318,7 @@ export interface OutputVariable {
 export interface Postjobexecution {
     Node?: ExecutionObject;
     Node10?: ExecutionObject;
+    Node16?: ExecutionObject;
     PowerShell?: ExecutionObject;
     PowerShell3?: ExecutionObject;
 }
@@ -327,6 +329,7 @@ export interface Postjobexecution {
 export interface Prejobexecution {
     Node?: ExecutionObject;
     Node10?: ExecutionObject;
+    Node16?: ExecutionObject;
     PowerShell?: ExecutionObject;
     PowerShell3?: ExecutionObject;
 }
@@ -601,6 +604,7 @@ const typeMap: any = {
     "Execution": o([
         { json: "Node", js: "node", typ: u(undefined, r("ExecutionObject")) },
         { json: "Node10", js: "node10", typ: u(undefined, r("ExecutionObject")) },
+        { json: "Node16", js: "node16", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell", js: "powerShell", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell3", js: "powerShell3", typ: u(undefined, r("ExecutionObject")) },
         { json: "HttpRequest", js: "httpRequest", typ: u(undefined, r("HttpRequestObject")) },
@@ -677,12 +681,14 @@ const typeMap: any = {
     "Postjobexecution": o([
         { json: "Node", js: "node", typ: u(undefined, r("ExecutionObject")) },
         { json: "Node10", js: "node10", typ: u(undefined, r("ExecutionObject")) },
+        { json: "Node16", js: "node16", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell", js: "powerShell", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell3", js: "powerShell3", typ: u(undefined, r("ExecutionObject")) },
     ], false),
     "Prejobexecution": o([
         { json: "Node", js: "node", typ: u(undefined, r("ExecutionObject")) },
         { json: "Node10", js: "node10", typ: u(undefined, r("ExecutionObject")) },
+        { json: "Node16", js: "node16", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell", js: "powerShell", typ: u(undefined, r("ExecutionObject")) },
         { json: "PowerShell3", js: "powerShell3", typ: u(undefined, r("ExecutionObject")) },
     ], false),

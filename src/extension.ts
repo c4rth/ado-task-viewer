@@ -10,5 +10,5 @@ export function deactivate() { }
 function viewTask(uri: vscode.Uri | undefined, context: vscode.ExtensionContext) {
 	uri = uri || vscode.window.activeTextEditor?.document.uri;
 	if (!uri) { return; }
-	AzDoTaskPanel.render(uri, context.extensionPath);
+	AzDoTaskPanel.render(uri, context.extensionUri);
 }

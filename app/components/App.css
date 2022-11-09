@@ -1,14 +1,13 @@
-.App {    
+.App {
   width: 400px;
 }
 
-.AppError {    
+.AppError {
   width: 100%;
   margin: 10px;
-  color: red;
-} 
+}
 
-.InputsPanel {    
+.InputsPanel {
   width: 359px;
 }
 

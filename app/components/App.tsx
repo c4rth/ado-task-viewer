@@ -1,12 +1,13 @@
 import { IconButton, IIconProps, Label, Stack, ITextFieldStyles, ThemeProvider } from "@fluentui/react";
 import React from "react";
 import { Convert } from "../../src/models/AzureDevOpsTask";
-import { ReloadMessage } from '../../src/views/messages/MessageTypes';
+import { ReloadMessage, SetTitleMessage } from '../../src/views/messages/MessageTypes';
 import './App.css';
 import { InputsPanel } from "./InputsPanel";
 import { convertToAdoTask } from "./models/AdoTask";
 import ThemeHelpers from "./theme/ThemeHelper";
 import { LabelInfo } from "./ui/LabelInfo";
+var jsonlint = require("jsonlint-mod");
 
 export const App: React.FC = (): JSX.Element => {
 
@@ -21,6 +22,11 @@ export const App: React.FC = (): JSX.Element => {
   };
 
   try {
+    const azureDevOpsTask = jsonlint.parse(azureDevOpsTaskJson);
+    vscode.postMessage<SetTitleMessage>({
+      type: 'SETTITLE',
+      payload: azureDevOpsTask.name
+    });
     Convert.validateAzureDevOpsTask(azureDevOpsTask);
     return (
       <ThemeProvider theme={ThemeHelpers.getAdaptedTheme()}>
@@ -41,7 +47,7 @@ export const App: React.FC = (): JSX.Element => {
     console.error(e);
     return (
       <ThemeProvider theme={ThemeHelpers.getAdaptedTheme()}>
-        <div className="AppError">
+        <div className="npm">
           <Stack horizontal verticalAlign="center">
             <Label styles={titleErrorStyle}>task.json is invalid</Label>
             <IconButton iconProps={iconRefreshProps} title="Refresh" ariaLabel="Refresh" onClick={_onClickRefresh} />
