@@ -8,15 +8,15 @@ export class AzDoTaskPanel {
     public static currentPanel: AzDoTaskPanel | undefined;
     public readonly _panel: vscode.WebviewPanel;
     private _disposables: vscode.Disposable[] = [];
-    public readonly _extensionPath: string;
+    public readonly _extensionUri: vscode.Uri;
     public readonly _fileUri: vscode.Uri;
 
-    private constructor(panel: vscode.WebviewPanel, fileUri: vscode.Uri, json: string, extensionPath: string) {
+    private constructor(panel: vscode.WebviewPanel, fileUri: vscode.Uri, fileContent: string, extensionUri: vscode.Uri) {
         this._panel = panel;
-        this._extensionPath = extensionPath;
+        this._extensionUri = extensionUri;
         this._fileUri = fileUri;
 
-        this._renderWebview(json);
+        this._renderWebview(fileContent);
 
         this._panel.webview.onDidReceiveMessage(
             (message) => {
@@ -34,20 +34,20 @@ export class AzDoTaskPanel {
         );
     }
 
-    public static render(fileUri: vscode.Uri, extensionPath: string) {
+    public static render(fileUri: vscode.Uri, extensionUri: vscode.Uri) {
         vscode.workspace.openTextDocument(fileUri).then((document) => {
-            const json = document.getText();
+            const fileContent = document.getText();
             if (AzDoTaskPanel.currentPanel) {
-                AzDoTaskPanel.currentPanel._renderWebview(json);
+                AzDoTaskPanel.currentPanel._renderWebview(fileContent);
                 AzDoTaskPanel.currentPanel._panel.reveal(ViewColumn.One);
                 vscode.commands.executeCommand('workbench.action.webview.reloadWebviewAction');
             } else {
                 const panel = vscode.window.createWebviewPanel("ado-task", "Loading...", vscode.ViewColumn.One, {
                     enableScripts: true,
-                    localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'out', 'app'))],
+                    //localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'out', 'app'))],
                     retainContextWhenHidden: true
                 });
-                AzDoTaskPanel.currentPanel = new AzDoTaskPanel(panel, fileUri, json, extensionPath);
+                AzDoTaskPanel.currentPanel = new AzDoTaskPanel(panel, fileUri, fileContent, extensionUri);
             }
         });
     }
@@ -55,7 +55,7 @@ export class AzDoTaskPanel {
     private _handleMessage(message: any): any {
         if (message.type === 'RELOAD') {
             if (AzDoTaskPanel.currentPanel) {
-                AzDoTaskPanel.render(AzDoTaskPanel.currentPanel._fileUri, AzDoTaskPanel.currentPanel._extensionPath);
+                AzDoTaskPanel.render(AzDoTaskPanel.currentPanel._fileUri, AzDoTaskPanel.currentPanel._extensionUri);
             }
         } else if (message.type === 'OPENURL') {
             vscode.env.openExternal(vscode.Uri.parse(message.payload));
@@ -84,10 +84,9 @@ export class AzDoTaskPanel {
         }
     }
 
-    private _getWebviewContent(json: string): string {
-        const mainAppPath = path.join(this._extensionPath, 'out', 'app', 'bundle.js');
-        const mainAppUri = vscode.Uri.file(mainAppPath).with({ scheme: "vscode-resource" });
-        const jsonString = JSON.stringify(json);
+    private _getWebviewContent(fileContent: string): string {
+        const mainAppUri = this._panel.webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'out', 'app', 'bundle.js'));
+        const fileContentString = JSON.stringify(fileContent);
         return `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -98,8 +97,7 @@ export class AzDoTaskPanel {
             <div id="root"></div>
             <script>
                 const vscode = acquireVsCodeApi();
-                const azureDevOpsTaskJson = ${jsonString};
-                const azureDevOpsTask = ${json};
+                const azureDevOpsTaskJson = ${fileContentString};
             </script>
             <script src="${mainAppUri}"></script>
         </body>

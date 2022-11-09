@@ -23,7 +23,6 @@ export const App: React.FC = (): JSX.Element => {
 
   try {
     const azureDevOpsTask = jsonlint.parse(azureDevOpsTaskJson);
-    //const azureDevOpsTask = JSON.parse(azureDevOpsTaskJson);
     vscode.postMessage<SetTitleMessage>({
       type: 'SETTITLE',
       payload: azureDevOpsTask.name

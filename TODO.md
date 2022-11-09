@@ -49,7 +49,7 @@ DONE :
     - Contains EndsWith StartsWith
 
     "$schema": "https://raw.githubusercontent.com/microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-- JSON validation
+- JSON validationvsc
 
 Schema : missing or errors
     execution - HttpRequest

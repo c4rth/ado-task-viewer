@@ -1,7 +1,12 @@
 # Change Log
 All notable changes to the "ado-task-viewer" extension will be documented in this file.
 
-## Version 0.2.5
+## Version 0.2.6
+- Fix [issue #6](https://github.com/c4rth/ado-task-viewer/issues/6)
+- Add 'Node16' as a valid execution value
+- Update packages
+
+## Version 0.2.5 (unreleased)
 - Improve JSON validation
 
 ## Version 0.2.4
